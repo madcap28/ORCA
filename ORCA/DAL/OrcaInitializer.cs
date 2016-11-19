@@ -11,36 +11,92 @@ namespace ORCA.DAL
     {
         protected override void Seed(OrcaContext context)
         {
-            base.Seed(context);
+            //base.Seed(context);
 
+
+            // add a regular user for testing initialization
             OrcaUser generalUser = new OrcaUser();
 
             generalUser.OrcaUserName = "TestUser";
             generalUser.FirstName = "Test";
             generalUser.LastName = "User";
+            generalUser.Password = "password";
             generalUser.Email = "testuser@marshall.edu";
             generalUser.PhoneNumber = "3045432101";
             generalUser.IsAccountDeactivated = false;
             generalUser.UserType = OrcaUserType.Consultee;
 
             context.OrcaUsers.Add(generalUser);
+            context.SaveChanges();
 
+
+
+            // add a regular expert consultant for testing initialization
             OrcaUser expertUser = new OrcaUser();
 
             expertUser.OrcaUserName = "TestExpert";
             expertUser.FirstName = "Test";
             expertUser.LastName = "Expert";
+            expertUser.Password = "password";
             expertUser.Email = "testexpert@marahsll.edu";
             expertUser.PhoneNumber = "1234567890";
             expertUser.IsAccountDeactivated = false;
             expertUser.UserType = OrcaUserType.Consultant;
 
+            context.OrcaUsers.Add(expertUser);
+            context.SaveChanges();
+
             ExpertConsultant expertUserConsultant = new ExpertConsultant();
 
             expertUserConsultant.ExpertConsultantID = expertUser.OrcaUserID;
+            expertUserConsultant.ExpertStatus = ExpertStatus.Approved;
             expertUserConsultant.IsActive = true;
-            expertUserConsultant.IsApproved = true;
-            expertUserConsultant.IsAdmin = true;
+
+            context.ExpertConsultants.Add(expertUserConsultant);
+            context.SaveChanges();
+
+            ConsultantExpertise consultantExpertise = new ConsultantExpertise();
+
+            consultantExpertise.ExpertConsultantID = expertUserConsultant.ExpertConsultantID;
+            consultantExpertise.FieldOfExpertise = "Computer Science";
+
+            context.ConsultantExpertises.Add(consultantExpertise);
+            context.SaveChanges();
+
+
+
+            // add an admin expert consultant for testing initialization
+            expertUser = new OrcaUser();
+
+            expertUser.OrcaUserName = "AdminExpert";
+            expertUser.FirstName = "Admin";
+            expertUser.LastName = "Expert";
+            expertUser.Password = "password";
+            expertUser.Email = "adminexpert@marahsll.edu";
+            expertUser.PhoneNumber = "1234567890";
+            expertUser.IsAccountDeactivated = false;
+            expertUser.UserType = OrcaUserType.ConsultantAdmin;
+
+            context.OrcaUsers.Add(expertUser);
+            context.SaveChanges();
+
+            expertUserConsultant = new ExpertConsultant();
+
+            expertUserConsultant.ExpertConsultantID = expertUser.OrcaUserID;
+            expertUserConsultant.ExpertStatus = ExpertStatus.Approved;
+            expertUserConsultant.IsActive = true;
+
+            context.ExpertConsultants.Add(expertUserConsultant);
+            context.SaveChanges();
+
+            consultantExpertise = new ConsultantExpertise();
+
+            consultantExpertise.ExpertConsultantID = expertUserConsultant.ExpertConsultantID;
+            consultantExpertise.FieldOfExpertise = "Software Engineering";
+
+            context.ConsultantExpertises.Add(consultantExpertise);
+            context.SaveChanges();
+
         }
     }
 }

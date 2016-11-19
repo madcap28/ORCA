@@ -21,9 +21,6 @@ namespace ORCA.Models.OrcaDB
         [Required]
         public bool IsActive { get; set; }// This indicates if the ExpertConsultant is currently active and will be available for response.  The OrcaUser ExpertConsultant can change this, i.e. setting this to False (inactive) when he/she goes on vacation.
 
-        [Required]
-        public bool IsAdmin { get; set; }// This indicates the OrcaUser ExpertConsultant has administrative responsibilities and can approve other OrcaUser ExpertConsultants as well as disable OrcaUser accounts in general.
-
 
 
 
