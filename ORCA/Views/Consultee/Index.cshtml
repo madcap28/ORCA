@@ -1,0 +1,23 @@
+﻿@using ORCA.Models
+
+@*Session["OrcaUserID"] = newOrcaUser.OrcaUserID;
+Session["OrcaUserName"] = newOrcaUser.OrcaUserName;
+Session["FirstName"] = newOrcaUser.FirstName;
+Session["LastName"] = newOrcaUser.LastName;
+Session["UserType"] = newOrcaUser.UserType;*@
+
+@{
+    ViewBag.Title = "Home";
+}
+
+<h2>Home</h2>
+
+<h4>Welcome @Session["OrcaUserName"]</h4>
+
+<h4>@ViewBag.Message</h4>
+<h6>@Session["OrcaUserID"]</h6>
+<h6>@Session["OrcaUserName"]</h6>
+<h6>@Session["FirstName"]</h6>
+<h6>@Session["LastName"]</h6>
+<h6>@Session["UserType"]</h6>
+

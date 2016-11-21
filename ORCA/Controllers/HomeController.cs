@@ -11,8 +11,6 @@ namespace ORCA.Controllers
 {
     public class HomeController : Controller
     {
-        OrcaContext db = new OrcaContext();
-
         public ActionResult Index()
         {
             return View();
@@ -39,6 +37,8 @@ namespace ORCA.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login([Bind(Include = "OrcaUserName,Password")] LoginModel loginInfo)
         {
+            OrcaContext db = new OrcaContext();
+
             if (ModelState.IsValid)
             {
                 OrcaUser userQuery = null;
@@ -61,9 +61,15 @@ namespace ORCA.Controllers
                     // NOTE:
                     if (userQuery.Password == loginInfo.Password)// check the password
                     {
-                        LoggedInUser LoggedInUser = new LoggedInUser(userQuery.OrcaUserID, userQuery.OrcaUserName, userQuery.FirstName, userQuery.LastName, userQuery.UserType);
+                        // this is not the best way to do it, but knowledge of the language, or lack thereof dictates a sloppy work-around for now
+                        Session["OrcaUserID"] = userQuery.OrcaUserID;
+                        Session["OrcaUserName"] = userQuery.OrcaUserName;
+                        Session["FirstName"] = userQuery.FirstName;
+                        Session["LastName"] = userQuery.LastName;
+                        Session["UserType"] = userQuery.UserType;
 
-                        Session["LoggedInUser"] = LoggedInUser as LoggedInUser;// save session info for later use
+                        // following might be someone more proper but it is a pain in the arse to figure out when you don't know the language well enough and what i have below doesn't seem to work when trying to get the info out of it.  i will note that using tempdata has no problem but then you have to keep saving the tempdata when going between controllers because otherwise it is cleared
+                        //Session["UserProfile"] = (new UserProfile(userQuery.OrcaUserID)) as UserProfile;
 
                         TempData["Message"] = "You have successfully logged into your account.";
 
@@ -102,6 +108,8 @@ namespace ORCA.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Register([Bind(Include = "OrcaUserName,FirstName,LastName,Email,PhoneNumber,Password,ConfirmPassword")] RegistrationModel registrationInfo)
         {
+            OrcaContext db = new OrcaContext();
+
             if (ModelState.IsValid)
             {
                 var userExistQuery = from user in db.OrcaUsers
@@ -130,9 +138,11 @@ namespace ORCA.Controllers
                                    where user.OrcaUserName == registrationInfo.OrcaUserName
                                    select user).First();
 
-                    LoggedInUser LoggedInUser = new LoggedInUser(newOrcaUser.OrcaUserID, newOrcaUser.OrcaUserName, newOrcaUser.FirstName, newOrcaUser.LastName, newOrcaUser.UserType);
-
-                    Session["LoggedInUser"] = LoggedInUser as LoggedInUser;// save session info for later use
+                    Session["OrcaUserID"] = newOrcaUser.OrcaUserID;
+                    Session["OrcaUserName"] = newOrcaUser.OrcaUserName;
+                    Session["FirstName"] = newOrcaUser.FirstName;
+                    Session["LastName"] = newOrcaUser.LastName;
+                    Session["UserType"] = newOrcaUser.UserType;
 
                     TempData["Message"] = "You have successfully created a new account.";
 
