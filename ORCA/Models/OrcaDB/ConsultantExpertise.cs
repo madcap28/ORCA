@@ -9,11 +9,11 @@ namespace ORCA.Models.OrcaDB
 {
     public class ConsultantExpertise
     {
-        [Key]
+        [Key, Required]
         public int ConsultantExpertiseID { get; set; }
 
         [Required]// [ForeignKey("ExpertConsultant")] [ForeignKey("OrcaUser")]
-        public int ExpertConsultantID { get; set; }// This is the OrcaUser ExpertConsultant that has this ConsultantExpertise in his/her list of ConsultantExpertises.   ExpertConsultantID = ExpertConsultant.ExpertConsultantID = OrcaUser.OrcaUserID
+        public int OrcaUserID { get; set; }// This is the OrcaUser ExpertConsultant that has this ConsultantExpertise in his/her list of ConsultantExpertises.   ExpertConsultantID = ExpertConsultant.ExpertConsultantID = OrcaUser.OrcaUserID
 
         [Required]
         public string FieldOfExpertise { get; set; }// This is FieldOfExpertise of an OrcaUser that is an ExpertConsultant
@@ -23,10 +23,10 @@ namespace ORCA.Models.OrcaDB
 
 
         // NOTE: ExpertConsultantID = ExpertConsultant.ExpertConsultantID = OrcaUser.OrcaUserID
-        [ForeignKey("ExpertConsultantID")]
+        [ForeignKey("OrcaUserID")]
         public virtual ExpertConsultant ExpertConsultant { get; set; }// This points to the ExpertConsultant class that contains the info about users that are experts
 
-        [ForeignKey("ExpertConsultantID")]
+        [ForeignKey("OrcaUserID")]
         public virtual OrcaUser OrcaUser { get; set; }// This points to the OrcaUser class that is an ExpertConsultant
     }
 }

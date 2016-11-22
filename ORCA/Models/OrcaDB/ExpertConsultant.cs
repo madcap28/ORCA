@@ -13,7 +13,7 @@ namespace ORCA.Models.OrcaDB
     public class ExpertConsultant
     {
         [Key, ForeignKey("OrcaUser"), Required]
-        public int ExpertConsultantID { get; set; }// This is the ExpertConsultantID of the OrcaUser that is an ExpertConsultant.   ExpertConsultantID = OrcaUser.OrcaUserID
+        public int OrcaUserID { get; set; }// This is the ExpertConsultantID of the OrcaUser that is an ExpertConsultant.   ExpertConsultantID = OrcaUser.OrcaUserID
         
         [Required]
         public ExpertStatus ExpertStatus { get; set; }// This indicates if the OrcaUser ExpertConsultant has been approved to provide expert advice.  This is set by an admin that confirms and approves the account.
@@ -25,7 +25,7 @@ namespace ORCA.Models.OrcaDB
 
 
 
-        [ForeignKey("ExpertConsultantID")]
+        [ForeignKey("OrcaUserID")]
         public virtual OrcaUser OrcaUser { get; set; }// This is the OrcaUser that is an ExpertConsultant
 
         public virtual ICollection<ConsultantExpertise> ConsultantExpertises { get; set; }// This is a list of ConsultantExpertises that this OrcaUser ExpertConsultant has claimed as fields of expertise

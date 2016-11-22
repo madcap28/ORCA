@@ -6,12 +6,13 @@
 
 <h2>Login</h2>
 
+<h4>@ViewBag.Message</h4>
+
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h3>@ViewBag.Message</h3>
         <h4>Please enter your User Name and Password</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })

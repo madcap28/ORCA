@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -10,7 +11,7 @@ namespace ORCA.Models.OrcaDB
 
     public class OrcaUser
     {
-        [Key]
+        [Key, ForeignKey("OrcaPassword")]
         public int OrcaUserID { get; set; }
         
         [Required]
@@ -20,8 +21,11 @@ namespace ORCA.Models.OrcaDB
 
         public string LastName { get; set; }// Optional field but will be required for OrcaUser ExpertConsultant in order to get approved as an ExpertConsultant.
 
-        [Required]
-        public string Password { get; set; }// NEED TO HASH AND SECURE THIS
+        //[Required,
+        //    Display(Name = "Password"),
+        //    DataType(DataType.Password),
+        //    MinLength(8, ErrorMessage = "Please ensure that your password is at least 8 characters.")]
+        //public string Password { get; set; }// NEED TO HASH AND SECURE THIS
 
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }// Optional field but will be required for OrcaUser ExpertConsultant in order to get approved as an ExpertConsultant.  May be required for password reset if the user forgets his/her password.
@@ -37,5 +41,10 @@ namespace ORCA.Models.OrcaDB
 
         [Required]
         public OrcaUserType UserType { get; set; }// This indicates the UserType as either a Consultee seeking expert advice or a Consultant providing expert advice.
+
+
+
+        [ForeignKey("OrcaUserID")]
+        public virtual OrcaPassword OrcaPassword { get; set; }
     }
 }

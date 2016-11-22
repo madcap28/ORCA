@@ -15,6 +15,7 @@ namespace ORCA.DAL
         }
 
         public DbSet<OrcaUser> OrcaUsers { get; set; }
+        public DbSet<OrcaPassword> OrcaPasswords { get; set; }
         public DbSet<ExpertConsultant> ExpertConsultants { get; set; }
         public DbSet<ConsultantExpertise> ConsultantExpertises { get; set; }
         public DbSet<Ticket> Tickets { get; set; }

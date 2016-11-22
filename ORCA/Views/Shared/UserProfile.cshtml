@@ -1,0 +1,33 @@
+﻿
+@{
+    ViewBag.Title = "UserProfile";
+}
+
+<h2>Edit Profile</h2>
+
+<h4>@ViewBag.Message</h4>
+
+
+@if (Session["UserType"].ToString() == "Consultee")
+{
+    Html.RenderPartial("_UserProfile");
+}
+else
+{
+    Html.RenderPartial("_UserProfile");
+    Html.RenderPartial("_ConsulteeProfile");
+}
+
+<div>
+    <div>
+        @Html.ActionLink("Change Password", "ChangePassword")
+        <div>
+            @Html.ActionLink("Home", "Index")
+        </div>
+        <h2>  </h2>
+    </div>
+    @if (Session["UserType"].ToString() == "Consultee")
+    {
+        @Html.ActionLink("Request Expert Consultant Status", "ExpertRequest")
+    }
+</div>

@@ -16,11 +16,12 @@ namespace ORCA.DAL
 
             // add a regular user for testing initialization
             OrcaUser generalUser = new OrcaUser();
+            generalUser.OrcaPassword = new OrcaPassword();
 
             generalUser.OrcaUserName = "TestUser";
             generalUser.FirstName = "Test";
             generalUser.LastName = "User";
-            generalUser.Password = "password";
+            generalUser.OrcaPassword.Password = "password";
             generalUser.Email = "testuser@marshall.edu";
             generalUser.PhoneNumber = "3045432101";
             generalUser.IsAccountDeactivated = false;
@@ -33,11 +34,12 @@ namespace ORCA.DAL
 
             // add a regular expert consultant for testing initialization
             OrcaUser expertUser = new OrcaUser();
+            expertUser.OrcaPassword = new OrcaPassword();
 
             expertUser.OrcaUserName = "TestExpert";
             expertUser.FirstName = "Test";
             expertUser.LastName = "Expert";
-            expertUser.Password = "password";
+            expertUser.OrcaPassword.Password = "password";
             expertUser.Email = "testexpert@marahsll.edu";
             expertUser.PhoneNumber = "1234567890";
             expertUser.IsAccountDeactivated = false;
@@ -48,7 +50,7 @@ namespace ORCA.DAL
 
             ExpertConsultant expertUserConsultant = new ExpertConsultant();
 
-            expertUserConsultant.ExpertConsultantID = expertUser.OrcaUserID;
+            expertUserConsultant.OrcaUserID = expertUser.OrcaUserID;
             expertUserConsultant.ExpertStatus = ExpertStatus.Approved;
             expertUserConsultant.IsActive = true;
 
@@ -57,7 +59,7 @@ namespace ORCA.DAL
 
             ConsultantExpertise consultantExpertise = new ConsultantExpertise();
 
-            consultantExpertise.ExpertConsultantID = expertUserConsultant.ExpertConsultantID;
+            consultantExpertise.OrcaUserID = expertUserConsultant.OrcaUserID;
             consultantExpertise.FieldOfExpertise = "Computer Science";
 
             context.ConsultantExpertises.Add(consultantExpertise);
@@ -67,11 +69,12 @@ namespace ORCA.DAL
 
             // add an admin expert consultant for testing initialization
             expertUser = new OrcaUser();
+            expertUser.OrcaPassword = new OrcaPassword();
 
             expertUser.OrcaUserName = "AdminExpert";
             expertUser.FirstName = "Admin";
             expertUser.LastName = "Expert";
-            expertUser.Password = "password";
+            expertUser.OrcaPassword.Password = "password";
             expertUser.Email = "adminexpert@marahsll.edu";
             expertUser.PhoneNumber = "1234567890";
             expertUser.IsAccountDeactivated = false;
@@ -82,7 +85,7 @@ namespace ORCA.DAL
 
             expertUserConsultant = new ExpertConsultant();
 
-            expertUserConsultant.ExpertConsultantID = expertUser.OrcaUserID;
+            expertUserConsultant.OrcaUserID = expertUser.OrcaUserID;
             expertUserConsultant.ExpertStatus = ExpertStatus.Approved;
             expertUserConsultant.IsActive = true;
 
@@ -91,7 +94,7 @@ namespace ORCA.DAL
 
             consultantExpertise = new ConsultantExpertise();
 
-            consultantExpertise.ExpertConsultantID = expertUserConsultant.ExpertConsultantID;
+            consultantExpertise.OrcaUserID = expertUserConsultant.OrcaUserID;
             consultantExpertise.FieldOfExpertise = "Software Engineering";
 
             context.ConsultantExpertises.Add(consultantExpertise);

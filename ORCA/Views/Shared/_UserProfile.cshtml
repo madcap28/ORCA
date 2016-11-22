@@ -1,12 +1,8 @@
-﻿@model ORCA.Models.UserProfile
+﻿
 
-@{
-    ViewBag.Title = "UserProfile";
-}
 
-<h2>Edit Profile</h2>
 
-<h4>@ViewBag.Message</h4>
+@model ORCA.Models.UserProfile
 
 @using (Html.BeginForm())
 {
@@ -64,10 +60,3 @@
         </div>
     </div>
 }
-
-<div>
-    <div>
-        @Html.ActionLink("Change Password", "Index")
-    </div>
-    @Html.ActionLink("Home", "Index")
-</div>
