@@ -12,7 +12,7 @@
 
 
 
-            @Html.ActionLink("Marshall ORCA", "Index", "Consultee", new { area = "" }, new { @class = "navbar-brand" })
+            @Html.ActionLink("Marshall ORCA", "Index", new { area = "" }, new { @class = "navbar-brand" })
 
 
 
@@ -24,10 +24,10 @@
 
                 @*<li>@Html.ActionLink("Name displayed on link","Name of file","Folder location of file")</li>*@
 
-                <li>@Html.ActionLink("Home", "Index", "Consultee")</li>
-                <li>@Html.ActionLink("About", "About", "Consultee")</li>
-                <li>@Html.ActionLink("Profile", "UserProfile", "Consultee")</li>
-                <li>@Html.ActionLink("Logout", "Logout", "Consultee")</li>
+                <li>@Html.ActionLink("Home", "Index")</li>
+                <li>@Html.ActionLink("About", "About")</li>
+                <li>@Html.ActionLink("Profile", "UserProfile")</li>
+                <li>@Html.ActionLink("Logout", "Logout")</li>
             </ul>
         </div>
     </div>

@@ -9,7 +9,7 @@ namespace ORCA.Models.OrcaDB
 {
     public class ConsultantExpertise
     {
-        [Key, Required]
+        [Key]
         public int ConsultantExpertiseID { get; set; }
 
         [Required]// [ForeignKey("ExpertConsultant")] [ForeignKey("OrcaUser")]

@@ -127,14 +127,19 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\ConsultantController.cs" />
+    <Compile Include="Controllers\ConsultantExpertisesController.cs" />
     <Compile Include="Controllers\ConsulteeController.cs" />
+    <Compile Include="Controllers\ExpertConsultantsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\OrcaUsersController.cs" />
     <Compile Include="DAL\OrcaContext.cs" />
     <Compile Include="DAL\OrcaInitializer.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\ChangePasswordModel.cs" />
+    <Compile Include="Models\ConsultantProfile.cs" />
     <Compile Include="Models\OrcaDB\OrcaPassword.cs" />
     <Compile Include="Models\UserProfile.cs" />
     <Compile Include="Models\LoginModel.cs" />
@@ -199,14 +204,33 @@
     <Content Include="Views\Home\_HeaderNavBar.cshtml" />
     <Content Include="Views\Home\Register.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
-    <Content Include="Views\Consultee\_HeaderNavBar.cshtml" />
+    <Content Include="Views\Shared\_HeaderNavBar.cshtml" />
     <Content Include="Views\Shared\Index.cshtml" />
     <Content Include="Views\Consultee\Consultations.cshtml" />
-    <Content Include="Views\Shared\UserProfile.cshtml" />
-    <Content Include="Views\Shared\_UserProfile.cshtml" />
-    <Content Include="Views\Consultee\ChangePassword.cshtml" />
-    <Content Include="Views\Consultant\_HeaderNavBar.cshtml" />
+    <Content Include="Views\Shared\ChangePassword.cshtml" />
     <Content Include="Views\Consultee\ExpertRequest.cshtml" />
+    <Content Include="Views\Shared\_ConsultantProfile.cshtml" />
+    <Content Include="Views\OrcaUsers\Create.cshtml" />
+    <Content Include="Views\OrcaUsers\Delete.cshtml" />
+    <Content Include="Views\OrcaUsers\Details.cshtml" />
+    <Content Include="Views\OrcaUsers\Edit.cshtml" />
+    <Content Include="Views\OrcaUsers\Index.cshtml" />
+    <Content Include="Views\ExpertConsultants\Create.cshtml" />
+    <Content Include="Views\ExpertConsultants\Delete.cshtml" />
+    <Content Include="Views\ExpertConsultants\Details.cshtml" />
+    <Content Include="Views\ExpertConsultants\Edit.cshtml" />
+    <Content Include="Views\ExpertConsultants\Index.cshtml" />
+    <Content Include="Views\ConsultantExpertises\Create.cshtml" />
+    <Content Include="Views\ConsultantExpertises\Delete.cshtml" />
+    <Content Include="Views\ConsultantExpertises\Details.cshtml" />
+    <Content Include="Views\ConsultantExpertises\Edit.cshtml" />
+    <Content Include="Views\ConsultantExpertises\Index.cshtml" />
+    <Content Include="Views\Consultant\CPEditView.cshtml" />
+    <Content Include="Views\Consultant\CPDetailsView.cshtml" />
+    <Content Include="Views\Consultant\CPCreateView.cshtml" />
+    <Content Include="Views\Consultant\CPListView.cshtml" />
+    <Content Include="Views\Consultant\UserProfile.cshtml" />
+    <Content Include="Views\Consultee\UserProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

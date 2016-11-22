@@ -64,12 +64,18 @@ namespace ORCA.Controllers
                 ViewBag.Message += (" " + TempData["Message"].ToString());
             }
 
-            
-            // the next two lines are necissary as the values get nullified when passing between UserProfile()->View(userProfile) and UserProfile(UserProfile)
-            // it's not the prefered method but the work-around is necissary at the moment
-            profileInfo.OrcaUserID = (int)Convert.ToInt32(Session["OrcaUserID"].ToString());
-            profileInfo.OrcaUserName = (string)Session["OrcaUserName"];
-            
+
+            //// the next two lines are necissary as the values get nullified when passing between UserProfile()->View(userProfile) and UserProfile(UserProfile)
+            //// it's not the prefered method but the work-around is necissary at the moment
+
+            //profileInfo.OrcaUserID = (int)Convert.ToInt32(Session["OrcaUserID"].ToString());
+            //profileInfo.OrcaUserName = (string)Session["OrcaUserName"];
+
+            ////DOES NOT WORKprofileInfo = new UserProfile((int)Convert.ToInt32(Session["OrcaUserID"].ToString()));
+            //// THIS IS BUGGERED UP... Im not even sure exactly what was causing the problem but now it is working "properly" i guess so I'll leve it commented
+
+            //////// FINAL NOTE it seems that the view has to have @Html.HiddenFor(model => model.OrcaUserID) if it isn't being altered by the view
+
             if (ModelState.IsValid)
             {
                 // save the profile changes
@@ -91,7 +97,7 @@ namespace ORCA.Controllers
             }
             else
             {
-                ViewBag.Message += " Unable to save changes.";
+                ViewBag.Message += " Unable to save changes. Please review your changes.";
             }
             
             return View(profileInfo);
@@ -185,7 +191,7 @@ namespace ORCA.Controllers
                 switch (requestingUser.ExpertStatus)
                 {
                     case ExpertStatus.Requested:
-                        ViewBag.Message = "A request to become a Marshall Expert Consultant has previously been submitted and is being reviewed.  Please make sure that your name and contact information under Profile is accurate. Your request will be reviewed, and an administrator may contact you for further information.  If your request is approved then your account will be promoted.";
+                        ViewBag.Message = "A previous request to become a Marshall Expert Consultant has already been submitted.  Please be patient as the request must be reviewed.";
                         break;
                     case ExpertStatus.Declined:
                         ViewBag.Message = "Your previous request to become a Marshall Expert Consultant has been declined.";
