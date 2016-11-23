@@ -8,10 +8,12 @@ using System.Web;
 
 namespace ORCA.Models
 {
+    public enum ActiveStatus { Yes, No }
+
     [BindableType(IsBindable = true)]
     public class UserProfile
     {
-        
+        [Required]
         public int OrcaUserID { get; set; }
 
         [Display(Name = "User Name")]
@@ -32,15 +34,36 @@ namespace ORCA.Models
         [Phone, /*DataType(DataType.PhoneNumber),*/ Display(Name = "Phone Number")]
         public string PhoneNumber { get; set; }
 
-        
 
+
+
+        [Display(Name = "Actively Consulting?"), Required]
+        public ActiveStatus IsActive { get; set; }
+
+        [Display(Name = "Professional Degree/Title")]
+        public string TitleDegree { get; set; }
         
+        [Display(Name = "Fields of Expertise")]
+        public ICollection<ConsultantExpertise> FieldsOfExpertise { get; set; }
+        //public List<ConsultantExpertise> FieldsOfExpertise { get; set; }
+        //public IEnumerable<ConsultantExpertise> FildsOfExpertise { get; set; }
+
+        [Display(Name = "Add Field of Expertise")]
+        public string FieldToAdd { get; set; }
+
+        [Display(Name = "Key Word List")]
+        public string KeyWordList { get; set; }
+
+
+
+
         public UserProfile() { }
         public UserProfile(int OrcaUserID)
         {
             OrcaContext db = new OrcaContext();
 
             OrcaUser userInfo = db.OrcaUsers.Find(OrcaUserID);
+            
 
             if (userInfo != null)
             {
@@ -51,33 +74,36 @@ namespace ORCA.Models
                 this.LastName = userInfo.LastName;
                 this.Email = userInfo.Email;
                 this.PhoneNumber = userInfo.PhoneNumber;
+
+                
+                if (userInfo.UserType == OrcaUserType.Consultant || userInfo.UserType == OrcaUserType.ConsultantAdmin)
+                {
+                    ExpertConsultant consultantInfo = db.ExpertConsultants.Find(OrcaUserID);
+
+                    if (consultantInfo != null)
+                    {
+                        // using a dropdown but the db value is a bool, so set appropriately
+                        if (consultantInfo.IsActive)
+                        {
+                            this.IsActive = ActiveStatus.Yes;
+                        }
+                        else
+                        {
+                            this.IsActive = ActiveStatus.No;
+                        }
+
+                        this.TitleDegree = consultantInfo.TitleDegree;
+
+                        // this.FieldsOfExpertise = consultantInfo.ConsultantExpertises;
+
+                        this.FieldsOfExpertise = (from expertise in db.ConsultantExpertises
+                                                  where expertise.OrcaUserID == OrcaUserID
+                                                  select expertise).ToList();
+                        
+                        this.KeyWordList = consultantInfo.KeyWordList;
+                    }
+                }
             }
-
-            //try
-            //{
-            //    OrcaUser userInfo = (from user in db.OrcaUsers
-            //                         where user.OrcaUserID == OrcaUserID
-            //                         select user).First();
-            //    //db.OrcaUsers.AsQueryable().First(user => user.OrcaUserID == OrcaUserID);
-
-            //    // fill in the info for the user
-            //    this.OrcaUserID = OrcaUserID;
-            //    this.OrcaUserName = userInfo.OrcaUserName;
-            //    this.FirstName = userInfo.FirstName;
-            //    this.LastName = userInfo.LastName;
-            //    this.Email = userInfo.Email;
-            //    this.PhoneNumber = userInfo.PhoneNumber;
-            //}
-            //catch (Exception)
-            //{
-            //    //this.OrcaUserID = -1;
-            //    //this.OrcaUserName = null;
-            //    //this.FirstName = null;
-            //    //this.LastName = null;
-            //    //this.Email = null;
-            //    //this.PhoneNumber = null;
-            //}
         }
-        
     }
 }

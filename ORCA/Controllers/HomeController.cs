@@ -44,14 +44,14 @@ namespace ORCA.Controllers
                 ViewBag.Message += (" " + TempData["Message"].ToString());
             }
 
-            LoginModel loginInfo = new LoginModel();
+            Login loginInfo = new Login();
 
             return View(loginInfo);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Login([Bind(Include = "OrcaUserName,Password")] LoginModel loginInfo)
+        public ActionResult Login([Bind(Include = "OrcaUserName,Password")] Login loginInfo)
         {
             // convnention for making it easier to pass messages between controllers
             if (TempData["Message"] != null)
@@ -130,14 +130,14 @@ namespace ORCA.Controllers
                 ViewBag.Message += (" " + TempData["Message"].ToString());
             }
 
-            RegistrationModel registrationInfo = new RegistrationModel();
+            Registration registrationInfo = new Registration();
 
             return View(registrationInfo);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Register([Bind(Include = "OrcaUserName,FirstName,LastName,Email,PhoneNumber,Password,ConfirmPassword")] RegistrationModel registrationInfo)
+        public ActionResult Register([Bind(Include = "OrcaUserName,FirstName,LastName,Email,PhoneNumber,Password,ConfirmPassword")] Registration registrationInfo)
         {
             // convnention for making it easier to pass messages between controllers
             if (TempData["Message"] != null)

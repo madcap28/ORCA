@@ -1,4 +1,4 @@
-﻿@model ORCA.Models.RegistrationModel
+﻿@model ORCA.Models.Registration
 
 @{
     ViewBag.Title = "Register";
@@ -13,7 +13,6 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h3>@ViewBag.Message</h3>
         <h4>Please enter your registration information.</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })

@@ -6,7 +6,7 @@ using System.Web;
 
 namespace ORCA.Models
 {
-    public class ChangePasswordModel
+    public class PasswordChange
     {
         [Required,
             Display(Name = "Current Password"),

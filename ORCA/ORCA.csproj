@@ -127,6 +127,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\ConsultantAdminController.cs" />
     <Compile Include="Controllers\ConsultantController.cs" />
     <Compile Include="Controllers\ConsultantExpertisesController.cs" />
     <Compile Include="Controllers\ConsulteeController.cs" />
@@ -138,20 +139,18 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\ChangePasswordModel.cs" />
-    <Compile Include="Models\ConsultantProfile.cs" />
-    <Compile Include="Models\OrcaDB\OrcaPassword.cs" />
+    <Compile Include="Models\PasswordChange.cs" />
     <Compile Include="Models\UserProfile.cs" />
-    <Compile Include="Models\LoginModel.cs" />
+    <Compile Include="Models\OrcaDB\OrcaPassword.cs" />
+    <Compile Include="Models\Login.cs" />
     <Compile Include="Models\OrcaDB\ConsultantExpertise.cs" />
     <Compile Include="Models\OrcaDB\ExpertConsultant.cs" />
     <Compile Include="Models\OrcaDB\OrcaUser.cs" />
     <Compile Include="Models\OrcaDB\Ticket.cs" />
     <Compile Include="Models\OrcaDB\TicketEntry.cs" />
     <Compile Include="Models\OrcaDB\TicketExpert.cs" />
-    <Compile Include="Models\RegistrationModel.cs" />
-    <Compile Include="OrcaHelper\PasswordChanger.cs" />
-    <Compile Include="OrcaHelper\UserProfileInfoChanger.cs" />
+    <Compile Include="Models\Registration.cs" />
+    <Compile Include="OrcaHelper\OrcaHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -201,15 +200,13 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\About.cshtml" />
-    <Content Include="Views\Home\_HeaderNavBar.cshtml" />
+    <Content Include="Views\Shared\_HeaderNavBar.cshtml" />
     <Content Include="Views\Home\Register.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
-    <Content Include="Views\Shared\_HeaderNavBar.cshtml" />
     <Content Include="Views\Shared\Index.cshtml" />
     <Content Include="Views\Consultee\Consultations.cshtml" />
     <Content Include="Views\Shared\ChangePassword.cshtml" />
     <Content Include="Views\Consultee\ExpertRequest.cshtml" />
-    <Content Include="Views\Shared\_ConsultantProfile.cshtml" />
     <Content Include="Views\OrcaUsers\Create.cshtml" />
     <Content Include="Views\OrcaUsers\Delete.cshtml" />
     <Content Include="Views\OrcaUsers\Details.cshtml" />
@@ -225,16 +222,14 @@
     <Content Include="Views\ConsultantExpertises\Details.cshtml" />
     <Content Include="Views\ConsultantExpertises\Edit.cshtml" />
     <Content Include="Views\ConsultantExpertises\Index.cshtml" />
-    <Content Include="Views\Consultant\CPEditView.cshtml" />
-    <Content Include="Views\Consultant\CPDetailsView.cshtml" />
-    <Content Include="Views\Consultant\CPCreateView.cshtml" />
-    <Content Include="Views\Consultant\CPListView.cshtml" />
-    <Content Include="Views\Consultant\UserProfile.cshtml" />
-    <Content Include="Views\Consultee\UserProfile.cshtml" />
+    <Content Include="Views\Shared\UserProfile.cshtml" />
+    <Content Include="Views\Consultant\_HeaderNavBar.cshtml" />
+    <Content Include="Views\ConsultantAdmin\_HeaderNavBar.cshtml" />
+    <Content Include="Views\Consultee\_HeaderNavBar.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\ConsultantAdmin\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

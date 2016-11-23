@@ -1,7 +1,6 @@
 ﻿using ORCA.DAL;
 using ORCA.Models;
 using ORCA.Models.OrcaDB;
-using ORCA.OrcaHelper;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -47,9 +46,8 @@ namespace ORCA.Controllers
             }
 
             // pre-populate the profile info for the vew, THIS ASSUMES THE SESSION INFO IS SAVED
-            // must do a stupid work-around because populating the userProfile will fill in the editable fields but will eliminate any fields that are not editable, i.e. OrcaUserID and OrcaUserName
             UserProfile userProfile = new UserProfile((int)Session["OrcaUserID"]);
-            
+
             return View(userProfile);
         }
 
@@ -64,22 +62,10 @@ namespace ORCA.Controllers
                 ViewBag.Message += (" " + TempData["Message"].ToString());
             }
 
-
-            //// the next two lines are necissary as the values get nullified when passing between UserProfile()->View(userProfile) and UserProfile(UserProfile)
-            //// it's not the prefered method but the work-around is necissary at the moment
-
-            //profileInfo.OrcaUserID = (int)Convert.ToInt32(Session["OrcaUserID"].ToString());
-            //profileInfo.OrcaUserName = (string)Session["OrcaUserName"];
-
-            ////DOES NOT WORKprofileInfo = new UserProfile((int)Convert.ToInt32(Session["OrcaUserID"].ToString()));
-            //// THIS IS BUGGERED UP... Im not even sure exactly what was causing the problem but now it is working "properly" i guess so I'll leve it commented
-
-            //////// FINAL NOTE it seems that the view has to have @Html.HiddenFor(model => model.OrcaUserID) if it isn't being altered by the view
-
             if (ModelState.IsValid)
             {
                 // save the profile changes
-                if (UserProfileInfoChanger.ChangeUserProfileInfo(profileInfo) != null)
+                if (OrcaHelper.ChangeUserProfileInfo(profileInfo) != null)
                 {
                     // update the session variables that may have changed (really need to get the time to find out how to do this correctly but this clunky work-around will have to suffice for now)
                     //Session["OrcaUserID"] = userQuery.OrcaUserID;
@@ -89,6 +75,9 @@ namespace ORCA.Controllers
                     //Session["UserType"] = userQuery.UserType;
 
                     ViewBag.Message += " Changes have been saved.";
+                    TempData["Message"] = " Changes have been saved.";
+
+                    return RedirectToAction("UserProfile");
                 }
                 else
                 {
@@ -99,7 +88,7 @@ namespace ORCA.Controllers
             {
                 ViewBag.Message += " Unable to save changes. Please review your changes.";
             }
-            
+
             return View(profileInfo);
         }
 
@@ -119,7 +108,7 @@ namespace ORCA.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult ChangePassword([Bind(Include = "CurrentPassword,Password,ConfirmPassword")] ChangePasswordModel passwordChange)
+        public ActionResult ChangePassword([Bind(Include = "CurrentPassword,Password,ConfirmPassword")] PasswordChange passwordChange)
         {
             // convnention for making it easier to pass messages between controllers
             if (TempData["Message"] != null)
@@ -132,7 +121,7 @@ namespace ORCA.Controllers
             if (ModelState.IsValid)
             {
                 // change password for logged in user and get the success status
-                PasswordChangeStatus status = PasswordChanger.ChangePassword(Convert.ToInt32(Session["OrcaUserID"].ToString()), passwordChange);
+                PasswordChangeStatus status = OrcaHelper.ChangePassword(Convert.ToInt32(Session["OrcaUserID"].ToString()), passwordChange);
 
                 switch (status)
                 {
@@ -207,62 +196,6 @@ namespace ORCA.Controllers
             
             return View();
         }
-
-        //public ActionResult UserProfile()
-        //{
-        //    // pre-populate the profile info for the vew, THIS ASSUMES THE SESSION INFO IS SAVED
-        //    UserProfile userProfile = new UserProfile((int)Session["OrcaUserID"]);
-        //    //UserProfile userProfile = new UserProfile(Convert.ToInt32(Session["OrcaUserID"].ToString()));
-
-        //    //ViewBag.Message = "Session test " + (int)Convert.ToInt32(Session["OrcaUserID"].ToString());
-        //    //ViewBag.Message = "Session test " + (int)Session["OrcaUserID"];
-        //    //ViewBag.Message = userProfile.OrcaUserName + " OrcaUserName " + userProfile.OrcaUserID + " OrcaUserID " + userProfile.FirstName + " FirstName " + userProfile.LastName + " LastName " + userProfile.Email + " Email " + userProfile.PhoneNumber + "PhoneNumber";
-        //    ViewBag.Message = "OrcaUserID = " + userProfile.OrcaUserID;
-
-        //    return View(userProfile);
-        //}
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        ////public ActionResult UserProfile([Bind(Exclude = "OrcaUserID,OrcaUserName", Include = "FirstName,LastName,Email,PhoneNumber")] UserProfile profileInfo)
-        //public ActionResult UserProfile([Bind(Include = "OrcaUserID,OrcaUserName,FirstName,LastName,Email,PhoneNumber")] UserProfile profileInfo)
-        //{
-        //    //int id = profileInfo.OrcaUserID;
-        //    //ViewBag.Message = profileInfo.OrcaUserName + " = OrcaUserName " + profileInfo.OrcaUserID + " = OrcaUserID " + profileInfo.FirstName + " = FirstName " + profileInfo.LastName + " = LastName " + profileInfo.Email + " = Email " + profileInfo.PhoneNumber + " = PhoneNumber";
-        //    OrcaContext db = new OrcaContext();
-
-        //    if (ModelState.IsValid)
-        //    {
-        //        //int test = Convert.ToInt32(Session["OrcaUserID"].ToString());
-        //        //int id2 = profileInfo.OrcaUserID;
-        //        //int test = (int)Session["OrcaUserID"];
-
-        //        OrcaUser userQuery = (from user in db.OrcaUsers
-        //                              where user.OrcaUserID == test //Convert.ToInt32(Session["OrcaUserID"].ToString())//1// profileInfo.OrcaUserID
-        //                              select user).First();
-
-        //        userQuery.OrcaUserName = profileInfo.OrcaUserName;
-        //        userQuery.FirstName = profileInfo.FirstName;
-        //        userQuery.LastName = profileInfo.LastName;
-        //        userQuery.Email = profileInfo.Email;
-        //        userQuery.PhoneNumber = profileInfo.PhoneNumber;
-
-        //        //db.Entry(userQuery).State = EntityState.Modified;
-        //        //db.SaveChanges();
-
-        //        //ViewBag.Message = "Changes have been saved. " + profileInfo.OrcaUserName + " OrcaUserName " + profileInfo.OrcaUserID + " OrcaUserID " + profileInfo.FirstName + " FirstName " + profileInfo.LastName + " LastName " + profileInfo.Email + " Email " + profileInfo.PhoneNumber + "PhoneNumber";
-
-        //        //ViewBag.Message = "Changes have been saved." + " id = " + id + " id2 = " + id2;
-        //        // not sure exactly why, but the profileInfo loses the OrcaUserName and OrcaUserID, so reinitialize it with the proper info from the database
-        //        profileInfo = new UserProfile(userQuery.OrcaUserID);
-
-        //        return View(profileInfo);
-        //    }
-        //    else
-        //    {
-        //        ViewBag.Message = "Unable to save changes.";
-        //    }
-
-        //    return View(profileInfo);
-        //}
+        
     }
 }

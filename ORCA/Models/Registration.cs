@@ -6,7 +6,7 @@ using System.Web;
 
 namespace ORCA.Models
 {
-    public class RegistrationModel
+    public class Registration
     {
         [Required, Display(Name = "User Name")]
         public string OrcaUserName { get; set; }

@@ -9,7 +9,7 @@ using System.Web.Mvc;
 
 namespace ORCA.Controllers
 {
-    public class ConsultantController : Controller
+    public class ConsultantAdminController : Controller
     {
         public ActionResult Index()
         {
@@ -35,7 +35,7 @@ namespace ORCA.Controllers
             return View();
         }
 
-        
+
 
         public ActionResult UserProfile()
         {
@@ -47,10 +47,10 @@ namespace ORCA.Controllers
 
             // pre-populate the profile info for the vew, THIS ASSUMES THE SESSION INFO IS SAVED
             UserProfile userProfile = new UserProfile((int)Session["OrcaUserID"]);
-            
+
             return View(userProfile);
         }
-        
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult UserProfile([Bind(Include = "OrcaUserID,OrcaUserName,FirstName,LastName,Email,PhoneNumber,IsActive,TitleDegree,FieldToAdd,KeyWordList")] UserProfile profileInfo)
@@ -60,7 +60,7 @@ namespace ORCA.Controllers
             {
                 ViewBag.Message += (" " + TempData["Message"].ToString());
             }
-            
+
             if (ModelState.IsValid)
             {
                 // save the profile changes
@@ -87,7 +87,7 @@ namespace ORCA.Controllers
             {
                 ViewBag.Message += " Unable to save changes. Please review your changes.";
             }
-            
+
             return View(profileInfo);
         }
 
@@ -103,7 +103,7 @@ namespace ORCA.Controllers
 
             return RedirectToAction("UserProfile");
         }
-        
+
 
 
         public ActionResult ChangePassword()
@@ -162,7 +162,6 @@ namespace ORCA.Controllers
             TempData["Message"] = "You have successfully Logged Out.";
             return RedirectToAction("Index", "Home");
         }
-
 
     }
 }
