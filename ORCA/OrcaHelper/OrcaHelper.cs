@@ -11,7 +11,10 @@ namespace ORCA
 {
     public enum PasswordChangeStatus { SUCCESS, INVALID_PASSWORD, INVALID_USER }
 
-    
+    public enum SortBy { OrcaUserID, OrcaUserName, FirstName, LastName, Email, PhoneNumber, IsAccountDeactivated, UserType, ExpertStatus, IsActive, TitleDegree, KeyWordList, ConsultantExpertiseID, FieldOfExpertise, TicketID, DTStamp, DescriptionName, IsTicketOpen, TicketEntryID, EntryDTStamp, EntryText, TicketExpertID, ExpertForThisTicket, IsActiveOnTicket }
+
+    public enum SortMethod { Ascending, Descending }
+
     public class OrcaHelper
     {
         

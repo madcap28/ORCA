@@ -16,10 +16,10 @@ namespace ORCA.Models.OrcaDB
         public int OrcaUserID { get; set; }// This is the OrcaUserID of the creator of this Ticket. OrcaUserID = OrcaUser.OrcaUserID
 
         [Required]
-        public DateTime DtStamp { get; set; }// This is the Date/Time Stamp when the Ticket is created
+        public DateTime DTStamp { get; set; }// This is the Date/Time Stamp when the Ticket is created
 
         [Required]
-        public string DiscriptionName { get; set; }// This is a short description of what the OrcaUser is seeking advice about on this ticket
+        public string DescriptionName { get; set; }// This is a short description of what the OrcaUser is seeking advice about on this ticket
 
         [Required]
         public bool IsTicketOpen { get; set; }// Indicates if Ticket is open or closed

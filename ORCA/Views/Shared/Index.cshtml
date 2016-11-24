@@ -1,61 +1,99 @@
 ﻿
+@model ORCA.Models.ActiveExperts
+
+
 @{
     ViewBag.Title = "Home";
 }
 
-<h2>Marshall ORCA Home</h2>
+<h1>Marshall Online Reporting & Consulting Application</h1>
 
 <h3>Welcome @Session["OrcaUserName"]</h3>
 
-<h4>@ViewBag.Message</h4>
+@*<h4>@ViewBag.Message</h4>
+@using ORCA
+<h1> @SortBy.FieldOfExpertise.ToString() </h1>*@
 
+@*ViewBag.FieldSortParam
+ViewBag.TitleSortParam
+ViewBag.FirstNameSortParam
+ViewBag.LastNameSortParam*@
 
+@*@using ORCA.Models
 
-
-@using ORCA.Models
-
-@*Session["OrcaUserID"] = newOrcaUser.OrcaUserID;
+    Session["OrcaUserID"] = newOrcaUser.OrcaUserID;
     Session["OrcaUserName"] = newOrcaUser.OrcaUserName;
     Session["FirstName"] = newOrcaUser.FirstName;
     Session["LastName"] = newOrcaUser.LastName;
-    Session["UserType"] = newOrcaUser.UserType;*@
+    Session["UserType"] = newOrcaUser.UserType;
 
 
 <h6>@Session["OrcaUserID"]</h6>
 <h6>@Session["OrcaUserName"]</h6>
 <h6>@Session["FirstName"]</h6>
 <h6>@Session["LastName"]</h6>
-<h6>@Session["UserType"]</h6>
+<h6>@Session["UserType"]</h6>*@
 
 
 
 
+<h2>Meet the Marshall Expert Consultants</h2>
+<table class="table">
+    <tr>
+        @*<th>
+            @Html.ActionLink("OrcaUserID", "Index", new { id = SortBy.OrcaUserID })
+            @Html.DisplayNameFor(model => model.Experts[0].OrcaUserID)
+        </th>
+        <th>
+            @Html.ActionLink("OrcaUserName", "Index", new { id = SortBy.OrcaUserName })
+            @Html.DisplayNameFor(model => model.Experts[0].OrcaUserName)
+        </th>*@
 
+        <th>
+            @Html.ActionLink("Field of Expertise", "Index", new { sortOrder = ViewBag.FieldSortParam })
+            @*@Html.ActionLink("Field of Expertise", "Index", new { id = SortBy.FieldOfExpertise })*@
+            @*@Html.DisplayNameFor(model => model.Experts[0].FieldOfExpertise)*@
+        </th>
+        <th>
+            @Html.ActionLink("Title/Degree", "Index", new { sortOrder = ViewBag.TitleSortParam })
+            @*@Html.ActionLink("Title/Degree", "Index", new { id = SortBy.TitleDegree })*@
+            @*@Html.DisplayNameFor(model => model.Experts[0].TitleDegree)*@
+        </th>
+        <th>
+            @Html.ActionLink("First Name", "Index", new { sortOrder = ViewBag.FirstNameSortParam })
+            @*@Html.ActionLink("First Name", "Index", new { id = SortBy.FirstName })*@
+            @*@Html.DisplayNameFor(model => model.Experts[0].FirstName)*@
+        </th>
+        <th>
+            @Html.ActionLink("Last Name", "Index", new { sortOrder = ViewBag.LastNameSortParam })
+            @*@Html.ActionLink("Last Name", "Index", new { id = SortBy.LastName })*@
+            @*@Html.DisplayNameFor(model => model.Experts[0].LastName)*@
+        </th>
+    </tr>
 
-@*<div class="jumbotron">
-        <h1>ASP.NET</h1>
-        <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-        <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-    </div>
+    @foreach (var item in Model.Experts)
+    {
+        <tr>
+            @*<td>
+                @Html.DisplayFor(modelItem => item.OrcaUserID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrcaUserName)
+            </td>*@
 
-    <div class="row">
-        <div class="col-md-4">
-            <h2>Getting started</h2>
-            <p>
-                ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-                enables a clean separation of concerns and gives you full control over markup
-                for enjoyable, agile development.
-            </p>
-            <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-        </div>
-        <div class="col-md-4">
-            <h2>Get more libraries</h2>
-            <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-            <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-        </div>
-        <div class="col-md-4">
-            <h2>Web Hosting</h2>
-            <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-            <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-        </div>
-    </div>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.FieldOfExpertise)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TitleDegree)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+        </tr>
+    }
+
+</table>

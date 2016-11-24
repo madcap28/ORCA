@@ -139,6 +139,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\ActiveExpert.cs" />
+    <Compile Include="Models\ActiveExperts.cs" />
+    <Compile Include="Models\Consultations.cs" />
     <Compile Include="Models\PasswordChange.cs" />
     <Compile Include="Models\UserProfile.cs" />
     <Compile Include="Models\OrcaDB\OrcaPassword.cs" />
@@ -203,7 +206,6 @@
     <Content Include="Views\Shared\_HeaderNavBar.cshtml" />
     <Content Include="Views\Home\Register.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
-    <Content Include="Views\Shared\Index.cshtml" />
     <Content Include="Views\Consultee\Consultations.cshtml" />
     <Content Include="Views\Shared\ChangePassword.cshtml" />
     <Content Include="Views\Consultee\ExpertRequest.cshtml" />
@@ -226,7 +228,7 @@
     <Content Include="Views\Consultant\_HeaderNavBar.cshtml" />
     <Content Include="Views\ConsultantAdmin\_HeaderNavBar.cshtml" />
     <Content Include="Views\Consultee\_HeaderNavBar.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Shared\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

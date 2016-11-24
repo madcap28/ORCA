@@ -75,7 +75,7 @@ namespace ORCA.Models
                 this.Email = userInfo.Email;
                 this.PhoneNumber = userInfo.PhoneNumber;
 
-                
+                // check to see if user is a consultant expert
                 if (userInfo.UserType == OrcaUserType.Consultant || userInfo.UserType == OrcaUserType.ConsultantAdmin)
                 {
                     ExpertConsultant consultantInfo = db.ExpertConsultants.Find(OrcaUserID);
@@ -98,7 +98,8 @@ namespace ORCA.Models
 
                         this.FieldsOfExpertise = (from expertise in db.ConsultantExpertises
                                                   where expertise.OrcaUserID == OrcaUserID
-                                                  select expertise).ToList();
+                                                  select expertise).OrderBy(x => x.FieldOfExpertise).ToList();
+                        
                         
                         this.KeyWordList = consultantInfo.KeyWordList;
                     }
