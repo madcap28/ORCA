@@ -6,81 +6,45 @@
     ViewBag.Title = "Home";
 }
 
+@*
+    ViewBag.FieldSortParam
+    ViewBag.TitleSortParam
+    ViewBag.FirstNameSortParam
+    ViewBag.LastNameSortParam
+*@
+
+@*
+    <h6>@Session["OrcaUserID"]</h6>
+    <h6>@Session["OrcaUserName"]</h6>
+    <h6>@Session["FirstName"]</h6>
+    <h6>@Session["LastName"]</h6>
+    <h6>@Session["UserType"]</h6>
+*@
+
 <h1>Marshall Online Reporting & Consulting Application</h1>
 
 <h3>Welcome @Session["OrcaUserName"]</h3>
 
-@*<h4>@ViewBag.Message</h4>
-@using ORCA
-<h1> @SortBy.FieldOfExpertise.ToString() </h1>*@
-
-@*ViewBag.FieldSortParam
-ViewBag.TitleSortParam
-ViewBag.FirstNameSortParam
-ViewBag.LastNameSortParam*@
-
-@*@using ORCA.Models
-
-    Session["OrcaUserID"] = newOrcaUser.OrcaUserID;
-    Session["OrcaUserName"] = newOrcaUser.OrcaUserName;
-    Session["FirstName"] = newOrcaUser.FirstName;
-    Session["LastName"] = newOrcaUser.LastName;
-    Session["UserType"] = newOrcaUser.UserType;
-
-
-<h6>@Session["OrcaUserID"]</h6>
-<h6>@Session["OrcaUserName"]</h6>
-<h6>@Session["FirstName"]</h6>
-<h6>@Session["LastName"]</h6>
-<h6>@Session["UserType"]</h6>*@
-
-
-
-
 <h2>Meet the Marshall Expert Consultants</h2>
 <table class="table">
     <tr>
-        @*<th>
-            @Html.ActionLink("OrcaUserID", "Index", new { id = SortBy.OrcaUserID })
-            @Html.DisplayNameFor(model => model.Experts[0].OrcaUserID)
-        </th>
-        <th>
-            @Html.ActionLink("OrcaUserName", "Index", new { id = SortBy.OrcaUserName })
-            @Html.DisplayNameFor(model => model.Experts[0].OrcaUserName)
-        </th>*@
-
         <th>
             @Html.ActionLink("Field of Expertise", "Index", new { sortOrder = ViewBag.FieldSortParam })
-            @*@Html.ActionLink("Field of Expertise", "Index", new { id = SortBy.FieldOfExpertise })*@
-            @*@Html.DisplayNameFor(model => model.Experts[0].FieldOfExpertise)*@
         </th>
         <th>
             @Html.ActionLink("Title/Degree", "Index", new { sortOrder = ViewBag.TitleSortParam })
-            @*@Html.ActionLink("Title/Degree", "Index", new { id = SortBy.TitleDegree })*@
-            @*@Html.DisplayNameFor(model => model.Experts[0].TitleDegree)*@
         </th>
         <th>
             @Html.ActionLink("First Name", "Index", new { sortOrder = ViewBag.FirstNameSortParam })
-            @*@Html.ActionLink("First Name", "Index", new { id = SortBy.FirstName })*@
-            @*@Html.DisplayNameFor(model => model.Experts[0].FirstName)*@
         </th>
         <th>
             @Html.ActionLink("Last Name", "Index", new { sortOrder = ViewBag.LastNameSortParam })
-            @*@Html.ActionLink("Last Name", "Index", new { id = SortBy.LastName })*@
-            @*@Html.DisplayNameFor(model => model.Experts[0].LastName)*@
         </th>
     </tr>
 
     @foreach (var item in Model.Experts)
     {
         <tr>
-            @*<td>
-                @Html.DisplayFor(modelItem => item.OrcaUserID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OrcaUserName)
-            </td>*@
-
             <td>
                 @Html.DisplayFor(modelItem => item.FieldOfExpertise)
             </td>

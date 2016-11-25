@@ -6,13 +6,14 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 
 namespace ORCA.Controllers
 {
     public class ConsulteeController : Controller
     {
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder)
         {
             // convnention for making it easier to pass messages between controllers
             if (TempData["Message"] != null)
@@ -20,7 +21,45 @@ namespace ORCA.Controllers
                 ViewBag.Message += (" " + TempData["Message"].ToString());
             }
 
-            return View();
+            ViewBag.FieldSortParam = String.IsNullOrEmpty(sortOrder) ? "FieldOfExpertise_desc" : "";
+            ViewBag.TitleSortParam = sortOrder == SortBy.TitleDegree.ToString() ? "TitleDegree_desc" : SortBy.TitleDegree.ToString();
+            ViewBag.FirstNameSortParam = sortOrder == SortBy.FirstName.ToString() ? "FirstName_desc" : SortBy.FirstName.ToString();
+            ViewBag.LastNameSortParam = sortOrder == SortBy.LastName.ToString() ? "LastName_desc" : SortBy.LastName.ToString();
+
+            ActiveExperts activeExperts = new ActiveExperts();
+
+            switch (sortOrder)
+            {
+                //case "FieldOfExpertise":
+                //    activeExperts.SortListBy(SortBy.FieldOfExpertise, SortMethod.Ascending);
+                //    break;
+                case "TitleDegree":
+                    activeExperts.SortListBy(SortBy.TitleDegree, SortMethod.Ascending);
+                    break;
+                case "FirstName":
+                    activeExperts.SortListBy(SortBy.FirstName, SortMethod.Ascending);
+                    break;
+                case "LastName":
+                    activeExperts.SortListBy(SortBy.LastName, SortMethod.Ascending);
+                    break;
+                case "FieldOfExpertise_desc":
+                    activeExperts.SortListBy(SortBy.FieldOfExpertise, SortMethod.Descending);
+                    break;
+                case "TitleDegree_desc":
+                    activeExperts.SortListBy(SortBy.TitleDegree, SortMethod.Descending);
+                    break;
+                case "FirstName_desc":
+                    activeExperts.SortListBy(SortBy.FirstName, SortMethod.Descending);
+                    break;
+                case "LastName_desc":
+                    activeExperts.SortListBy(SortBy.LastName, SortMethod.Descending);
+                    break;
+                default: // case "FieldOfExpertise":
+                    activeExperts.SortListBy(SortBy.FieldOfExpertise, SortMethod.Ascending);
+                    break;
+            }
+
+            return View(activeExperts);
         }
 
         public ActionResult About()
@@ -90,6 +129,104 @@ namespace ORCA.Controllers
             }
 
             return View(profileInfo);
+        }
+
+        
+        public ActionResult Consultations(string sortOrder, string selectionFilter)
+        {
+            /*
+             * 
+             * NOTE: There is a bug in that when repeatedly clicking on the filter buttons
+             *          the sort order will be toggled between ascending and descending. I'm
+             *          not going to worry about it until I get finished.
+             * 
+             */
+
+            // convnention for making it easier to pass messages between controllers
+            if (TempData["Message"] != null)
+            {
+                ViewBag.Message += (" " + TempData["Message"].ToString());
+            }
+
+            string rcvSortOrder, rcvOldSortOrder, sndSortOrder, sndOldSortOrder;
+
+            // catch selectionFilter to pass between View and Controller
+            if (TempData["SelectionFilter"] != null) { selectionFilter = TempData["SelectionFilter"].ToString(); }
+            selectionFilter = String.IsNullOrEmpty(selectionFilter) ? ConsultationTicketSelection.All.ToString() : selectionFilter;// check for first time and set selectionFilter
+
+            // catch sortOrder, get it through method arguments, if not get it through TempData, if stil not then set default
+            rcvSortOrder = String.IsNullOrEmpty(sortOrder) ? "" : sortOrder;
+            if (String.IsNullOrEmpty(rcvSortOrder) && TempData["SortOrder"] != null) { rcvSortOrder = TempData["SortOrder"].ToString(); }
+            rcvSortOrder = String.IsNullOrEmpty(rcvSortOrder) ? SortBy.TicketID.ToString() : rcvSortOrder;
+
+            if (TempData["OldSortOrder"] != null) { rcvOldSortOrder = TempData["OldSortOrder"].ToString(); }
+            else { rcvOldSortOrder = SortBy.TicketID.ToString(); }// check for first time and set oldSortOrder
+
+            
+            // convert the string representations back to the enum representation
+            ConsultationTicketSelection selectFilt = (ConsultationTicketSelection)Enum.Parse(typeof(ConsultationTicketSelection), selectionFilter, true);
+
+            UserConsultations userConsultations;
+
+            int userId = Convert.ToInt32(Session["OrcaUserID"].ToString());
+
+            sndSortOrder = rcvSortOrder;
+
+            switch (rcvSortOrder)
+            {
+                case "TicketID":
+                    if (rcvSortOrder == rcvOldSortOrder) { sndSortOrder = "TicketID_desc"; }
+                    userConsultations = new UserConsultations(userId, selectFilt).SortListBy(SortBy.TicketID, SortMethod.Ascending);
+                    break;
+                case "TicketID_desc":
+                    if (rcvSortOrder == rcvOldSortOrder) { sndSortOrder = "TicketID"; }
+                    userConsultations = new UserConsultations(userId, selectFilt).SortListBy(SortBy.TicketID, SortMethod.Descending);
+                    break;
+                case "DescriptionName":
+                    if (rcvSortOrder == rcvOldSortOrder) { sndSortOrder = "DescriptionName_desc"; }
+                    userConsultations = new UserConsultations(userId, selectFilt).SortListBy(SortBy.DescriptionName, SortMethod.Ascending);
+                    break;
+                case "DescriptionName_desc":
+                    if (rcvSortOrder == rcvOldSortOrder) { sndSortOrder = "DescriptionName"; }
+                    userConsultations = new UserConsultations(userId, selectFilt).SortListBy(SortBy.DescriptionName, SortMethod.Descending);
+                    break;
+                case "DTStamp":
+                    if (rcvSortOrder == rcvOldSortOrder) { sndSortOrder = "DTStamp_desc"; }
+                    userConsultations = new UserConsultations(userId, selectFilt).SortListBy(SortBy.DTStamp, SortMethod.Ascending);
+                    break;
+                case "DTStamp_desc":
+                    if (rcvSortOrder == rcvOldSortOrder) { sndSortOrder = "DTStamp"; }
+                    userConsultations = new UserConsultations(userId, selectFilt).SortListBy(SortBy.DTStamp, SortMethod.Descending);
+                    break;
+                case "OrcaUserIDLastReplied":
+                    if (rcvSortOrder == rcvOldSortOrder) { sndSortOrder = "OrcaUserIDLastReplied_desc"; }
+                    userConsultations = new UserConsultations(userId, selectFilt).SortListBy(SortBy.OrcaUserIDLastReplied, SortMethod.Ascending);
+                    break;
+                case "OrcaUserIDLastReplied_desc":
+                    if (rcvSortOrder == rcvOldSortOrder) { sndSortOrder = "OrcaUserIDLastReplied"; }
+                    userConsultations = new UserConsultations(userId, selectFilt).SortListBy(SortBy.OrcaUserIDLastReplied, SortMethod.Descending);
+                    break;
+                case "IsTicketOpen":
+                    if (rcvSortOrder == rcvOldSortOrder) { sndSortOrder = "IsTicketOpen_desc"; }
+                    userConsultations = new UserConsultations(userId, selectFilt).SortListBy(SortBy.IsTicketOpen, SortMethod.Ascending);
+                    break;
+                case "IsTicketOpen_desc":
+                    if (rcvSortOrder == rcvOldSortOrder) { sndSortOrder = "IsTicketOpen"; }
+                    userConsultations = new UserConsultations(userId, selectFilt).SortListBy(SortBy.IsTicketOpen, SortMethod.Descending);
+                    break;
+                default:
+                    sndSortOrder = "TicketID";
+                    userConsultations = new UserConsultations(userId, selectFilt).SortListBy(SortBy.TicketID, SortMethod.Ascending);
+                    break;
+            }
+
+            sndOldSortOrder = rcvSortOrder;
+
+            ViewBag.SortOrder = sndSortOrder;
+            ViewBag.OldSortOrder = sndOldSortOrder;
+            ViewBag.SelectionFilter = selectionFilter;
+
+            return View(userConsultations);
         }
 
 

@@ -10,9 +10,6 @@ namespace ORCA.Models
 {
     public class ActiveExperts
     {
-        public SortBy CurrentSortBy { get; set; }
-        public bool IsAscendingSort { get; set; }
-
         [Display(Name = "Search Experts")]
         public string SearchField { get; set; }
 
@@ -50,7 +47,6 @@ namespace ORCA.Models
             // NOTE: Need to figure out how to do the above section properly. I believe it can and should be done with a join but I don't know enough about it and this will suffice for now.
 
             Experts = Experts.OrderBy(x => x.FieldOfExpertise).ToList();
-            
         }
 
         public ActiveExperts SortListBy(SortBy sortBy, SortMethod sortMethod)

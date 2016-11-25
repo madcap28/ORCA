@@ -134,17 +134,15 @@
                     {
                         foreach (var item in Model.FieldsOfExpertise)
                         {
+                            @Html.HiddenFor(modelItem => item.ConsultantExpertiseID)
+                            @Html.HiddenFor(modelItem => item.OrcaUserID)
+                            @Html.HiddenFor(modelItem => item.FieldOfExpertise)
+                            @Html.HiddenFor(modelItem => item.ExpertConsultant)
+                            @Html.HiddenFor(modelItem => item.OrcaUser)
+
                             <tr>
                                 <td>
-
-                                    @Html.HiddenFor(model => item.ConsultantExpertiseID)
-                                    @Html.HiddenFor(model => item.OrcaUserID)
-                                    @Html.HiddenFor(model => item.FieldOfExpertise)
-                                    @Html.HiddenFor(model => item.ExpertConsultant)
-                                    @Html.HiddenFor(model => item.OrcaUser)
-
-                                    @Html.DisplayFor(model => item.FieldOfExpertise)
-
+                                    @Html.DisplayFor(modelItem => item.FieldOfExpertise)
                                 </td>
                                 <td>
                                     @Html.ActionLink("Delete", "DeleteExpertise", new { id = item.ConsultantExpertiseID })

@@ -1,0 +1,155 @@
+﻿
+
+@model ORCA.Models.UserConsultations
+
+@using ORCA.Models
+
+@{
+    ViewBag.Title = "Consultations";
+}
+<h1>Marshall Online Reporting & Consulting Application</h1>
+<h2>Your Consultations</h2>
+
+<h4>@ViewBag.Message</h4>
+
+
+@{
+    string rcvSortOrder = ViewBag.SortOrder;
+    string rcvOldSortOrder = ViewBag.OldSortOrder;
+    string sndSortOrder, sndOldSortOrder;
+
+    string sndTicketIDSortOrder = "TicketID";
+    string sndDescriptionNameSortOrder = "DescriptionName";
+    string sndDTStampSortOrder = "DTStamp";
+    string sndOrcaUserIDLastRepliedSortOrder = "OrcaUserIDLastReplied";
+    string sndIsTicketOpenSortOrder = "IsTicketOpen";
+
+    sndSortOrder = rcvSortOrder;
+
+
+    switch (rcvSortOrder)
+    {
+        case "TicketID":
+            if (rcvSortOrder == rcvOldSortOrder) { sndSortOrder = sndTicketIDSortOrder = "TicketID_desc"; }
+            break;
+        case "TicketID_desc":
+            if (rcvSortOrder == rcvOldSortOrder) { sndSortOrder = sndTicketIDSortOrder = "TicketID"; }
+            break;
+        case "DescriptionName":
+            if (rcvSortOrder == rcvOldSortOrder) { sndSortOrder = sndDescriptionNameSortOrder = "DescriptionName_desc"; }
+            break;
+        case "DescriptionName_desc":
+            if (rcvSortOrder == rcvOldSortOrder) { sndSortOrder = sndDescriptionNameSortOrder = "DescriptionName"; }
+            break;
+        case "DTStamp":
+            if (rcvSortOrder == rcvOldSortOrder) { sndSortOrder = sndDTStampSortOrder = "DTStamp_desc"; }
+            break;
+        case "DTStamp_desc":
+            if (rcvSortOrder == rcvOldSortOrder) { sndSortOrder = sndDTStampSortOrder = "DTStamp"; }
+            break;
+        case "OrcaUserIDLastReplied":
+            if (rcvSortOrder == rcvOldSortOrder) { sndSortOrder = sndOrcaUserIDLastRepliedSortOrder = "OrcaUserIDLastReplied_desc"; }
+            break;
+        case "OrcaUserIDLastReplied_desc":
+            if (rcvSortOrder == rcvOldSortOrder) { sndSortOrder = sndOrcaUserIDLastRepliedSortOrder = "OrcaUserIDLastReplied"; }
+            break;
+        case "IsTicketOpen":
+            if (rcvSortOrder == rcvOldSortOrder) { sndSortOrder = sndIsTicketOpenSortOrder = "IsTicketOpen_desc"; }
+            break;
+        case "IsTicketOpen_desc":
+            if (rcvSortOrder == rcvOldSortOrder) { sndSortOrder = sndIsTicketOpenSortOrder = "IsTicketOpen"; }
+            break;
+        default:
+            sndSortOrder = "TicketID";
+            break;
+    }
+
+    sndOldSortOrder = rcvSortOrder;
+
+    TempData["SortOrder"] = sndSortOrder;
+    TempData["OldSortOrder"] = sndOldSortOrder;
+
+}
+
+
+
+
+<div>
+    @Html.ActionLink("Home", "Index")
+</div>
+
+<hr />
+@using (Html.BeginForm())
+{
+
+    <p>
+        <h3>Filter Consultations</h3>
+        <div>
+            <input type="button" value="All" class="btn btn-default" onclick="location.href='@Url.Action("Consultations", new { sortOrder = ViewBag.SortOrder, selectionFilter = ConsultationTicketSelection.All.ToString() })'" />
+
+            <input type="button" value="Open" class="btn btn-default" onclick="location.href='@Url.Action("Consultations", new { sortOrder = ViewBag.SortOrder, selectionFilter = ConsultationTicketSelection.Open.ToString() })'" />
+
+            <input type="button" value="Closed" class="btn btn-default" onclick="location.href='@Url.Action("Consultations", new { sortOrder = ViewBag.SortOrder, selectionFilter = ConsultationTicketSelection.Closed.ToString() })'" />
+
+            <input type="button" value="New Reply" class="btn btn-default" onclick="location.href='@Url.Action("Consultations", new { sortOrder = ViewBag.SortOrder, selectionFilter = ConsultationTicketSelection.NewReply.ToString() })'" />
+        </div>
+    </p>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.ActionLink("Ticket Number", "Consultations", new { sortOrder = sndTicketIDSortOrder , selectionFilter = ViewBag.SelectionFilter })
+        </th>
+        <th>
+            @Html.ActionLink("Description", "Consultations", new { sortOrder = sndDescriptionNameSortOrder, selectionFilter = ViewBag.SelectionFilter })
+        </th>
+        <th>
+            @Html.ActionLink("Date Created", "Consultations", new { sortOrder = sndDTStampSortOrder, selectionFilter = ViewBag.SelectionFilter })
+        </th>
+        <th>
+            @Html.ActionLink("Last Replied", "Consultations", new { sortOrder = sndOrcaUserIDLastRepliedSortOrder, selectionFilter = ViewBag.SelectionFilter })
+        </th>
+        <th>
+            @Html.ActionLink("Status", "Consultations", new { sortOrder = sndIsTicketOpenSortOrder, selectionFilter = ViewBag.SelectionFilter })
+        </th>
+    </tr>
+
+    @Html.HiddenFor(model => Model.ConsultationTickets)
+
+    @foreach (var item in Model.ConsultationTickets)
+    {
+        @Html.HiddenFor(modelItem => item.OrcaUserIDLastReplied)
+
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TicketID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DescriptionName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DTStamp)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrcaUserNameLastReplied)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.ActionLink("Edit Consultation Ticket", "EditTicket", new { id = item.TicketID })
+            </td>
+        </tr>
+    }
+
+</table>
+
+<hr/>
+<p>
+    <input type="button" value="Request New Consultation" class="btn btn-default" onclick="location.href='@Url.Action("RequestConsultation")'" />
+</p>
+<hr/>
+<div>
+    @Html.ActionLink("Home", "Index")
+</div>
