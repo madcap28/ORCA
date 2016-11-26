@@ -33,7 +33,7 @@ namespace ORCA.Models.OrcaDB
         // NOTE:
         // NOTE: Must take care of proper phone number formatting later
         // NOTE:
-        [DataType(DataType.PhoneNumber)]
+        [DataType(DataType.PhoneNumber), Phone]
         public string PhoneNumber { get; set; }// Optional field
 
         [Required]

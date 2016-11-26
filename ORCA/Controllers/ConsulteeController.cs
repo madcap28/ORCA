@@ -8,12 +8,13 @@ using System.Linq;
 using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
+using System.Web.Routing;
 
 namespace ORCA.Controllers
 {
     public class ConsulteeController : Controller
     {
-        public ActionResult Index(string sortOrder)
+        public ActionResult Index([Bind]string sortOrder, [Bind]string searchString)
         {
             // convnention for making it easier to pass messages between controllers
             if (TempData["Message"] != null)
@@ -21,8 +22,21 @@ namespace ORCA.Controllers
                 ViewBag.Message += (" " + TempData["Message"].ToString());
             }
 
-            ViewBag.FieldSortParam = String.IsNullOrEmpty(sortOrder) ? "FieldOfExpertise_desc" : "";
-            ViewBag.TitleSortParam = sortOrder == SortBy.TitleDegree.ToString() ? "TitleDegree_desc" : SortBy.TitleDegree.ToString();
+            if (String.IsNullOrEmpty(sortOrder))
+                if (TempData["SortOrder"] != null)
+                    sortOrder = TempData["SortOrder"].ToString();
+            if (String.IsNullOrEmpty(searchString))
+                if (TempData["SearchString"] != null)
+                    searchString = TempData["SearchString"].ToString();
+
+
+
+
+            if (String.IsNullOrEmpty(sortOrder)) sortOrder = SortBy.FieldOfExpertise.ToString();
+
+            ViewBag.FieldOfExpertiseSortParam = sortOrder == SortBy.FieldOfExpertise.ToString() ? "FieldOfExpertise_desc" : SortBy.FieldOfExpertise.ToString();
+            ViewBag.TitleDegreeSortParam = sortOrder == SortBy.TitleDegree.ToString() ? "TitleDegree_desc" : SortBy.TitleDegree.ToString();
+            ViewBag.OrcaUserNameSortParam = sortOrder == SortBy.OrcaUserName.ToString() ? "OrcaUserName_desc" : SortBy.OrcaUserName.ToString();
             ViewBag.FirstNameSortParam = sortOrder == SortBy.FirstName.ToString() ? "FirstName_desc" : SortBy.FirstName.ToString();
             ViewBag.LastNameSortParam = sortOrder == SortBy.LastName.ToString() ? "LastName_desc" : SortBy.LastName.ToString();
 
@@ -30,34 +44,40 @@ namespace ORCA.Controllers
 
             switch (sortOrder)
             {
-                //case "FieldOfExpertise":
-                //    activeExperts.SortListBy(SortBy.FieldOfExpertise, SortMethod.Ascending);
-                //    break;
+                case "OrcaUserName":
+                    activeExperts.FilterList(searchString).SortListBy(SortBy.OrcaUserName, SortMethod.Ascending);
+                    break;
                 case "TitleDegree":
-                    activeExperts.SortListBy(SortBy.TitleDegree, SortMethod.Ascending);
+                    activeExperts.FilterList(searchString).SortListBy(SortBy.TitleDegree, SortMethod.Ascending);
                     break;
                 case "FirstName":
-                    activeExperts.SortListBy(SortBy.FirstName, SortMethod.Ascending);
+                    activeExperts.FilterList(searchString).SortListBy(SortBy.FirstName, SortMethod.Ascending);
                     break;
                 case "LastName":
-                    activeExperts.SortListBy(SortBy.LastName, SortMethod.Ascending);
+                    activeExperts.FilterList(searchString).SortListBy(SortBy.LastName, SortMethod.Ascending);
                     break;
                 case "FieldOfExpertise_desc":
-                    activeExperts.SortListBy(SortBy.FieldOfExpertise, SortMethod.Descending);
+                    activeExperts.FilterList(searchString).SortListBy(SortBy.FieldOfExpertise, SortMethod.Descending);
+                    break;
+                case "OrcaUserName_desc":
+                    activeExperts.FilterList(searchString).SortListBy(SortBy.OrcaUserName, SortMethod.Descending);
                     break;
                 case "TitleDegree_desc":
-                    activeExperts.SortListBy(SortBy.TitleDegree, SortMethod.Descending);
+                    activeExperts.FilterList(searchString).SortListBy(SortBy.TitleDegree, SortMethod.Descending);
                     break;
                 case "FirstName_desc":
-                    activeExperts.SortListBy(SortBy.FirstName, SortMethod.Descending);
+                    activeExperts.FilterList(searchString).SortListBy(SortBy.FirstName, SortMethod.Descending);
                     break;
                 case "LastName_desc":
-                    activeExperts.SortListBy(SortBy.LastName, SortMethod.Descending);
+                    activeExperts.FilterList(searchString).SortListBy(SortBy.LastName, SortMethod.Descending);
                     break;
                 default: // case "FieldOfExpertise":
-                    activeExperts.SortListBy(SortBy.FieldOfExpertise, SortMethod.Ascending);
+                    activeExperts.FilterList(searchString).SortListBy(SortBy.FieldOfExpertise, SortMethod.Ascending);
                     break;
             }
+
+            ViewBag.SortOrder = sortOrder;
+            //ViewBag.SearchString = searchString;
 
             return View(activeExperts);
         }
@@ -92,7 +112,7 @@ namespace ORCA.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //public ActionResult UserProfile([Bind(Exclude = "OrcaUserID,OrcaUserName", Include = "FirstName,LastName,Email,PhoneNumber")] UserProfile profileInfo)
+        
         public ActionResult UserProfile([Bind(Include = "OrcaUserID,OrcaUserName,FirstName,LastName,Email,PhoneNumber")] UserProfile profileInfo)
         {
             // convnention for making it easier to pass messages between controllers
@@ -160,7 +180,7 @@ namespace ORCA.Controllers
             rcvSortOrder = String.IsNullOrEmpty(rcvSortOrder) ? SortBy.TicketID.ToString() : rcvSortOrder;
 
             if (TempData["OldSortOrder"] != null) { rcvOldSortOrder = TempData["OldSortOrder"].ToString(); }
-            else { rcvOldSortOrder = SortBy.TicketID.ToString(); }// check for first time and set oldSortOrder
+            else { rcvOldSortOrder = SortBy.IsTicketOpen.ToString(); }// check for first time and set oldSortOrder
 
             
             // convert the string representations back to the enum representation
@@ -215,7 +235,7 @@ namespace ORCA.Controllers
                     userConsultations = new UserConsultations(userId, selectFilt).SortListBy(SortBy.IsTicketOpen, SortMethod.Descending);
                     break;
                 default:
-                    sndSortOrder = "TicketID";
+                    sndSortOrder = "DTStamp_desc";
                     userConsultations = new UserConsultations(userId, selectFilt).SortListBy(SortBy.TicketID, SortMethod.Ascending);
                     break;
             }
@@ -229,6 +249,105 @@ namespace ORCA.Controllers
             return View(userConsultations);
         }
 
+
+
+        public ActionResult CreateConsultationTicket()
+        {
+            // convnention for making it easier to pass messages between controllers
+            if (TempData["Message"] != null)
+            {
+                ViewBag.Message += (" " + TempData["Message"].ToString());
+            }
+            CreateConsultationTicket ticket = new CreateConsultationTicket();
+
+            return View(ticket);
+        }
+        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateConsultationTicket([Bind(Include = "DescriptionName,DescriptionDetails")] CreateConsultationTicket ticket)
+        {
+            // convnention for making it easier to pass messages between controllers
+            if (TempData["Message"] != null)
+            {
+                ViewBag.Message += (" " + TempData["Message"].ToString());
+            }
+            
+            if (ModelState.IsValid)
+            {
+                OrcaContext db = new OrcaContext();
+
+                int oid = Convert.ToInt32(Session["OrcaUserID"].ToString());
+
+                // make sure the user hasn't already created a ticket with the same name
+                if (!db.Tickets.Any(tic => (tic.OrcaUserID == oid && tic.DescriptionName == ticket.DescriptionName)))
+                {
+                    Ticket newTicket = new Ticket();
+                    TicketEntry newTicketEntry = new TicketEntry();
+                    DateTime dtStamp = DateTime.Now;
+                    
+                    // enter the values for the ticket
+                    newTicket.OrcaUserID = newTicket.OrcaUserIDLastReplied = Convert.ToInt32(Session["OrcaUserID"].ToString());
+                    newTicket.DTStamp = dtStamp;
+                    newTicket.DescriptionName = ticket.DescriptionName;
+                    newTicket.IsTicketOpen = true;
+                    
+                    db.Tickets.Add(newTicket);
+                    db.SaveChanges();
+
+                    // enter the values for the first ticket entry
+                    newTicketEntry.TicketID = newTicket.TicketID;
+                    newTicketEntry.OrcaUserID = newTicket.OrcaUserID;
+                    newTicketEntry.EntryDTStamp = dtStamp;
+                    newTicketEntry.EntryText = ticket.DescriptionDetails;
+
+                    db.TicketEntries.Add(newTicketEntry);
+                    db.SaveChanges();
+                    
+
+                    return RedirectToAction("EditConsultationTicket", new { newTicket.TicketID, id = newTicket.TicketID });
+
+                    // DOUBLE NOTE: Leaving this here for now, this was annoying and still doesn't work as I would like it, or maybe it does. 
+                    // NOTE: The following RedirectToAction takes me to the right url but the id value is null so I will pass it in TempData and pick it up in the EditConsultationTicket
+                    // NOTE: Need to do this differently, but will have to do this workaround for now. I think the RoutConfig.cs needs to be edited in App_Start but I'm not sure.
+
+                    //TempData["TicketID"] = newTicket.TicketID;
+
+                    //return RedirectToAction("EditConsultationTicket", new { id = newTicket.TicketID } );
+                    //("EditConsultationTicket", new RouteValueDictionary( new { Controller = "Consultee", Action = "EditConsultationTicket", Id = newTicket.TicketID }));//
+
+                    //// the following seems to mostly work as needed, but there is something odd
+                    //int id = newTicket.TicketID;
+                    //return RedirectToAction("EditConsultationTicket", new { id = id , newTicket.TicketID} );
+                    //// the above seems to mostly work as needed, but there is something odd
+                    //int id = newTicket.TicketID;
+                    //return RedirectToAction("EditConsultationTicket", new { newTicket.TicketID, id = id });
+                }
+                else
+                {
+                    ViewBag.Message += "You have previously created a ticket with the same Short Description/Name.  Please, either edit that ticket or change the Short Discription/Name of the new consultation ticket.";
+                }
+            }
+            
+            return View(ticket);
+        }
+
+
+        [HttpGet]
+        public ActionResult EditConsultationTicket(int ticketId)
+        {
+            // convnention for making it easier to pass messages between controllers
+            if (TempData["Message"] != null)
+            {
+                ViewBag.Message += (" " + TempData["Message"].ToString());
+            }
+            //if (ticketId == null) ViewBag.Message = "ticketid = null";
+            //else ViewBag.Message = "ticketId = " + ticketId;
+            //ViewBag.Message = "ticketId = " + ticketId;
+
+
+            return View();
+        }
 
 
 

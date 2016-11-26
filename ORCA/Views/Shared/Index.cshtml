@@ -22,23 +22,45 @@
 *@
 
 <h1>Marshall Online Reporting & Consulting Application</h1>
-
+<h4>@ViewBag.Message</h4>
 <h3>Welcome @Session["OrcaUserName"]</h3>
+
+@{
+    TempData["SortOrder"] = ViewBag.SortOrder;
+    TempData["SearchString"] = ViewBag.SearchString;
+}
+
+@*<input type="button" value="New Reply" class="btn btn-default" onclick="location.href='@Url.Action("Consultations", new { sortOrder = ViewBag.SortOrder, selectionFilter = ConsultationTicketSelection.NewReply.ToString() })'" />
+    <input type="submit" value="Search" onsubmit=@{TempData["SearchString"] = ViewBag.SearchString;} />
+*@
+
+@using (Html.BeginForm())
+{
+    <p>
+        Search Expert Consultants:  @Html.TextBox("SearchString")
+        <input type="submit" value="Search" />
+
+</p>
+}
+
 
 <h2>Meet the Marshall Expert Consultants</h2>
 <table class="table">
     <tr>
         <th>
-            @Html.ActionLink("Field of Expertise", "Index", new { sortOrder = ViewBag.FieldSortParam })
+            @Html.ActionLink("Field of Expertise", "Index", new { sortOrder = ViewBag.FieldOfExpertiseSortParam , searchString = ViewBag.SearchString })
         </th>
         <th>
-            @Html.ActionLink("Title/Degree", "Index", new { sortOrder = ViewBag.TitleSortParam })
+            @Html.ActionLink("Title/Degree", "Index", new { sortOrder = ViewBag.TitleDegreeSortParam, searchString = ViewBag.SearchString })
         </th>
         <th>
-            @Html.ActionLink("First Name", "Index", new { sortOrder = ViewBag.FirstNameSortParam })
+            @Html.ActionLink("User Name", "Index", new { sortOrder = ViewBag.OrcaUserNameSortParam, searchString = ViewBag.SearchString })
         </th>
         <th>
-            @Html.ActionLink("Last Name", "Index", new { sortOrder = ViewBag.LastNameSortParam })
+            @Html.ActionLink("First Name", "Index", new { sortOrder = ViewBag.FirstNameSortParam, searchString = ViewBag.SearchString })
+        </th>
+        <th>
+            @Html.ActionLink("Last Name", "Index", new { sortOrder = ViewBag.LastNameSortParam, searchString = ViewBag.SearchString })
         </th>
     </tr>
 
@@ -50,6 +72,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.TitleDegree)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrcaUserName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.FirstName)

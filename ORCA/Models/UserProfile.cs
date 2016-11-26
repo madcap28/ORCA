@@ -25,13 +25,13 @@ namespace ORCA.Models
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
-        [EmailAddress, /*DataType(DataType.EmailAddress),*/ Display(Name = "Email Address")]
+        [DataType(DataType.EmailAddress), Display(Name = "Email Address"), EmailAddress]
         public string Email { get; set; }
 
         // NOTE:
         // NOTE: Must take care of proper phone number formatting later
         // NOTE:
-        [Phone, /*DataType(DataType.PhoneNumber),*/ Display(Name = "Phone Number")]
+        [Phone, DataType(DataType.PhoneNumber), Display(Name = "Phone Number")]
         public string PhoneNumber { get; set; }
 
 

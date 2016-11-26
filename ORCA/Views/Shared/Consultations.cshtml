@@ -96,6 +96,12 @@
     </p>
 }
 
+@Model.OrcaUserID.ToString()
+@Model.SearchField
+@Model.ConsultationTickets.ToString()
+@Model.ConsultationTickets.Count 
+
+
 <table class="table">
     <tr>
         <th>
@@ -138,7 +144,7 @@
                 @Html.DisplayFor(modelItem => item.Status)
             </td>
             <td>
-                @Html.ActionLink("Edit Consultation Ticket", "EditTicket", new { id = item.TicketID })
+                @Html.ActionLink("Edit/View", "EditConsultationTicket", new { item.TicketID, id = item.TicketID })
             </td>
         </tr>
     }
@@ -147,7 +153,7 @@
 
 <hr/>
 <p>
-    <input type="button" value="Request New Consultation" class="btn btn-default" onclick="location.href='@Url.Action("RequestConsultation")'" />
+    <input type="button" value="Create New Consultation Ticket" class="btn btn-default" onclick="location.href='@Url.Action("CreateConsultationTicket")'" />
 </p>
 <hr/>
 <div>

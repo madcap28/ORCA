@@ -5,6 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
+
+////////// System.Diagnostics.Debug.WriteLine("Message Goes Here.");
+
 namespace ORCA.Models
 {
     public enum ConsultationTicketSelection { All, Open, Closed, NewReply, None }
@@ -22,10 +25,18 @@ namespace ORCA.Models
         {
             OrcaContext db = new OrcaContext();
 
+            OrcaUserID = ticketCreatorOrcaUserID;
             // NOTE: I need to figure out how to do the following section properly. I believe it has to do with using join, but I don't know enough about it so this will suffice for now.
             List<Ticket> tickets = (from tic in db.Tickets
                                     where tic.OrcaUserID == OrcaUserID
                                     select tic).ToList();
+
+            //System.Diagnostics.Debug.WriteLine(
+            //    " tickets.Count = " + tickets.Count +
+            //    " ticketCreatorOrcaUserID = " + ticketCreatorOrcaUserID +
+            //    " selection = " + selection
+                
+            //    );
 
             ConsultationTickets = new List<UserConsultation>();
 

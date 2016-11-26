@@ -17,9 +17,88 @@ namespace ORCA.Models
 
         public ActiveExperts()
         {
+            PopulateList();
+        }
+
+
+
+        public ActiveExperts FilterList(string searchString)
+        {
+            if (!(String.IsNullOrEmpty(searchString) || String.IsNullOrWhiteSpace(searchString)))
+            {
+                // not the best way to do it, but it will work for now
+                OrcaContext db = new OrcaContext();
+
+                List<ActiveExpert> expertsToKeep = new List<ActiveExpert>();// will contain the filtered list of experts
+
+                foreach (var expert in Experts)
+                {
+                    bool keep = false;// don't keep the expert unless we find matching substring
+
+                    // check their expertises for a match
+                    var checkExpertises = from expertise in db.ConsultantExpertises
+                                          where expertise.OrcaUserID == expert.OrcaUserID
+                                          select expertise;
+
+                    foreach (var chk in checkExpertises)
+                    {
+                        if (!String.IsNullOrEmpty(chk.FieldOfExpertise))
+                        {
+                            if (chk.FieldOfExpertise.ToLower().Contains(searchString.ToLower()))
+                            {
+                                keep = true;
+                                break;
+                            }
+                        }
+                    }
+                    if (keep)
+                    {
+                        expertsToKeep.Add(expert);
+                        continue;
+                    }
+                    
+                    // search the experts keyword list
+                    var expertConsultant = from exp in db.ExpertConsultants
+                                           where exp.OrcaUserID == exp.OrcaUserID
+                                           select exp;
+                    foreach (var exp in expertConsultant)
+                    {
+                        if (!String.IsNullOrEmpty(exp.KeyWordList))
+                        {
+                            if (exp.KeyWordList.ToLower().Contains(searchString.ToLower()))
+                            {
+                                keep = true;
+                                break;
+                            }
+                        }
+                        if (!String.IsNullOrEmpty(exp.TitleDegree))
+                        {
+                            if (exp.TitleDegree.ToLower().Contains(searchString.ToLower()))
+                            {
+                                keep = true;
+                                break;
+                            }
+                        }
+                    }
+                    if (keep)
+                    {
+                        expertsToKeep.Add(expert);
+                        continue;
+                    }
+                }
+                // set new list
+                Experts = expertsToKeep;
+            }
+            else PopulateList();
+
+            return this;
+        }
+
+        void PopulateList()
+        {
             OrcaContext db = new OrcaContext();
 
-
+            // THIS IS A NASTY HACK BUT IT WILL WORK FOR NOW, it assumes that an expert consultant has added an expertise, otherwise the consultant can not be found in the list
             // NOTE: I need to figure out how to do the following section properly. I believe it has to do with using join, but I don't know enough about it so this will suffice for now.
             List<ConsultantExpertise> consultantExpertises = db.ConsultantExpertises.ToList();
 
@@ -122,5 +201,34 @@ namespace ORCA.Models
             
             return this;
         }
+
+
+        //// WARNING: THE FOLLOWING IS A HACK AND A HORRIBLY BAD IDEA, but I didn't think earlier and I'm too tired to think about how to do it properly
+        //public ActiveExperts AddInactiveExpertsThatAreStillActiveOnTicket(int ticketID)
+        //{
+        //    OrcaContext db = new OrcaContext();
+
+        //    List<TicketExpert> ticExp = (from tick in db.TicketExperts
+        //                                 where tick.TicketActivityState != ActivityState.Inactive
+        //                                 select tick).ToList();
+
+        //    //foreach (var exp in ticExp.ToList())
+
+
+        //    //foreach (var exp in expertConsultantQuery)
+        //    //{
+        //    //    if (db.ExpertConsultants.)
+
+        //    //    ActiveExpert activeExpert = new ActiveExpert();
+
+        //    //    activeExpert.OrcaUserID = exp.OrcaUserID;
+        //    //    activeExpert.OrcaUserName = exp.OrcaUser.OrcaUserName;
+        //    //    activeExpert.TitleDegree = exp.TitleDegree;
+        //    //    activeExpert.FirstName = exp.OrcaUser.FirstName;
+        //    //    activeExpert.LastName = exp.OrcaUser.LastName;
+        //    //    activeExpert.FieldOfExpertise = db.ConsultantExpertises.Where(x => x.OrcaUserID == exp.OrcaUserID).ToList().Find(x => x.OrcaUserID == exp.OrcaUserID).FieldOfExpertise;
+
+        //    return this;
+        //}
     }
 }
