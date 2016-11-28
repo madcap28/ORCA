@@ -127,12 +127,15 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\BaseConsultController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ConsultantAdminController.cs" />
     <Compile Include="Controllers\ConsultantController.cs" />
     <Compile Include="Controllers\ConsulteeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OrcaUsersController.cs" />
+    <Compile Include="Controllers\XXXTESTXXXExpertConsultantsController.cs" />
+    <Compile Include="Controllers\XXXTESTXXXTicketEntriesController.cs" />
     <Compile Include="DAL\OrcaContext.cs" />
     <Compile Include="DAL\OrcaInitializer.cs" />
     <Compile Include="Global.asax.cs">
@@ -140,8 +143,11 @@
     </Compile>
     <Compile Include="Models\ActiveExpert.cs" />
     <Compile Include="Models\ActiveExperts.cs" />
+    <Compile Include="Models\AddEntryToTicket.cs" />
+    <Compile Include="Models\ConsultationEntry.cs" />
     <Compile Include="Models\CreateConsultationTicket.cs" />
     <Compile Include="Models\EditConsultationTicket.cs" />
+    <Compile Include="Models\OrcaDB\ConsultantStatusRequest.cs" />
     <Compile Include="Models\UserConsultation.cs" />
     <Compile Include="Models\UserConsultations.cs" />
     <Compile Include="Models\PasswordChange.cs" />
@@ -211,21 +217,31 @@
     <Content Include="Views\Shared\Consultations.cshtml" />
     <Content Include="Views\Shared\ChangePassword.cshtml" />
     <Content Include="Views\Consultee\ExpertRequest.cshtml" />
-    <Content Include="Views\OrcaUsers\Create.cshtml" />
-    <Content Include="Views\OrcaUsers\Delete.cshtml" />
-    <Content Include="Views\OrcaUsers\Details.cshtml" />
-    <Content Include="Views\OrcaUsers\Edit.cshtml" />
-    <Content Include="Views\OrcaUsers\Index.cshtml" />
     <Content Include="Views\Shared\UserProfile.cshtml" />
     <Content Include="Views\Consultant\_HeaderNavBar.cshtml" />
     <Content Include="Views\ConsultantAdmin\_HeaderNavBar.cshtml" />
     <Content Include="Views\Consultee\_HeaderNavBar.cshtml" />
     <Content Include="Views\Shared\Index.cshtml" />
-    <Content Include="Views\Consultee\CreateConsultationTicket.cshtml" />
+    <Content Include="Views\Shared\CreateConsultationTicket.cshtml" />
+    <Content Include="Views\Shared\EditConsultationTicket.cshtml" />
+    <Content Include="Views\XXXTESTXXXExpertConsultants\Create.cshtml" />
+    <Content Include="Views\XXXTESTXXXExpertConsultants\Delete.cshtml" />
+    <Content Include="Views\XXXTESTXXXExpertConsultants\Details.cshtml" />
+    <Content Include="Views\XXXTESTXXXExpertConsultants\Edit.cshtml" />
+    <Content Include="Views\XXXTESTXXXExpertConsultants\Index.cshtml" />
+    <Content Include="Views\XXXTESTXXXTicketEntries\Create.cshtml" />
+    <Content Include="Views\XXXTESTXXXTicketEntries\Delete.cshtml" />
+    <Content Include="Views\XXXTESTXXXTicketEntries\Details.cshtml" />
+    <Content Include="Views\XXXTESTXXXTicketEntries\Edit.cshtml" />
+    <Content Include="Views\XXXTESTXXXTicketEntries\Index.cshtml" />
+    <Content Include="Views\EditConsultationTicket.cshtml" />
+    <Content Include="Views\YYYYYYTest.cshtml" />
+    <Content Include="Views\Shared\YYYYTESTReg.cshtml" />
+    <None Include="Views\Shared\AddConsultant.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Base\" />
+    <Folder Include="Views\BaseConsultee\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

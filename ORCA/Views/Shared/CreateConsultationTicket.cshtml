@@ -25,11 +25,11 @@
                 @Html.ValidationMessageFor(model => model.DescriptionName, "", new { @class = "text-danger" })
             </div>
         </div>
-
+        
         <div class="form-group">
             @Html.LabelFor(model => model.DescriptionDetails, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.DescriptionDetails, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.TextAreaFor(model => model.DescriptionDetails, 10, 100, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.DescriptionDetails, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -43,8 +43,18 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Home", "Index")
 </div>
+<div>
+    @Html.ActionLink("About", "About")
+</div>
+<div>
+    @Html.ActionLink("Consultations", "Consultations")
+</div>
+<div>
+    @Html.ActionLink("Profile", "UserProfile")
+</div>
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

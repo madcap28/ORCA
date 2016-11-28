@@ -1,0 +1,264 @@
+﻿@model ORCA.Models.EditConsultationTicket
+
+@{
+    ViewBag.Title = "EditConsultationTicket";
+}
+
+
+
+@{
+    System.Diagnostics.Debug.WriteLine("EditContultationTicket.cshtml");
+ }
+
+
+<h2>ORCA Consultation</h2>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TicketID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TicketID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OrcaUserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OrcaUserName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DTStamp)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DTStamp)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DescriptionName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DescriptionName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsTicketOpen)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsTicketOpen)
+        </dd>
+
+    </dl>
+</div>
+
+@*<dl class="dl-horizontal">
+    <dt>
+        <text>Current Consultants</text>
+    </dt>
+    <dd>
+        <input type="button" value="Request/Add Consultant" class="btn btn-default" onclick="location.href='@Url.Action("AddConsultantToTicket", new { ticketId = Model.TicketID })'" />
+    </dd>
+</dl>*@
+
+
+<hr />
+
+<h3>Current Consultants <input type="button" value="Request/Add Consultant" class="btn btn-default" onclick="location.href='@Url.Action("AddConsultant", new { ticketId = Model.TicketID, sortOrder = SortBy.FieldOfExpertise, searchString = "" })'" /></h3>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("Expertise")
+        </th>
+        <th>
+            @Html.DisplayName("Consultant User Name")
+        </th>
+        <th>
+            @Html.DisplayName("Title/Degree")
+        </th>
+        <th>
+            @Html.DisplayName("First Name")
+        </th>
+        <th>
+            @Html.DisplayName("Last Name")
+        </th>
+    </tr>
+
+    @{
+        System.Diagnostics.Debug.WriteLine("@@@@@@@@@@@@ SON OF A MOTHERLESS GOAT @@@@@@@@@@@");
+        System.Diagnostics.Debug.WriteLine("EditContultationTicket.cshtml");
+        System.Diagnostics.Debug.WriteLine("Model.CurrentTicketExperts.Experts.Count = " + Model.CurrentTicketExperts.Experts.Count);
+        System.Diagnostics.Debug.WriteLine("Model.TicketID = " + Model.TicketID);
+
+    }
+
+
+
+
+    @*THIS IS A REALLY REDICULOUS HACK BUT ITS 3:47 AM*@
+
+
+
+
+
+
+
+    @*@using ORCA.Models
+    @{
+        ActiveExperts ae = new ActiveExperts();
+        ae.RemoveExpertsNotActiveOnTicket(Model.TicketID);
+        Model.CurrentTicketExperts = ae;
+
+        ActiveExperts actExp = Model.CurrentTicketExperts;
+        actExp.PopulateList();
+        actExp.RemoveExpertsNotActiveOnTicket(Model.TicketID);
+        Model.CurrentTicketExperts = actExp;
+    }
+
+    @{
+        System.Diagnostics.Debug.WriteLine("EditContultationTicket.cshtml");
+        System.Diagnostics.Debug.WriteLine("Model.CurrentTicketExperts.Experts.Count = " + Model.CurrentTicketExperts.Experts.Count);
+        System.Diagnostics.Debug.WriteLine("Model.TicketID = " + Model.TicketID);
+        System.Diagnostics.Debug.WriteLine("EditContultationTicket.cshtml");
+
+    }*@
+
+
+
+
+
+
+
+    @foreach (var item in Model.CurrentTicketExperts.Experts)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FieldOfExpertise)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrcaUserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TitleDegree)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @Html.ActionLink("Remove Consultant", "RemoveConsultantFromTicket", new { consultantId = item.OrcaUserID, ticketId = Model.TicketID,  })
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+
+
+
+
+
+@using (Html.BeginForm())
+{
+    
+        
+        
+    @*
+        
+
+        THIS IS ALL HACKED AND NEEDS TO BE SCRAPPED, STILL FIGURING OUT MVC ASP.net 
+        
+        
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        <h3>Add Reply or Change Consultation Status</h3>
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.IsTicketOpen, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.EnumDropDownListFor(model => model.IsTicketOpen)
+                    @Html.ValidationMessageFor(model => model.IsTicketOpen, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.NewTicketEntry, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.NewTicketEntry, 5, 100, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.NewTicketEntry, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Update Ticket" class="btn btn-default" />
+            </div>
+        </div>
+    </div>*@
+
+
+
+
+
+
+    <h3>Consultation Ticket Entries <input type="button" value="Reply/Add to Ticket" class="btn btn-default" onclick="location.href='@Url.Action("AddEntryToTicket", new { ticketId = Model.TicketID })'" /></h3>
+
+    <table class="table">
+        
+        <tr>
+            <th>
+                @Html.DisplayName("Posted By")
+            </th>
+            <th>
+                @Html.DisplayName("Date")
+            </th>
+            <th>
+                @Html.DisplayName("Entry Text")
+            </th>
+        </tr>
+
+        @foreach (var item in Model.TicketEntries)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrcaUserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EntryDTStamp)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EntryText)
+                </td>
+
+            </tr>
+        }
+
+    </table>
+
+}
+
+
+<div>
+    @Html.ActionLink("Home", "Index")
+</div>
+<div>
+    @Html.ActionLink("About", "About")
+</div>
+<div>
+    @Html.ActionLink("Consultations", "Consultations")
+</div>
+<div>
+    @Html.ActionLink("Profile", "UserProfile")
+</div>

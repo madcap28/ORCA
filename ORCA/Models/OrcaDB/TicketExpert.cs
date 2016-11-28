@@ -23,7 +23,7 @@ namespace ORCA.Models.OrcaDB
         [Required]
         public ActivityState TicketActivityState { get; set; }// Indicates that the ExpertConsultant has been requested, active and still allowed to post to this Ticket, or inactive and no longer allowed to post to this Ticket.
 
-
+        
 
 
 

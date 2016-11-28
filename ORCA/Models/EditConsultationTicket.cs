@@ -10,25 +10,35 @@ namespace ORCA.Models
 {
     public class EditConsultationTicket
     {
+        [Display(Name = "Ticket Number")]
         public int TicketID { get; set; }
         
+        [Display(Name = "Created By")]
         public string OrcaUserName { get; set; }
 
-        [Required, Display(Name = "Date Created"), DataType(DataType.DateTime), DisplayFormat(DataFormatString = "{0:g}", ConvertEmptyStringToNull = true, NullDisplayText = "MM-dd-yyyy hh:mm am/pm", ApplyFormatInEditMode = true)]
+        [Display(Name = "Date Created"), DataType(DataType.DateTime), DisplayFormat(DataFormatString = "{0:g}", ConvertEmptyStringToNull = true, NullDisplayText = "MM-dd-yyyy hh:mm am/pm", ApplyFormatInEditMode = true)]
         public DateTime DTStamp { get; set; }
 
         [Required, Display(Name = "Description")]
         public string DescriptionName { get; set; }
-
+        
         [Required, Display(Name = "Status")]
         public TicketStatus IsTicketOpen { get; set; }
 
-        public List<TicketEntry> TicketEntries { get; set; }
+        [Display(Name = "New Entry")]
+        public string NewTicketEntry { get; set; }
 
-        public List<TicketExpert> CurrentTicketExperts { get; set; }
 
+        [Display(Name = "Current Consultants")]
+        public ActiveExperts CurrentTicketExperts { get; set; }
 
-        public List<TicketExpert> ExpertsToAdd { get; set; }
+        public ActiveExperts ExpertsToAdd { get; set; }
+
+        [Display(Name = "Entries & Replies")]
+        public List<ConsultationEntry> TicketEntries { get; set; }
+
+        
+
 
 
         public EditConsultationTicket() { }
@@ -40,35 +50,44 @@ namespace ORCA.Models
 
             if (ticket != null)
             {
-                TicketID = ticketID;
-                OrcaUserName = db.OrcaUsers.Find().OrcaUserName;
-                //OrcaUserName = ticket.OrcaUserCreator.OrcaUserName; // should test this to see if it is created
-                DTStamp = ticket.DTStamp;
 
+                System.Diagnostics.Debug.WriteLine("EditContultationTicket.cs");
+                System.Diagnostics.Debug.WriteLine("ticket is not null");
+
+                TicketID = ticketID;
+                OrcaUserName = db.OrcaUsers.Find(ticket.OrcaUserID).OrcaUserName;
+                DTStamp = ticket.DTStamp;
+                DescriptionName = ticket.DescriptionName;
+                
                 if (ticket.IsTicketOpen) IsTicketOpen = TicketStatus.Open;
                 else IsTicketOpen = TicketStatus.Closed;
 
-                TicketEntries = (from entry in db.TicketEntries
-                                 where entry.TicketID == ticketID
-                                 orderby entry.EntryDTStamp descending
-                                 select entry).ToList();
 
-                CurrentTicketExperts = (from expert in db.TicketExperts
-                                        where expert.TicketID == TicketID
-                                        select expert).ToList();
 
-                //ExpertsToAdd = 
 
+                CurrentTicketExperts = new ActiveExperts();
+
+
+                System.Diagnostics.Debug.WriteLine("CurrentTicketExperts.Experts.Count = " + CurrentTicketExperts.Experts.Count);
+
+
+                CurrentTicketExperts.RemoveExpertsNotActiveOnTicket(ticketID);
+
+                System.Diagnostics.Debug.WriteLine("After RemoveExpertsNotActiveOnTicket  CurrentTicketExperts.Experts.Count = " + CurrentTicketExperts.Experts.Count);
+
+
+                //ExpertsToAdd = new ActiveExperts();
+                //ExpertsToAdd.AddInactiveExpertsThatAreStillActiveOnTicket(ticketID);
+
+                TicketEntries = new List<ConsultationEntry>();
+
+                foreach(var entry in db.Tickets.Find(ticketID).TicketEntries)
+                {
+                    TicketEntries.Add(new ConsultationEntry(entry.TicketEntryID));
+                }
+                TicketEntries.OrderByDescending(x => x.EntryDTStamp);
             }
         }
-
-        public EditConsultationTicket UpdateTicket()
-        {
-
-            return this;
-        }
-
-        
         
 
     }

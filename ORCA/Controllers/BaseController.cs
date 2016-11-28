@@ -5,6 +5,16 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
+
+
+/* 
+ *  
+ *  These are all the actions methods are that are common everyone
+ *  
+ *  
+ */
+
+
 namespace ORCA.Controllers
 {
     public class BaseController : Controller
@@ -36,6 +46,8 @@ namespace ORCA.Controllers
             ViewBag.LastNameSortParam = sortOrder == SortBy.LastName.ToString() ? "LastName_desc" : SortBy.LastName.ToString();
 
             ActiveExperts activeExperts = new ActiveExperts();
+
+            if (String.IsNullOrWhiteSpace(searchString)) activeExperts.PopulateList();
 
             switch (sortOrder)
             {

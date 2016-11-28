@@ -42,25 +42,40 @@
         Search Expert Consultants:  @Html.TextBox("searchString")
         <input type="submit" value="Search" onclick=@{ TempData["SearchString"] = null; } />
     </p>
+    }
+
+
+
+@{
+    System.Diagnostics.Debug.WriteLine("&&&&& PROBLEM SOMEWHERE &&&&&&");
+    System.Diagnostics.Debug.WriteLine("In AddConsultant.cshtml");
+    System.Diagnostics.Debug.WriteLine("Model.Experts.Count = " + Model.Experts.Count);
+
 }
+
+
+
 
 <h2>Meet the Marshall Expert Consultants</h2>
 <table class="table">
     <tr>
         <th>
-            @Html.ActionLink("Field of Expertise", "Index", new { sortOrder = ViewBag.FieldOfExpertiseSortParam , searchString = ViewBag.SearchString })
+            @Html.ActionLink("Field of Expertise", "AddConsultant", new { sortOrder = ViewBag.FieldOfExpertiseSortParam, searchString = ViewBag.SearchString, ticketId = ViewBag.TicketID })
         </th>
         <th>
-            @Html.ActionLink("Title/Degree", "Index", new { sortOrder = ViewBag.TitleDegreeSortParam, searchString = ViewBag.SearchString })
+            @Html.ActionLink("Title/Degree", "AddConsultant", new { sortOrder = ViewBag.TitleDegreeSortParam, searchString = ViewBag.SearchString, ticketId = ViewBag.TicketID })
         </th>
         <th>
-            @Html.ActionLink("User Name", "Index", new { sortOrder = ViewBag.OrcaUserNameSortParam, searchString = ViewBag.SearchString })
+            @Html.ActionLink("User Name", "AddConsultant", new { sortOrder = ViewBag.OrcaUserNameSortParam, searchString = ViewBag.SearchString, ticketId = ViewBag.TicketID })
         </th>
         <th>
-            @Html.ActionLink("First Name", "Index", new { sortOrder = ViewBag.FirstNameSortParam, searchString = ViewBag.SearchString })
+            @Html.ActionLink("First Name", "AddConsultant", new { sortOrder = ViewBag.FirstNameSortParam, searchString = ViewBag.SearchString, ticketId = ViewBag.TicketID })
         </th>
         <th>
-            @Html.ActionLink("Last Name", "Index", new { sortOrder = ViewBag.LastNameSortParam, searchString = ViewBag.SearchString })
+            @Html.ActionLink("Last Name", "AddConsultant", new { sortOrder = ViewBag.LastNameSortParam, searchString = ViewBag.SearchString, ticketId = ViewBag.TicketID })
+        </th>
+        <th>
+
         </th>
     </tr>
 
@@ -70,6 +85,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.FieldOfExpertise)
             </td>
+            
             <td>
                 @Html.DisplayFor(modelItem => item.TitleDegree)
             </td>
@@ -82,7 +98,31 @@
             <td>
                 @Html.DisplayFor(modelItem => item.LastName)
             </td>
+            <td>
+                @Html.ActionLink("Add", "AddConsultantToTicket", new { consultantId = item.OrcaUserID, ticketId = ViewBag.TicketID, sortOrder = ViewBag.LastNameSortParam, searchString = ViewBag.SearchString })
+            </td>
+
+           
+            
         </tr>
     }
 
+  
+
+
+
 </table>
+
+<div>
+    @Html.ActionLink("Home", "Index")
+</div>
+<div>
+    @Html.ActionLink("About", "About")
+</div>
+<div>
+    @Html.ActionLink("Consultations", "Consultations")
+</div>
+<div>
+    @Html.ActionLink("Profile", "UserProfile")
+</div>
+

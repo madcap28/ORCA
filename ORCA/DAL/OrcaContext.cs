@@ -15,6 +15,8 @@ namespace ORCA.DAL
         {
         }
 
+        
+
         public DbSet<OrcaUser> OrcaUsers { get; set; }
         public DbSet<OrcaPassword> OrcaPasswords { get; set; }
         public DbSet<ExpertConsultant> ExpertConsultants { get; set; }
@@ -22,6 +24,7 @@ namespace ORCA.DAL
         public DbSet<Ticket> Tickets { get; set; }
         public DbSet<TicketEntry> TicketEntries { get; set; }
         public DbSet<TicketExpert> TicketExperts { get; set; }
+        public DbSet<ConsultantStatusRequest> ConsultantStatusRequests { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

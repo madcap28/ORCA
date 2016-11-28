@@ -37,6 +37,6 @@ namespace ORCA.Models
             DataType(DataType.Password),
             Compare("Password", ErrorMessage = "This does not match the Password above. Please retype your password.")]
         public string ConfirmPassword { get; set; }
-
+        
     }
 }

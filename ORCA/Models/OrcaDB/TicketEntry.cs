@@ -15,7 +15,7 @@ namespace ORCA.Models.OrcaDB
         [ForeignKey("Ticket"), Required]
         public int TicketID { get; set; }// This is the TicketID of the ticket this TicketEntry is on.  TicketID = Ticket.TicketID
 
-        [ForeignKey("OrcaUser"), Required]
+        [ForeignKey("OrcaUser"), Required, Display(Name = "Posted By")]
         public int OrcaUserID { get; set; }// This is the OrcaUserID of the creator of this TicketEntry.  OrcaUserID = OrcaUser.OrcaUserID
 
         [Required]

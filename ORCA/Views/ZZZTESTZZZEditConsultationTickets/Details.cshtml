@@ -1,0 +1,58 @@
+﻿@model ORCA.Models.EditConsultationTicket
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>EditConsultationTicket</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TicketID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TicketID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OrcaUserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OrcaUserName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DTStamp)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DTStamp)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DescriptionName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DescriptionName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsTicketOpen)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsTicketOpen)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
