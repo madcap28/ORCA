@@ -339,6 +339,16 @@ namespace ORCA.Controllers
 
 
 
+        //public ActionResult Consults()
+        //{
+
+        //    return View();
+        //}
+
+
+
+
+
 
 
 
@@ -448,21 +458,32 @@ namespace ORCA.Controllers
 
 
 
-            System.Diagnostics.Debug.WriteLine("***********IMPORTANT********");
-            System.Diagnostics.Debug.WriteLine("AddConsultant activeExperts.Experts.count = " + activeExperts.Experts.Count);
-
+            System.Diagnostics.Debug.WriteLine("*  1  **********IMPORTANT********");
+            System.Diagnostics.Debug.WriteLine("      Inside    BaseConsultController.cs -> AddConsultant");
+            System.Diagnostics.Debug.WriteLine("activeExperts was just created");
+            System.Diagnostics.Debug.WriteLine("       activeExperts.Experts.Count = " + activeExperts.Experts.Count);
+            System.Diagnostics.Debug.WriteLine("       searchString = " + searchString);
 
 
             if (String.IsNullOrWhiteSpace(searchString)) activeExperts.PopulateList();
 
+            System.Diagnostics.Debug.WriteLine("*  2  **********IMPORTANT********");
+            System.Diagnostics.Debug.WriteLine("      Inside    BaseConsultController.cs -> AddConsultant");
+            System.Diagnostics.Debug.WriteLine("after if (String.IsNullOrWhiteSpace(searchString)) activeExperts.PopulateList();");
+            System.Diagnostics.Debug.WriteLine("       activeExperts.Experts.Count = " + activeExperts.Experts.Count);
+
+
+
             //activeExperts.AddInactiveExpertsThatAreStillActiveOnTicket(ticketId);
             activeExperts = activeExperts.RemoveExpertsNotActiveOnTicket(ticketId);
 
+            // IS THIS THE CULPRIT???????
+            //if (String.IsNullOrWhiteSpace(searchString)) activeExperts.PopulateList();
 
-            System.Diagnostics.Debug.WriteLine("***********IMPORTANT********");
-            System.Diagnostics.Debug.WriteLine("AddConsultant after RemoveExpertsNotActiveOnTicket , activeExperts.Experts.count = " + activeExperts.Experts.Count);
-
-
+            System.Diagnostics.Debug.WriteLine("*  3  **********IMPORTANT********");
+            System.Diagnostics.Debug.WriteLine("      Inside    BaseConsultController.cs -> AddConsultant");
+            System.Diagnostics.Debug.WriteLine("activeExperts was just updated");
+            System.Diagnostics.Debug.WriteLine("       activeExperts.Experts.Count = " + activeExperts.Experts.Count);
 
 
             switch (sortOrder)
@@ -502,6 +523,12 @@ namespace ORCA.Controllers
             ViewBag.SortOrder = sortOrder;
             //ViewBag.SearchString = searchString;
             ViewBag.TicketID = ticketId;
+
+
+            System.Diagnostics.Debug.WriteLine("*  4  **********IMPORTANT********");
+            System.Diagnostics.Debug.WriteLine("      Inside    BaseConsultController.cs -> AddConsultant");
+            System.Diagnostics.Debug.WriteLine("going to View(activeExperts)");
+            System.Diagnostics.Debug.WriteLine("       activeExperts.Experts.Count = " + activeExperts.Experts.Count);
 
             return View(activeExperts);
         }

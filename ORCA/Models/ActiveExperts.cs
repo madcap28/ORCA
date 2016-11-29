@@ -525,55 +525,55 @@ namespace ORCA.Models
 
         public ActiveExperts RemoveExpertsNotActiveOnTicket(int ticketID)
         {
-            OrcaContext db = new OrcaContext();
+            //////OrcaContext db = new OrcaContext();
 
 
 
-            System.Diagnostics.Debug.WriteLine("####### IMPORTANT ####### IN REMOVE EXPERTS NOT ACTIVE ON TICKET");
-            System.Diagnostics.Debug.WriteLine("ticketID = " + ticketID);
-            System.Diagnostics.Debug.WriteLine("Experts.Count = " + Experts.Count);
+            //////System.Diagnostics.Debug.WriteLine("####### IMPORTANT ####### IN REMOVE EXPERTS NOT ACTIVE ON TICKET");
+            //////System.Diagnostics.Debug.WriteLine("ticketID = " + ticketID);
+            //////System.Diagnostics.Debug.WriteLine("Experts.Count = " + Experts.Count);
 
-            Experts = new List<ActiveExpert>();
+            //////Experts = new List<ActiveExpert>();
 
-            //List<TicketExpert> ticketExperts = db.TicketExperts.Where(x => x.TicketID == ticketID && x.TicketActivityState == ActivityState.Active).ToList();
+            ////////List<TicketExpert> ticketExperts = db.TicketExperts.Where(x => x.TicketID == ticketID && x.TicketActivityState == ActivityState.Active).ToList();
 
-            List<TicketExpert> ticketExperts = (from ticEx in db.TicketExperts
-                                                where ticEx.TicketID == ticketID && ticEx.TicketActivityState == ActivityState.Active
-                                                select ticEx).ToList();
-
-
+            //////List<TicketExpert> ticketExperts = (from ticEx in db.TicketExperts
+            //////                                    where ticEx.TicketID == ticketID && ticEx.TicketActivityState == ActivityState.Active
+            //////                                    select ticEx).ToList();
 
 
 
 
 
-            System.Diagnostics.Debug.WriteLine("tiketExperts.count = " + ticketExperts.Count());
+
+
+            //////System.Diagnostics.Debug.WriteLine("tiketExperts.count = " + ticketExperts.Count());
 
 
 
             
-            foreach (TicketExpert actTicExp in ticketExperts)
-            {
+            //////foreach (TicketExpert actTicExp in ticketExperts)
+            //////{
 
-                OrcaUser orcaUser = db.OrcaUsers.Find(actTicExp.TicketExpertID);
-                ActiveExpert activeExpert = new ActiveExpert();
+            //////    OrcaUser orcaUser = db.OrcaUsers.Find(actTicExp.TicketExpertID);
+            //////    ActiveExpert activeExpert = new ActiveExpert();
 
-                List<ConsultantExpertise> consultantExpertises = db.ConsultantExpertises.Where(x => x.OrcaUserID == actTicExp.TicketExpertID).ToList();
+            //////    List<ConsultantExpertise> consultantExpertises = db.ConsultantExpertises.Where(x => x.OrcaUserID == actTicExp.TicketExpertID).ToList();
                 
-                foreach (ConsultantExpertise conExp in consultantExpertises)
-                {
+            //////    foreach (ConsultantExpertise conExp in consultantExpertises)
+            //////    {
 
-                    activeExpert.OrcaUserID = actTicExp.TicketExpertID;
-                    activeExpert.OrcaUserName = orcaUser.OrcaUserName;
-                    activeExpert.FirstName = orcaUser.FirstName;
-                    activeExpert.LastName = orcaUser.LastName;
-                    activeExpert.TitleDegree = db.ExpertConsultants.Find(actTicExp.TicketExpertID).TitleDegree;
-                    activeExpert.FieldOfExpertise = conExp.FieldOfExpertise;
+            //////        activeExpert.OrcaUserID = actTicExp.TicketExpertID;
+            //////        activeExpert.OrcaUserName = orcaUser.OrcaUserName;
+            //////        activeExpert.FirstName = orcaUser.FirstName;
+            //////        activeExpert.LastName = orcaUser.LastName;
+            //////        activeExpert.TitleDegree = db.ExpertConsultants.Find(actTicExp.TicketExpertID).TitleDegree;
+            //////        activeExpert.FieldOfExpertise = conExp.FieldOfExpertise;
 
-                    Experts.Add(activeExpert);
-                }
+            //////        Experts.Add(activeExpert);
+            //////    }
                 
-            }
+            //////}
             
             return this;
             //// HACK TO GET ONLY CURRENT TICKET EXPERTS

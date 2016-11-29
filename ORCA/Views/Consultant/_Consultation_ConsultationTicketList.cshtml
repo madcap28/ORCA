@@ -1,0 +1,48 @@
+﻿
+
+
+@model ORCA.Models.Consultation.Consultation
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("OrcaUserName")
+            @*For(model => model.ConsultationTickets.FirstOrDefault().OrcaUserName)*@
+        </th>
+        <th>
+            @Html.DisplayName("DTStamp")
+           @*For(model => model.ConsultationTickets.FirstOrDefault().DTStamp)*@
+        </th>
+        <th>
+            @Html.DisplayName("DescriptionName")
+            @*For(model => model.ConsultationTickets.FirstOrDefault().DescriptionName)*@
+        </th>
+        <th>
+            @Html.DisplayName("OrcaIDLastReplied")
+            @*For(model => model.ConsultationTickets.FirstOrDefault().OrcaUserIDLastReplied)*@
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model.ConsultationTickets) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.OrcaUserName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DTStamp)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DescriptionName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OrcaUserIDLastReplied)
+        </td>
+        <td>
+            @Html.ActionLink("View/Edit Ticket", "ConsultationTicket", new { id=item.TicketID, ticket = item })
+        </td>
+    </tr>
+}
+
+</table>

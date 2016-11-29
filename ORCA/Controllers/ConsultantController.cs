@@ -1,5 +1,6 @@
 ﻿using ORCA.DAL;
 using ORCA.Models;
+using ORCA.Models.Consultation;
 using ORCA.Models.OrcaDB;
 using System;
 using System.Collections.Generic;
@@ -75,6 +76,41 @@ namespace ORCA.Controllers
 
             return RedirectToAction("UserProfile");
         }
-        
+
+
+
+        public ActionResult Consults(Consultation consultationModel, Consultation.FilterTicketOption filterTicketOption)
+        {
+            if(consultationModel != null)
+            {
+                
+                consultationModel.FilterConsultationTickets(filterTicketOption);
+                return View(consultationModel);
+
+            }
+
+            OrcaUserType userType;
+
+            // check user type 
+            if (Session["UserType"].ToString() == OrcaUserType.Consultant.ToString())
+                userType = OrcaUserType.Consultant;
+            else if (Session["UserType"].ToString() == OrcaUserType.ConsultantAdmin.ToString())
+                userType = OrcaUserType.ConsultantAdmin;
+            else
+                userType = OrcaUserType.Consultee;
+            // check the user id
+            int orcaUserId = int.Parse(Session["OrcaUserID"].ToString());
+
+            Consultation consults = new Consultation();
+            consults.Init(orcaUserId, userType);
+
+
+
+
+            return View(consults);
+
+        }
+
+
     }
 }
