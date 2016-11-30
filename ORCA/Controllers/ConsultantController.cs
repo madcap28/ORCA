@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using static ORCA.Models.Consultation.Consultation;
 
 namespace ORCA.Controllers
 {
@@ -77,39 +78,73 @@ namespace ORCA.Controllers
             return RedirectToAction("UserProfile");
         }
 
-
-
-        public ActionResult Consults(Consultation consultationModel, Consultation.FilterTicketOption filterTicketOption)
+        [HttpGet]
+        public ActionResult Consults()
         {
-            if(consultationModel != null)
-            {
-                
-                consultationModel.FilterConsultationTickets(filterTicketOption);
-                return View(consultationModel);
-
-            }
+            int userId = int.Parse(Session["OrcaUserID"].ToString());
+            string orcaUserType = Session["UserType"].ToString();
 
             OrcaUserType userType;
 
-            // check user type 
-            if (Session["UserType"].ToString() == OrcaUserType.Consultant.ToString())
-                userType = OrcaUserType.Consultant;
-            else if (Session["UserType"].ToString() == OrcaUserType.ConsultantAdmin.ToString())
-                userType = OrcaUserType.ConsultantAdmin;
-            else
-                userType = OrcaUserType.Consultee;
-            // check the user id
-            int orcaUserId = int.Parse(Session["OrcaUserID"].ToString());
-
-            Consultation consults = new Consultation();
-            consults.Init(orcaUserId, userType);
-
-
-
-
-            return View(consults);
+            switch (orcaUserType)
+            {
+                case "Consultee":
+                    userType = OrcaUserType.Consultee;
+                    break;
+                case "Consultant":
+                    userType = OrcaUserType.Consultant;
+                    break;
+                case "ConsultantAdmin":
+                    userType = OrcaUserType.ConsultantAdmin;
+                    break;
+                default:
+                    userType = OrcaUserType.Consultee;
+                    break;
+            }
+            Consultation consult = new Consultation(userId, userType);
+            return View(consult);
 
         }
+        [HttpPost]
+        public ActionResult Consults(Consultation consultationModel)
+        {
+            return View("consultationModel");
+        }
+
+
+
+
+        //public ActionResult Consults(consultationModel)
+        //{
+        //    if (consultationModel != null)
+        //    {
+
+        //        consultationModel.FilterConsultationTickets(filterTicketOption);
+        //        return View(consultationModel);
+
+        //    }
+
+        //    OrcaUserType userType;
+
+        //    // check user type 
+        //    if (Session["UserType"].ToString() == OrcaUserType.Consultant.ToString())
+        //        userType = OrcaUserType.Consultant;
+        //    else if (Session["UserType"].ToString() == OrcaUserType.ConsultantAdmin.ToString())
+        //        userType = OrcaUserType.ConsultantAdmin;
+        //    else
+        //        userType = OrcaUserType.Consultee;
+        //    // check the user id
+        //    int orcaUserId = int.Parse(Session["OrcaUserID"].ToString());
+
+        //    Consultation consults = new Consultation();
+        //    consults.Init(orcaUserId, userType);
+
+
+
+
+        //    return View(consults);
+
+        //}
 
 
     }

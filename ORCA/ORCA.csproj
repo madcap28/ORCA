@@ -242,8 +242,8 @@
     <Content Include="Views\Consultant\zzzConsultationTicketzzzDetails.cshtml" />
     <Content Include="Views\Consultant\zzzConsultationTicketzzzList.cshtml" />
     <Content Include="Views\Consultant\zzzConsultationTicketzzzCreate.cshtml" />
-    <Content Include="Views\Consultant\_Consultation_ConsultationTicketList.cshtml" />
     <Content Include="Views\Consultant\Consults.cshtml" />
+    <Content Include="Views\Consultant\_Consults_Consultation_TicketList.cshtml" />
     <Content Include="Views\Consultant\View.cshtml" />
     <None Include="Views\Shared\AddConsultant.cshtml" />
   </ItemGroup>

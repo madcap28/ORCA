@@ -1,6 +1,8 @@
-﻿@model ORCA.Models.Consultation.Consultation
+﻿
 
-@using ORCA.Models.Consultation-
+@model ORCA.Models.Consultation.Consultation
+
+@using ORCA.Models.Consultation
 
 @{
     ViewBag.Title = "Consults";
@@ -9,20 +11,10 @@
 <h2>Consults</h2>
 
 
+@{
+    Html.RenderPartial("_Consults_Consultation_TicketList");
+}
 
-<p>
-    <h3>Filter Consultations</h3>
-    <div>
-        <input type="button" value="All" class="btn btn-default" onclick="location.href='@Url.Action("Consults", new { consultationModel = Model, filterTicketOption = Consultation.FilterTicketOption.All })'" />
-
-        <input type="button" value="Open" class="btn btn-default" onclick="location.href='@Url.Action("Consults", new { consultationModel = Model, filterTicketOption = Consultation.FilterTicketOption.Open })'" />
-
-        <input type="button" value="Closed" class="btn btn-default" onclick="location.href='@Url.Action("Consults", new { consultationModel = Model, filterTicketOption = Consultation.FilterTicketOption.Closed })'" />
-
-        <input type="button" value="New Reply" class="btn btn-default" onclick="location.href='@Url.Action("Consults", new { consultationModel = Model, filterTicketOption = Consultation.FilterTicketOption.NewReply })'" />
-    </div>
-</p>-
--
 
 @*<div>
     <h4>Consultation</h4>
@@ -76,9 +68,9 @@
 
 
 
-@{
+@*@{
     Html.RenderPartial("_Consultation_ConsultationTicketList");
-}
+}*@
 
 
 

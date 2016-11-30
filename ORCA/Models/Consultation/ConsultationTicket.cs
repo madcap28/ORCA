@@ -32,9 +32,10 @@ namespace ORCA.Models.Consultation
         [Display(Name = "Description")]
         public string DescriptionName { get; set; }
 
-        [Display(Name = "Last Replied")]
+        [Display(Name = "Last Reply")]
         public int OrcaUserIDLastReplied { get; set; }
         
+        private bool _TicketStatus_IsTicketOpen { get; set; }
         [Display(Name = "Status")]
         public ConsultationTicketStatus TicketStatus
         {
@@ -48,16 +49,24 @@ namespace ORCA.Models.Consultation
             }
         }
 
-        private bool _TicketStatus_IsTicketOpen { get; set; }
+        
         ///*
         // * 
         // * Consturtors and Initializers
         // * 
         // */
+        
 
-        public ConsultationTicket() { }
-        public ConsultationTicket(int ticketId) { InitPopulateConsultationTicket(ticketId); }
-        public ConsultationTicket InitPopulateConsultationTicket(int ticketId)
+        public ConsultationTicket(int? ticketId = null)
+        {
+            if (ticketId != null)
+            {
+                int tmp = (int)ticketId;
+                InitPopulateConsultationTicket((int)ticketId);
+            }
+        }
+
+        public ConsultationTicket InitPopulateConsultationTicket(int? ticketId)
         {
             OrcaContext db = new OrcaContext();
             
