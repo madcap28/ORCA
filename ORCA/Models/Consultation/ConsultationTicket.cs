@@ -18,7 +18,8 @@ namespace ORCA.Models.Consultation
          * Fields to Display  (They were entered when ticket was created)
          * 
          */
-         
+
+        OrcaContext db = new OrcaContext();
         
         [Display(Name = "Ticket Number"),Key]
         public int TicketID { get; set; }
@@ -34,18 +35,20 @@ namespace ORCA.Models.Consultation
 
         [Display(Name = "Last Reply")]
         public int OrcaUserIDLastReplied { get; set; }
-        
-        private bool _TicketStatus_IsTicketOpen { get; set; }
+
+        private bool _TicketStatus_IsTicketOpen;
         [Display(Name = "Status")]
         public ConsultationTicketStatus TicketStatus
         {
             get { return _TicketStatus_IsTicketOpen ? ConsultationTicketStatus.Open : ConsultationTicketStatus.Closed; }
             set
             {
-                if (value == ConsultationTicketStatus.Open)
-                {
-                    _TicketStatus_IsTicketOpen = true;
-                }
+                if (value == ConsultationTicketStatus.Open) _TicketStatus_IsTicketOpen = true;
+                else _TicketStatus_IsTicketOpen = false;
+
+                Ticket ticket = db.Tickets.Find(TicketID);
+                ticket.IsTicketOpen = _TicketStatus_IsTicketOpen;
+                
             }
         }
 
@@ -85,6 +88,9 @@ namespace ORCA.Models.Consultation
             return this;
         }
         
+
+        public bool IsTicketOpen() { return _TicketStatus_IsTicketOpen; }
+
     }
 
 }

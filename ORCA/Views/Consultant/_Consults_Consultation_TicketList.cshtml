@@ -5,16 +5,18 @@
 @using ORCA.Models.Consultation
 
 
+
+
 <p>
     <h3>Filter Consultations</h3>
     <div>
-        <input type="button" value="All" class="btn btn-default" onclick="location.href='@Url.Action("Consults", new { consultationModel = Model, filterTicketOption = Consultation.TicketFilterOption.All })'" />
+        <input type="button" value="All" class="btn btn-default" onclick="location.href='@Url.Action("Consults", new { consultationModel = Model, filterTicketOption = Consultation.TicketFilterOption.All, SortTicketOption = Model.SortTicketsOption, TicketSearchString = Model.TicketSearchString })'" />
 
-        <input type="button" value="Open" class="btn btn-default" onclick="location.href='@Url.Action("Consults", new { consultationModel = Model, filterTicketOption = Consultation.TicketFilterOption.Open })'" />
+        <input type="button" value="Open" class="btn btn-default" onclick="location.href='@Url.Action("Consults", new { consultationModel = Model, filterTicketOption = Consultation.TicketFilterOption.Open, SortTicketOption = Model.SortTicketsOption, TicketSearchString = Model.TicketSearchString })'" />
 
-        <input type="button" value="Closed" class="btn btn-default" onclick="location.href='@Url.Action("Consults", new { consultationModel = Model, filterTicketOption = Consultation.TicketFilterOption.Closed })'" />
+        <input type="button" value="Closed" class="btn btn-default" onclick="location.href='@Url.Action("Consults", new { consultationModel = Model, filterTicketOption = Consultation.TicketFilterOption.Closed, SortTicketOption = Model.SortTicketsOption, TicketSearchString = Model.TicketSearchString })'" />
 
-        <input type="button" value="New Reply" class="btn btn-default" onclick="location.href='@Url.Action("Consults", new { consultationModel = Model, filterTicketOption = Consultation.TicketFilterOption.NewReply })'" />
+        <input type="button" value="New Reply" class="btn btn-default" onclick="location.href='@Url.Action("Consults", new { consultationModel = Model, filterTicketOption = Consultation.TicketFilterOption.NewReply, SortTicketOption = Model.SortTicketsOption, TicketSearchString = Model.TicketSearchString })'" />
     </div>
 </p>
 
@@ -22,7 +24,8 @@
     @Html.ActionLink("Create New", "Create")
 </p>
 
-@*ticketid     dtstamp   status   orcausername    last replied   description*@
+
+
 
 <table class="table">
 
@@ -53,10 +56,24 @@
         </th>
         <th>
     </tr>
-    
 
+    @{
+        System.Diagnostics.Debug.WriteLine("####  in partial view  ##############################################");
+        System.Diagnostics.Debug.WriteLine("Model.FilterTicketsOption  " + Model.FilterTicketsOption);
+        System.Diagnostics.Debug.WriteLine("Model.SortTicketsOption  " + Model.SortTicketsOption);
+        System.Diagnostics.Debug.WriteLine("Model.TicketSearchString  " + Model.TicketSearchString);
+        System.Diagnostics.Debug.WriteLine("Model.ConsultationTickets.Count()  " + Model.ConsultationTickets.Count());
+
+    }
     @foreach (var item in Model.ConsultationTickets)
     {
+
+        System.Diagnostics.Debug.WriteLine("****  in partial view  *******************************************");
+        System.Diagnostics.Debug.WriteLine("item.TicketID  " + item.TicketID);
+        System.Diagnostics.Debug.WriteLine("item.DescriptionName  " + item.DescriptionName);
+
+
+
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.TicketID)
@@ -85,6 +102,147 @@
     }
 
 </table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*<p>
+    <h3>Filter Consultations</h3>
+    <div>
+        <input type="button" value="All" class="btn btn-default" onclick="location.href='@Url.Action("Consults", new { consultationModel = Model, filterTicketOption = Consultation.TicketFilterOption.All, SortTicketOption = Model.SortTicketsOption, TicketSearchString = Model.TicketSearchString })'" />
+
+        <input type="button" value="Open" class="btn btn-default" onclick="location.href='@Url.Action("Consults", new { consultationModel = Model, filterTicketOption = Consultation.TicketFilterOption.Open, SortTicketOption = Model.SortTicketsOption, TicketSearchString = Model.TicketSearchString })'" />
+
+        <input type="button" value="Closed" class="btn btn-default" onclick="location.href='@Url.Action("Consults", new { consultationModel = Model, filterTicketOption = Consultation.TicketFilterOption.Closed, SortTicketOption = Model.SortTicketsOption, TicketSearchString = Model.TicketSearchString })'" />
+
+        <input type="button" value="New Reply" class="btn btn-default" onclick="location.href='@Url.Action("Consults", new { consultationModel = Model, filterTicketOption = Consultation.TicketFilterOption.NewReply, SortTicketOption = Model.SortTicketsOption, TicketSearchString = Model.TicketSearchString })'" />
+    </div>
+</p>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>*@
+
+@*ticketid     dtstamp   status   orcausername    last replied   description*@
+
+@*@{ 
+    System.Diagnostics.Debug.WriteLine("***********************************************");
+    System.Diagnostics.Debug.WriteLine("" + Model.);
+    System.Diagnostics.Debug.WriteLine("");
+    System.Diagnostics.Debug.WriteLine("");
+    System.Diagnostics.Debug.WriteLine("");
+
+}*@
+
+
+@*<table class="table">
+
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ConsultationTickets.FirstOrDefault().TicketID)
+            @Html.ActionLink("TicketID", "Consults", new { consulTationModel = Model, Consultation.TicketSortOption.TicketID, toggleIfSame = true })
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ConsultationTickets.FirstOrDefault().DTStamp)
+            @Html.ActionLink("DTStamp", "Consults", new { consulTationModel = Model, Consultation.TicketSortOption.DTStamp, toggleIfSame = true })
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ConsultationTickets.FirstOrDefault().TicketStatus)
+            @Html.ActionLink("DTStamp", "Consults", new { consulTationModel = Model, Consultation.TicketSortOption.TicketStatus, toggleIfSame = true })
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ConsultationTickets.FirstOrDefault().OrcaUserName)
+            @Html.ActionLink("DTStamp", "Consults", new { consulTationModel = Model, Consultation.TicketSortOption.OrcaUserName, toggleIfSame = true })
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ConsultationTickets.FirstOrDefault().OrcaUserIDLastReplied)
+            @Html.ActionLink("OrcaUserIDLastReplied", "Consults", new { consulTationModel = Model, Consultation.TicketSortOption.OrcaUserIDLastReplied, toggleIfSame = true })
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ConsultationTickets.FirstOrDefault().DescriptionName)
+            @Html.ActionLink("DescriptionName", "Consults", new { consulTationModel = Model, Consultation.TicketSortOption.DescriptionName, toggleIfSame = true })
+        </th>
+        <th>
+    </tr>
+    
+    @{ 
+        System.Diagnostics.Debug.WriteLine("####  in partial view  ##############################################");
+        System.Diagnostics.Debug.WriteLine("Model.FilterTicketsOption  " + Model.FilterTicketsOption);
+        System.Diagnostics.Debug.WriteLine("Model.SortTicketsOption  " + Model.SortTicketsOption);
+        System.Diagnostics.Debug.WriteLine("Model.TicketSearchString  " + Model.TicketSearchString);
+        System.Diagnostics.Debug.WriteLine("Model.ConsultationTickets.Count()  " + Model.ConsultationTickets.Count());
+
+    }
+    @foreach (var item in Model.ConsultationTickets)
+        {
+
+            System.Diagnostics.Debug.WriteLine("****  in partial view  *******************************************");
+            System.Diagnostics.Debug.WriteLine("item.TicketID  " + item.TicketID);
+            System.Diagnostics.Debug.WriteLine("item.DescriptionName  " + item.DescriptionName);
+
+
+
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TicketID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DTStamp)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TicketStatus)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrcaUserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrcaUserIDLastReplied)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DescriptionName)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.TicketID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.TicketID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.TicketID })
+            </td>
+        </tr>
+    }
+
+</table>*@
 
 
 

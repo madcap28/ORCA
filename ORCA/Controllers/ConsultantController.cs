@@ -1,7 +1,9 @@
-﻿using ORCA.DAL;
+﻿using ORCA;
+using ORCA.DAL;
 using ORCA.Models;
 using ORCA.Models.Consultation;
 using ORCA.Models.OrcaDB;
+//using ORCA.OrcaHelper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -69,6 +71,8 @@ namespace ORCA.Controllers
         
         public ActionResult DeleteExpertise(int id)
         {
+            
+
             OrcaContext db = new OrcaContext();
 
             ConsultantExpertise expertise = db.ConsultantExpertises.Find(id);
@@ -78,37 +82,133 @@ namespace ORCA.Controllers
             return RedirectToAction("UserProfile");
         }
 
+
+
+
+
+
+
+
         [HttpGet]
-        public ActionResult Consults()
+        public ActionResult OrcaConsults()
         {
+            OrcaContext db = new OrcaContext();
+
+
+            Ticket ticket = db.Tickets.Find(1);
+
+            ticket.IsTicketOpen = false;
+
+
+
+
+            int stop = 2;
+
+            int go = stop = 3;
+            System.Diagnostics.Debug.WriteLine("****** stop *****" + stop);
+
+            EnumTest test = new EnumTest();
+
+
+            System.Diagnostics.Debug.WriteLine("     test.EnumTest_TestPublicEnum = " + test.EnumTest_TestPublicEnum);
+            test.EnumTest_TestPublicEnum = TestPublicEnum.Value2;
+            System.Diagnostics.Debug.WriteLine("     test.EnumTest_TestPublicEnum = " + test.EnumTest_TestPublicEnum);
+
+            test.EnumTest_TestPublicEnum = TestPublicEnum.Value2;
+            System.Diagnostics.Debug.WriteLine(test.EnumTest_TestPublicEnum);
+            test.EnumTest_TestPublicEnum = TestPublicEnum.Value2;
+            System.Diagnostics.Debug.WriteLine(test.EnumTest_TestPublicEnum);
+            test.EnumTest_TestPublicEnum = TestPublicEnum.Value1;
+            System.Diagnostics.Debug.WriteLine(test.EnumTest_TestPublicEnum);
+            test.EnumTest_TestPublicEnum = TestPublicEnum.Value1;
+            System.Diagnostics.Debug.WriteLine(test.EnumTest_TestPublicEnum);
+            test.EnumTest_TestPublicEnum = TestPublicEnum.Value1;
+            System.Diagnostics.Debug.WriteLine(test.EnumTest_TestPublicEnum);
+
+
+            test.EnumTest_TestPublicEnum = TestPublicEnum.descValue3;
+            System.Diagnostics.Debug.WriteLine(test.EnumTest_TestPublicEnum);
+            test.EnumTest_TestPublicEnum = TestPublicEnum.descValue3;
+            System.Diagnostics.Debug.WriteLine(test.EnumTest_TestPublicEnum);
+            test.EnumTest_TestPublicEnum = TestPublicEnum.descValue3;
+            System.Diagnostics.Debug.WriteLine(test.EnumTest_TestPublicEnum);
+            test.EnumTest_TestPublicEnum = TestPublicEnum.descValue4;
+            System.Diagnostics.Debug.WriteLine(test.EnumTest_TestPublicEnum);
+            test.EnumTest_TestPublicEnum = TestPublicEnum.descValue4;
+            System.Diagnostics.Debug.WriteLine(test.EnumTest_TestPublicEnum);
+            test.EnumTest_TestPublicEnum = TestPublicEnum.descValue4;
+            System.Diagnostics.Debug.WriteLine(test.EnumTest_TestPublicEnum);
+
+
+
+
+
+
+
             int userId = int.Parse(Session["OrcaUserID"].ToString());
-            string orcaUserType = Session["UserType"].ToString();
 
-            OrcaUserType userType;
+            Consultation consult = new Consultation(userId, OrcaUserType.Consultant);
 
-            switch (orcaUserType)
-            {
-                case "Consultee":
-                    userType = OrcaUserType.Consultee;
-                    break;
-                case "Consultant":
-                    userType = OrcaUserType.Consultant;
-                    break;
-                case "ConsultantAdmin":
-                    userType = OrcaUserType.ConsultantAdmin;
-                    break;
-                default:
-                    userType = OrcaUserType.Consultee;
-                    break;
-            }
-            Consultation consult = new Consultation(userId, userType);
+            //////System.Diagnostics.Debug.WriteLine("*****************BEGIN TEST******************************");
+
+            //////TicketFilterOption testVar;
+
+            //////System.Diagnostics.Debug.WriteLine("   BEFORE GET");
+            //////System.Diagnostics.Debug.WriteLine("      consult.FilterTicketsOption = " + consult.FilterTicketsOption);
+            //////testVar = consult.FilterTicketsOption;
+
+            //////System.Diagnostics.Debug.WriteLine("   AFTER GET / BEFORE GET");
+            //////System.Diagnostics.Debug.WriteLine("      consult.FilterTicketsOption = " + consult.FilterTicketsOption);
+            //////testVar = consult.FilterTicketsOption;
+
+            //////System.Diagnostics.Debug.WriteLine("   AFTER GET / before set");
+            //////System.Diagnostics.Debug.WriteLine("      consult.FilterTicketsOption = " + consult.FilterTicketsOption);
+            //////consult.FilterTicketsOption = testVar;
+
+            //////System.Diagnostics.Debug.WriteLine("   after set / before set");
+            //////System.Diagnostics.Debug.WriteLine("      consult.FilterTicketsOption = " + consult.FilterTicketsOption);
+            //////consult.FilterTicketsOption = testVar;
+
+            //////System.Diagnostics.Debug.WriteLine("   after set / before set");
+            //////System.Diagnostics.Debug.WriteLine("      consult.FilterTicketsOption = " + consult.FilterTicketsOption);
+            //////consult.FilterTicketsOption = testVar;
+
+            //////System.Diagnostics.Debug.WriteLine("   after set");
+
+            //////System.Diagnostics.Debug.WriteLine("********************END TEST***************************");
+
+
+            //////consult.TicketSearchString = "FIRST SEARCH";
+            //////consult.TicketSearchString = "second search";
+            //////consult.TicketSearchString = "THIRD SEARCH";
+
+
+            //////consult.SortTicketsOption = TicketSortOption.DescriptionName;
+            //////consult.SortTicketsOption = TicketSortOption.OrcaUserName;
+            //////consult.SortTicketsOption = TicketSortOption.OrcaUserName;
+            //////consult.SortTicketsOption = TicketSortOption.DescriptionName;
+            //////consult.SortTicketsOption = TicketSortOption.DescriptionName;
+
+
             return View(consult);
-
         }
-        [HttpPost]
-        public ActionResult Consults(Consultation consultationModel)
+
+
+
+
+        [HttpGet]
+        public ActionResult Consults(Consultation consultationModel, TicketFilterOption? FilterTicketsOption, TicketSortOption? SortTicketsOption, string TicketSearchString)
         {
-            return View("consultationModel");
+            //if (FilterTicketsOption != null) consultationModel.FilterTicketsOption = (TicketFilterOption)FilterTicketsOption;
+            //if (SortTicketsOption != null) consultationModel.SortTicketsOption = (TicketSortOption)SortTicketsOption;
+            //if (!String.IsNullOrEmpty(TicketSearchString)) consultationModel.TicketSearchString = TicketSearchString;
+
+
+            //if (FilterTicketsOption != null) consultationModel.FilterConsultationTickets(FilterTicketsOption);
+            //if (SortTicketsOption != null) consultationModel.SortConsultationTickets(SortTicketsOption, true);
+            //if (!String.IsNullOrEmpty(TicketSearchString)) consultationModel.SearchConsultationTickets(TicketSearchString);
+            
+            return View(consultationModel);
         }
 
 

@@ -163,6 +163,7 @@
     <Compile Include="Models\OrcaDB\TicketEntry.cs" />
     <Compile Include="Models\OrcaDB\TicketExpert.cs" />
     <Compile Include="Models\Registration.cs" />
+    <Compile Include="OrcaHelper\EnumTest.cs" />
     <Compile Include="OrcaHelper\OrcaHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -245,6 +246,7 @@
     <Content Include="Views\Consultant\Consults.cshtml" />
     <Content Include="Views\Consultant\_Consults_Consultation_TicketList.cshtml" />
     <Content Include="Views\Consultant\View.cshtml" />
+    <Content Include="Views\Shared\OrcaConsults.cshtml" />
     <None Include="Views\Shared\AddConsultant.cshtml" />
   </ItemGroup>
   <ItemGroup>
