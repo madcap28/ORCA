@@ -239,23 +239,7 @@ namespace ORCA.Controllers
 
             return View(userConsultations);
         }
-
-
-
-
-
-
-
-
-        /*
-         * 
-         * THIS BEGINS THE CRAP 
-         * 
-         */
-
-
-
-
+        
         public ActionResult CreateConsultationTicket()
         {
             // convnention for making it easier to pass messages between controllers
@@ -336,29 +320,7 @@ namespace ORCA.Controllers
 
             return View(ticket);
         }
-
-
-
-        //public ActionResult Consults()
-        //{
-
-        //    return View();
-        //}
-
-
-
-
-
-
-
-
-        /*
-         * 
-         * THIS BEGINS THE A MOUNTAIN OF EXPLODING CRAP THAT NEEDS TO BE REDONE ASAP
-         * 
-         */
-
-
+        
         [HttpGet]
         public ActionResult EditConsultationTicket(int ticketId)
         {
@@ -372,53 +334,30 @@ namespace ORCA.Controllers
 
             EditConsultationTicket ticketToEdit = new Models.EditConsultationTicket(ticketId);// this is the ticket we will edit
 
-            //System.Diagnostics.Debug.WriteLine("THIS IS IN EditConsultationTicket(int ticketiD)");
-            //System.Diagnostics.Debug.WriteLine(ticketToEdit.TicketID.ToString());
-            //System.Diagnostics.Debug.WriteLine(ticketToEdit.OrcaUserName);
-            //System.Diagnostics.Debug.WriteLine(ticketToEdit.DTStamp.ToString());
-            //System.Diagnostics.Debug.WriteLine(ticketToEdit.DescriptionName);
-            //System.Diagnostics.Debug.WriteLine(ticketToEdit.NewTicketEntry);
-            //System.Diagnostics.Debug.WriteLine(ticketToEdit.CurrentTicketExperts.ToString());
-            //System.Diagnostics.Debug.WriteLine(ticketToEdit.ExpertsToAdd.ToString());
-            //System.Diagnostics.Debug.WriteLine(ticketToEdit.TicketEntries.ToString());
-            //System.Diagnostics.Debug.WriteLine("THIS IS IN EditConsultationTicket(int ticketiD)");
-
-            //System.Diagnostics.Debug.WriteLine("THIS IS IN BEFORE View(ticketToEdit)");
-
-
             return View(ticketToEdit);
         }
-
         
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult EditConsultationTicket([Bind(Exclude = "TicketID,OrcaUserName,DTStamp,DescriptionName,IsTicketOpen,NewTicketEntry,CurrentTicketExperts,ExpertsToAdd,TicketEntries")] EditConsultationTicket editConsultationTicket)
         {
-            //System.Diagnostics.Debug.WriteLine("THIS IS IN EditConsultationTicket(EditConsultationTicket)");
-            //System.Diagnostics.Debug.WriteLine(editConsultationTicket.TicketID.ToString());
-            //System.Diagnostics.Debug.WriteLine(editConsultationTicket.OrcaUserName);
-            //System.Diagnostics.Debug.WriteLine(editConsultationTicket.DTStamp.ToString());
-            //System.Diagnostics.Debug.WriteLine(editConsultationTicket.DescriptionName);
-            //System.Diagnostics.Debug.WriteLine(editConsultationTicket.NewTicketEntry);
-            //System.Diagnostics.Debug.WriteLine(editConsultationTicket.CurrentTicketExperts.ToString());
-            //System.Diagnostics.Debug.WriteLine(editConsultationTicket.ExpertsToAdd.ToString());
-            //System.Diagnostics.Debug.WriteLine(editConsultationTicket.TicketEntries.ToString());
-            //System.Diagnostics.Debug.WriteLine("THIS IS IN EditConsultationTicket(EditConsultationTicket)");
-            System.Diagnostics.Debug.WriteLine("THIS IS IN BEFORE if (MedelState.IsValid");
-
-            
-
             if (ModelState.IsValid)
             {
-                //System.Diagnostics.Debug.WriteLine("THIS IS IN BEFORE return RedirectToAction");
-
                 return RedirectToAction("Index");
             }
 
-            //System.Diagnostics.Debug.WriteLine("THIS IS IN BEFORE View(ticketeditConsultationTicket)");
-
             return View(editConsultationTicket);
         }
+
+
+
+
+
+        //public ActionResult Consults()
+        //{
+
+        //    return View();
+        //}
 
 
         /*
@@ -442,10 +381,7 @@ namespace ORCA.Controllers
             if (String.IsNullOrEmpty(searchString))
                 if (TempData["SearchString"] != null)
                     searchString = TempData["SearchString"].ToString();
-
-
-            System.Diagnostics.Debug.WriteLine("public ActionResult AddConsultant(int ticketId, string sortOrder, string searchString)");
-
+            
             if (String.IsNullOrEmpty(sortOrder)) sortOrder = SortBy.FieldOfExpertise.ToString();
 
             ViewBag.FieldOfExpertiseSortParam = sortOrder == SortBy.FieldOfExpertise.ToString() ? "FieldOfExpertise_desc" : SortBy.FieldOfExpertise.ToString();
@@ -456,36 +392,15 @@ namespace ORCA.Controllers
 
             ActiveExperts activeExperts = new ActiveExperts();
 
-
-
-            System.Diagnostics.Debug.WriteLine("*  1  **********IMPORTANT********");
-            System.Diagnostics.Debug.WriteLine("      Inside    BaseConsultController.cs -> AddConsultant");
-            System.Diagnostics.Debug.WriteLine("activeExperts was just created");
-            System.Diagnostics.Debug.WriteLine("       activeExperts.Experts.Count = " + activeExperts.Experts.Count);
-            System.Diagnostics.Debug.WriteLine("       searchString = " + searchString);
-
-
+            
             if (String.IsNullOrWhiteSpace(searchString)) activeExperts.PopulateList();
-
-            System.Diagnostics.Debug.WriteLine("*  2  **********IMPORTANT********");
-            System.Diagnostics.Debug.WriteLine("      Inside    BaseConsultController.cs -> AddConsultant");
-            System.Diagnostics.Debug.WriteLine("after if (String.IsNullOrWhiteSpace(searchString)) activeExperts.PopulateList();");
-            System.Diagnostics.Debug.WriteLine("       activeExperts.Experts.Count = " + activeExperts.Experts.Count);
-
-
-
+            
             //activeExperts.AddInactiveExpertsThatAreStillActiveOnTicket(ticketId);
             activeExperts = activeExperts.RemoveExpertsNotActiveOnTicket(ticketId);
 
             // IS THIS THE CULPRIT???????
             //if (String.IsNullOrWhiteSpace(searchString)) activeExperts.PopulateList();
-
-            System.Diagnostics.Debug.WriteLine("*  3  **********IMPORTANT********");
-            System.Diagnostics.Debug.WriteLine("      Inside    BaseConsultController.cs -> AddConsultant");
-            System.Diagnostics.Debug.WriteLine("activeExperts was just updated");
-            System.Diagnostics.Debug.WriteLine("       activeExperts.Experts.Count = " + activeExperts.Experts.Count);
-
-
+            
             switch (sortOrder)
             {
                 case "OrcaUserName":
@@ -523,13 +438,7 @@ namespace ORCA.Controllers
             ViewBag.SortOrder = sortOrder;
             //ViewBag.SearchString = searchString;
             ViewBag.TicketID = ticketId;
-
-
-            System.Diagnostics.Debug.WriteLine("*  4  **********IMPORTANT********");
-            System.Diagnostics.Debug.WriteLine("      Inside    BaseConsultController.cs -> AddConsultant");
-            System.Diagnostics.Debug.WriteLine("going to View(activeExperts)");
-            System.Diagnostics.Debug.WriteLine("       activeExperts.Experts.Count = " + activeExperts.Experts.Count);
-
+            
             return View(activeExperts);
         }
 

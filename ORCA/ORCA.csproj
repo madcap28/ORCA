@@ -247,6 +247,7 @@
     <Content Include="Views\Consultant\_Consults_Consultation_TicketList.cshtml" />
     <Content Include="Views\Consultant\View.cshtml" />
     <Content Include="Views\Shared\OrcaConsults.cshtml" />
+    <Content Include="Views\Consultant\zzzz.cshtml" />
     <None Include="Views\Shared\AddConsultant.cshtml" />
   </ItemGroup>
   <ItemGroup>

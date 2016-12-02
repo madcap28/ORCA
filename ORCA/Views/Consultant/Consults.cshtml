@@ -12,12 +12,74 @@
 
 
 
+@Html.ActionLink("CLICK THIS TEST!!!", "Consults", new { viewModel = Model });
+
 
 
 @{
-    Html.RenderPartial("_Consults_Consultation_TicketList");
+    bool flipSort = true;
 }
 
+@*NOTE: If the sort/title field of the table is clicked, redirect to ConsultsUpdate and then it will be updated and sent back to Consults*@
+
+<table class="table">
+
+    <tr>
+        <th>
+            @Html.ActionLink("Ticket Number", "ConsultsUpdate", new { OrcaUserID_or_TicketExpertID = Model.OrcaUserID_or_TicketExpertID,
+           UserViewAccess = Model.UserViewAccess,
+           FilterTicketsOption = Model.FilterTicketsOption,
+           SortTicketsOption = Consultation.TicketSortOption.TicketID,
+           TicketSearchString = Model.TicketSearchString,
+           flipSort })
+        </th>
+        <th>
+            @Html.ActionLink("Date Created", "ConsultsUpdate", new { Model.OrcaUserID_or_TicketExpertID, Model.UserViewAccess, Model.FilterTicketsOption, Consultation.TicketSortOption.DTStamp, Model.TicketSearchString, flipSort })
+        </th>
+        <th>
+            @Html.ActionLink("Status", "ConsultsUpdate", new { Model.OrcaUserID_or_TicketExpertID, Model.UserViewAccess, Model.FilterTicketsOption, Consultation.TicketSortOption.TicketStatus, Model.TicketSearchString, flipSort })
+        </th>
+        <th>
+            @Html.ActionLink("Created By", "ConsultsUpdate", new { Model.OrcaUserID_or_TicketExpertID, Model.UserViewAccess, Model.FilterTicketsOption, Consultation.TicketSortOption.OrcaUserName, Model.TicketSearchString, flipSort })
+        </th>
+        <th>
+            @Html.ActionLink("Last Reply", "ConsultsUpdate", new { Model.OrcaUserID_or_TicketExpertID, Model.UserViewAccess,  Model.FilterTicketsOption, Consultation.TicketSortOption.OrcaUserNameLastReplied, Model.TicketSearchString, flipSort })
+        </th>
+        <th>
+            @Html.ActionLink("Description", "ConsultsUpdate", new { Model.OrcaUserID_or_TicketExpertID, Model.UserViewAccess, Model.FilterTicketsOption, Consultation.TicketSortOption.DescriptionName, Model.TicketSearchString, flipSort })
+        </th>
+        <th>
+    </tr>
+
+    @foreach (var item in Model.ConsultationTickets)
+    {
+
+
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TicketID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DTStamp)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TicketStatus)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrcaUserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrcaUserNameLastReplied)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DescriptionName)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.TicketID })
+            </td>
+        </tr>
+    }
+</table>
 
 
 
@@ -40,7 +102,111 @@
 
 
 
-@{
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*<div>
+        <h4>Consultation</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.ConsultationTickets.FirstOrDefault().TicketID)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ConsultationTickets.FirstOrDefault().TicketID)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.ConsultationTickets.FirstOrDefault().OrcaUserName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ConsultationTickets.FirstOrDefault().OrcaUserName)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.ConsultationTickets.FirstOrDefault().DTStamp)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ConsultationTickets.FirstOrDefault().DTStamp)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.ConsultationTickets.FirstOrDefault().DescriptionName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ConsultationTickets.FirstOrDefault().DescriptionName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.ConsultationTickets.FirstOrDefault().TicketStatus)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ConsultationTickets.FirstOrDefault().TicketStatus)
+            </dd>
+
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>*@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*@{
     System.Diagnostics.Debug.WriteLine("####  Consults.cshtml  ##############################################");
     System.Diagnostics.Debug.WriteLine("Model.FilterTicketsOption  " + Model.FilterTicketsOption);
     System.Diagnostics.Debug.WriteLine("Model.SortTicketsOption  " + Model.SortTicketsOption);
@@ -48,7 +214,7 @@
     System.Diagnostics.Debug.WriteLine("Model.ConsultationTickets.Count()  " + Model.ConsultationTickets.Count());
 
 
-}
+}*@
 
 
 

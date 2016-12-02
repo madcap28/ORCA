@@ -66,12 +66,8 @@ namespace ORCA.Models
 
 
                 CurrentTicketExperts = new ActiveExperts();
-
-
-                System.Diagnostics.Debug.WriteLine("CurrentTicketExperts.Experts.Count = " + CurrentTicketExperts.Experts.Count);
-
-
-                CurrentTicketExperts.RemoveExpertsNotActiveOnTicket(ticketID);
+                
+                CurrentTicketExperts = CurrentTicketExperts.RemoveExpertsNotActiveOnTicket(ticketID);
 
                 System.Diagnostics.Debug.WriteLine("After RemoveExpertsNotActiveOnTicket  CurrentTicketExperts.Experts.Count = " + CurrentTicketExperts.Experts.Count);
 

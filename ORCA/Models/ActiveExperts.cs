@@ -103,6 +103,7 @@ namespace ORCA.Models
 
             return this;
         }
+       
 
         public ActiveExperts PopulateList()
         {
@@ -111,7 +112,7 @@ namespace ORCA.Models
             // THIS IS A NASTY HACK BUT IT WILL WORK FOR NOW, it assumes that an expert consultant has added an expertise, otherwise the consultant can not be found in the list
             // NOTE: I need to figure out how to do the following section properly. I believe it has to do with using join, but I don't know enough about it so this will suffice for now.
             List<ConsultantExpertise> consultantExpertises = db.ConsultantExpertises.ToList();
-
+            
             Experts = new List<ActiveExpert>();
 
             foreach (var exp in consultantExpertises)
@@ -525,77 +526,30 @@ namespace ORCA.Models
 
         public ActiveExperts RemoveExpertsNotActiveOnTicket(int ticketID)
         {
-            //////OrcaContext db = new OrcaContext();
-
-
-
-            //////System.Diagnostics.Debug.WriteLine("####### IMPORTANT ####### IN REMOVE EXPERTS NOT ACTIVE ON TICKET");
-            //////System.Diagnostics.Debug.WriteLine("ticketID = " + ticketID);
-            //////System.Diagnostics.Debug.WriteLine("Experts.Count = " + Experts.Count);
-
-            //////Experts = new List<ActiveExpert>();
-
-            ////////List<TicketExpert> ticketExperts = db.TicketExperts.Where(x => x.TicketID == ticketID && x.TicketActivityState == ActivityState.Active).ToList();
-
-            //////List<TicketExpert> ticketExperts = (from ticEx in db.TicketExperts
-            //////                                    where ticEx.TicketID == ticketID && ticEx.TicketActivityState == ActivityState.Active
-            //////                                    select ticEx).ToList();
-
-
-
-
-
-
-
-            //////System.Diagnostics.Debug.WriteLine("tiketExperts.count = " + ticketExperts.Count());
-
-
-
+            OrcaContext db = new OrcaContext();
             
-            //////foreach (TicketExpert actTicExp in ticketExperts)
-            //////{
+             //List<TicketExpert> ticketExperts = db.TicketExperts.Where(x => x.TicketID == ticketID && x.TicketActivityState == ActivityState.Active).ToList();
 
-            //////    OrcaUser orcaUser = db.OrcaUsers.Find(actTicExp.TicketExpertID);
-            //////    ActiveExpert activeExpert = new ActiveExpert();
+            List<TicketExpert> ticketExperts = (from ticEx in db.TicketExperts
+                                                where ticEx.TicketID == ticketID && ticEx.TicketActivityState == ActivityState.Active
+                                                select ticEx).ToList();
 
-            //////    List<ConsultantExpertise> consultantExpertises = db.ConsultantExpertises.Where(x => x.OrcaUserID == actTicExp.TicketExpertID).ToList();
-                
-            //////    foreach (ConsultantExpertise conExp in consultantExpertises)
-            //////    {
+            List<ActiveExpert> newExperts = new List<ActiveExpert>();
 
-            //////        activeExpert.OrcaUserID = actTicExp.TicketExpertID;
-            //////        activeExpert.OrcaUserName = orcaUser.OrcaUserName;
-            //////        activeExpert.FirstName = orcaUser.FirstName;
-            //////        activeExpert.LastName = orcaUser.LastName;
-            //////        activeExpert.TitleDegree = db.ExpertConsultants.Find(actTicExp.TicketExpertID).TitleDegree;
-            //////        activeExpert.FieldOfExpertise = conExp.FieldOfExpertise;
-
-            //////        Experts.Add(activeExpert);
-            //////    }
-                
-            //////}
-            
+            // HACK & SLASH TIME
+            foreach (ActiveExpert actExp in Experts)
+            {
+                foreach(TicketExpert ticExp in ticketExperts)
+                {
+                    if (actExp.OrcaUserID == ticExp.ExpertForThisTicket)
+                    {
+                        newExperts.Add(actExp);
+                        break;
+                    }
+                }
+            }
+            Experts = newExperts;
             return this;
-            //// HACK TO GET ONLY CURRENT TICKET EXPERTS
-            //AddInactiveExpertsThatAreStillActiveOnTicket(ticketID);
-            //SortListBy(SortBy.FieldOfExpertise, SortMethod.Ascending);
-
-
-            //// SLASH TO GET RID OF THE ONES THAT ARENT ON THE TICKET
-            //List<TicketExpert> ticketExperts = (from tex in db.TicketExperts
-            //                                    where tex.TicketID == ticketID
-            //                                    select tex).ToList();
-            //// HACK & SLASH
-            //List<ActiveExpert> newTicketExperts = new List<ActiveExpert>();
-            //// HACK & SLASH
-            //foreach (ActiveExpert currExp in Experts)
-            //    foreach (TicketExpert tickExp in ticketExperts)
-            //        if (currExp.OrcaUserID == tickExp.ExpertForThisTicket && tickExp.TicketActivityState == ActivityState.Active)
-            //            newTicketExperts.Add(currExp);
-            //// now the new list should have only the ones on this particular ticket
-            //Experts = newTicketExperts;
-
-            //return this;
         }
 
 

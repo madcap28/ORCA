@@ -5,9 +5,131 @@
 @using ORCA.Models.Consultation
 
 
+<h3>Consultations</h3>
 
 
-<p>
+
+<table class="table">
+
+    <tr>
+        <th>
+            <form begin>
+                @Html.BeginForm();
+                {
+                @Html.DisplayNameFor(model => model.ConsultationTickets.FirstOrDefault().TicketID)
+                @Html.ActionLink("Ticket Number", "Consult", new { consultationModel = Model })
+                <input type="hidden" onclick=@{Model.SortTicketsOption = Consultation.TicketSortOption.TicketID; } />
+                }
+            </form>
+        </th>
+        <th>
+            <form begin>
+                {
+                @Html.DisplayNameFor(model => model.ConsultationTickets.FirstOrDefault().DTStamp)
+                @Html.ActionLink("Date Created", "Consult", new { consultationModel = Model })
+                <input type="hidden" onclick=@{Model.SortTicketsOption = Consultation.TicketSortOption.DTStamp; } />
+                }
+            </form>
+        </th>
+        <th>
+            <form begin>
+                @Html.BeginForm();
+                {
+                @Html.DisplayNameFor(model => model.ConsultationTickets.FirstOrDefault().TicketStatus)
+                @Html.ActionLink("Status", "Consult", new { consultationModel = Model })
+                <input type="hidden" onclick=@{Model.SortTicketsOption = Consultation.TicketSortOption.TicketStatus; } />
+                }
+            </form>
+        </th>
+        <th>
+            @Html.BeginForm();
+            {
+                @Html.DisplayNameFor(model => model.ConsultationTickets.FirstOrDefault().OrcaUserName)
+                @Html.ActionLink("Created By", "Consult", new { consultationModel = Model })
+            <input type="hidden" onclick=@{Model.SortTicketsOption = Consultation.TicketSortOption.OrcaUserName; } />
+            }
+        </th>
+        <th>
+            @Html.BeginForm();
+            {
+                @Html.DisplayNameFor(model => model.ConsultationTickets.FirstOrDefault().DescriptionName)
+                @Html.ActionLink("Description", "Consult", new { consultationModel = Model })
+                <input type="hidden" onclick=@{Model.SortTicketsOption = Consultation.TicketSortOption.DescriptionName; } />
+            }
+        </th>
+        <th>
+    </tr>
+
+
+    @foreach (var item in Model.ConsultationTickets)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TicketID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DTStamp)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TicketStatus)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrcaUserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DescriptionName)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.TicketID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.TicketID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.TicketID })
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*@using (Html.BeginForm())
+{
+    <input type="submit" value="THIS SUCKS" class="btn btn-default" onclick=@{ Html.Action("Index"); } />
+    }*@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*<p>
     <h3>Filter Consultations</h3>
     <div>
         <input type="button" value="All" class="btn btn-default" onclick="location.href='@Url.Action("Consults", new { consultationModel = Model, filterTicketOption = Consultation.TicketFilterOption.All, SortTicketOption = Model.SortTicketsOption, TicketSearchString = Model.TicketSearchString })'" />
@@ -101,18 +223,7 @@
         </tr>
     }
 
-</table>
-
-
-
-
-
-
-
-
-
-
-
+</table>*@
 
 
 

@@ -33,8 +33,9 @@ namespace ORCA.Models.Consultation
         [Display(Name = "Description")]
         public string DescriptionName { get; set; }
 
-        [Display(Name = "Last Reply")]
         public int OrcaUserIDLastReplied { get; set; }
+        [Display(Name = "Last Reply")]
+        public int OrcaUserNameLastReplied { get; set; }
 
         private bool _TicketStatus_IsTicketOpen;
         [Display(Name = "Status")]
