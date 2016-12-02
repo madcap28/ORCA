@@ -534,7 +534,7 @@ namespace ORCA.Controllers
         public ActionResult AddEntryToTicket([Bind(/*Exclude = "DescriptionName,OrcaUserName,EntryDTStamp",*/ Include = "TicketID,EntryText")] AddEntryToTicket entryToAddToTicket)
         {
             OrcaContext db = new OrcaContext();
-
+            // the shit gives probs
             if (ModelState.IsValid)
             {
                 TicketEntry ticketEntryToCopyToDb = new TicketEntry();
