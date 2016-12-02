@@ -97,7 +97,7 @@ namespace ORCA.Controllers
 
             if (TempData["ConsultationModel"] != null)
             {
-                System.Diagnostics.Debug.WriteLine("************#######************");
+                //System.Diagnostics.Debug.WriteLine("************#######************");
                 consultsModel = TempData["ConsultationModel"] as Consultation;
             }
             else
@@ -219,39 +219,39 @@ namespace ORCA.Controllers
         //    int stop = 2;
 
         //    int go = stop = 3;
-        //    System.Diagnostics.Debug.WriteLine("****** stop *****" + stop);
+        //    //System.Diagnostics.Debug.WriteLine("****** stop *****" + stop);
 
         //    EnumTest test = new EnumTest();
 
 
-        //    System.Diagnostics.Debug.WriteLine("     test.EnumTest_TestPublicEnum = " + test.EnumTest_TestPublicEnum);
+        //    //System.Diagnostics.Debug.WriteLine("     test.EnumTest_TestPublicEnum = " + test.EnumTest_TestPublicEnum);
         //    test.EnumTest_TestPublicEnum = TestPublicEnum.Value2;
-        //    System.Diagnostics.Debug.WriteLine("     test.EnumTest_TestPublicEnum = " + test.EnumTest_TestPublicEnum);
+        //    //System.Diagnostics.Debug.WriteLine("     test.EnumTest_TestPublicEnum = " + test.EnumTest_TestPublicEnum);
 
         //    test.EnumTest_TestPublicEnum = TestPublicEnum.Value2;
-        //    System.Diagnostics.Debug.WriteLine(test.EnumTest_TestPublicEnum);
+        //    //System.Diagnostics.Debug.WriteLine(test.EnumTest_TestPublicEnum);
         //    test.EnumTest_TestPublicEnum = TestPublicEnum.Value2;
-        //    System.Diagnostics.Debug.WriteLine(test.EnumTest_TestPublicEnum);
+        //    //System.Diagnostics.Debug.WriteLine(test.EnumTest_TestPublicEnum);
         //    test.EnumTest_TestPublicEnum = TestPublicEnum.Value1;
-        //    System.Diagnostics.Debug.WriteLine(test.EnumTest_TestPublicEnum);
+        //    //System.Diagnostics.Debug.WriteLine(test.EnumTest_TestPublicEnum);
         //    test.EnumTest_TestPublicEnum = TestPublicEnum.Value1;
-        //    System.Diagnostics.Debug.WriteLine(test.EnumTest_TestPublicEnum);
+        //    //System.Diagnostics.Debug.WriteLine(test.EnumTest_TestPublicEnum);
         //    test.EnumTest_TestPublicEnum = TestPublicEnum.Value1;
-        //    System.Diagnostics.Debug.WriteLine(test.EnumTest_TestPublicEnum);
+        //    //System.Diagnostics.Debug.WriteLine(test.EnumTest_TestPublicEnum);
 
 
         //    test.EnumTest_TestPublicEnum = TestPublicEnum.descValue3;
-        //    System.Diagnostics.Debug.WriteLine(test.EnumTest_TestPublicEnum);
+        //    //System.Diagnostics.Debug.WriteLine(test.EnumTest_TestPublicEnum);
         //    test.EnumTest_TestPublicEnum = TestPublicEnum.descValue3;
-        //    System.Diagnostics.Debug.WriteLine(test.EnumTest_TestPublicEnum);
+        //    //System.Diagnostics.Debug.WriteLine(test.EnumTest_TestPublicEnum);
         //    test.EnumTest_TestPublicEnum = TestPublicEnum.descValue3;
-        //    System.Diagnostics.Debug.WriteLine(test.EnumTest_TestPublicEnum);
+        //    //System.Diagnostics.Debug.WriteLine(test.EnumTest_TestPublicEnum);
         //    test.EnumTest_TestPublicEnum = TestPublicEnum.descValue4;
-        //    System.Diagnostics.Debug.WriteLine(test.EnumTest_TestPublicEnum);
+        //    //System.Diagnostics.Debug.WriteLine(test.EnumTest_TestPublicEnum);
         //    test.EnumTest_TestPublicEnum = TestPublicEnum.descValue4;
-        //    System.Diagnostics.Debug.WriteLine(test.EnumTest_TestPublicEnum);
+        //    //System.Diagnostics.Debug.WriteLine(test.EnumTest_TestPublicEnum);
         //    test.EnumTest_TestPublicEnum = TestPublicEnum.descValue4;
-        //    System.Diagnostics.Debug.WriteLine(test.EnumTest_TestPublicEnum);
+        //    //System.Diagnostics.Debug.WriteLine(test.EnumTest_TestPublicEnum);
 
 
 
@@ -263,33 +263,33 @@ namespace ORCA.Controllers
 
         //    Consultation consult = new Consultation(userId, OrcaUserType.Consultant);
 
-        //    //////System.Diagnostics.Debug.WriteLine("*****************BEGIN TEST******************************");
+        //    ////////System.Diagnostics.Debug.WriteLine("*****************BEGIN TEST******************************");
 
         //    //////TicketFilterOption testVar;
 
-        //    //////System.Diagnostics.Debug.WriteLine("   BEFORE GET");
-        //    //////System.Diagnostics.Debug.WriteLine("      consult.FilterTicketsOption = " + consult.FilterTicketsOption);
+        //    ////////System.Diagnostics.Debug.WriteLine("   BEFORE GET");
+        //    ////////System.Diagnostics.Debug.WriteLine("      consult.FilterTicketsOption = " + consult.FilterTicketsOption);
         //    //////testVar = consult.FilterTicketsOption;
 
-        //    //////System.Diagnostics.Debug.WriteLine("   AFTER GET / BEFORE GET");
-        //    //////System.Diagnostics.Debug.WriteLine("      consult.FilterTicketsOption = " + consult.FilterTicketsOption);
+        //    ////////System.Diagnostics.Debug.WriteLine("   AFTER GET / BEFORE GET");
+        //    ////////System.Diagnostics.Debug.WriteLine("      consult.FilterTicketsOption = " + consult.FilterTicketsOption);
         //    //////testVar = consult.FilterTicketsOption;
 
-        //    //////System.Diagnostics.Debug.WriteLine("   AFTER GET / before set");
-        //    //////System.Diagnostics.Debug.WriteLine("      consult.FilterTicketsOption = " + consult.FilterTicketsOption);
+        //    ////////System.Diagnostics.Debug.WriteLine("   AFTER GET / before set");
+        //    ////////System.Diagnostics.Debug.WriteLine("      consult.FilterTicketsOption = " + consult.FilterTicketsOption);
         //    //////consult.FilterTicketsOption = testVar;
 
-        //    //////System.Diagnostics.Debug.WriteLine("   after set / before set");
-        //    //////System.Diagnostics.Debug.WriteLine("      consult.FilterTicketsOption = " + consult.FilterTicketsOption);
+        //    ////////System.Diagnostics.Debug.WriteLine("   after set / before set");
+        //    ////////System.Diagnostics.Debug.WriteLine("      consult.FilterTicketsOption = " + consult.FilterTicketsOption);
         //    //////consult.FilterTicketsOption = testVar;
 
-        //    //////System.Diagnostics.Debug.WriteLine("   after set / before set");
-        //    //////System.Diagnostics.Debug.WriteLine("      consult.FilterTicketsOption = " + consult.FilterTicketsOption);
+        //    ////////System.Diagnostics.Debug.WriteLine("   after set / before set");
+        //    ////////System.Diagnostics.Debug.WriteLine("      consult.FilterTicketsOption = " + consult.FilterTicketsOption);
         //    //////consult.FilterTicketsOption = testVar;
 
-        //    //////System.Diagnostics.Debug.WriteLine("   after set");
+        //    ////////System.Diagnostics.Debug.WriteLine("   after set");
 
-        //    //////System.Diagnostics.Debug.WriteLine("********************END TEST***************************");
+        //    ////////System.Diagnostics.Debug.WriteLine("********************END TEST***************************");
 
 
         //    //////consult.TicketSearchString = "FIRST SEARCH";

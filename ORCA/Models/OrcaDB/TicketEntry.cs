@@ -12,16 +12,16 @@ namespace ORCA.Models.OrcaDB
         [Key]
         public int TicketEntryID { get; set; }
 
-        [ForeignKey("Ticket"), Required]
+        [ForeignKey("Ticket")/*, Required*/]
         public int TicketID { get; set; }// This is the TicketID of the ticket this TicketEntry is on.  TicketID = Ticket.TicketID
 
-        [ForeignKey("OrcaUser"), Required, Display(Name = "Posted By")]
+        [ForeignKey("OrcaUser"), /*Required,*/ Display(Name = "Posted By")]
         public int OrcaUserID { get; set; }// This is the OrcaUserID of the creator of this TicketEntry.  OrcaUserID = OrcaUser.OrcaUserID
 
-        [Required]
+        //[Required]
         public DateTime EntryDTStamp { get; set; }
 
-        [Required]
+        //[Required]
         public string EntryText { get; set; }// This is the EntryText that the creator enters for the Ticket.
 
 

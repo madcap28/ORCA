@@ -15,7 +15,7 @@ namespace ORCA.Models.OrcaDB
         [Required]// [ForeignKey("ExpertConsultant")] [ForeignKey("OrcaUser")]
         public int OrcaUserID { get; set; }// This is the OrcaUser ExpertConsultant that has this ConsultantExpertise in his/her list of ConsultantExpertises.   ExpertConsultantID = ExpertConsultant.ExpertConsultantID = OrcaUser.OrcaUserID
 
-        [Required]
+        //[Required]
         public string FieldOfExpertise { get; set; }// This is FieldOfExpertise of an OrcaUser that is an ExpertConsultant
 
 

@@ -36,10 +36,10 @@ namespace ORCA.Models.OrcaDB
         [DataType(DataType.PhoneNumber), Phone]
         public string PhoneNumber { get; set; }// Optional field
 
-        [Required]
+        //[Required]
         public bool IsAccountDeactivated { get; set; }// This is initially False when the account is created but an admin can disable this account by setting this to True.
 
-        [Required]
+        //[Required]
         public OrcaUserType UserType { get; set; }// This indicates the UserType as either a Consultee seeking expert advice or a Consultant providing expert advice.
 
 

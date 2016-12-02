@@ -15,10 +15,10 @@ namespace ORCA.Models.OrcaDB
         [Key, ForeignKey("OrcaUser"), Required]
         public int OrcaUserID { get; set; }// This is the ExpertConsultantID of the OrcaUser that is an ExpertConsultant.   ExpertConsultantID = OrcaUser.OrcaUserID
         
-        [Required]
+        //[Required]
         public ExpertStatus ExpertStatus { get; set; }// This indicates if the OrcaUser ExpertConsultant has been approved to provide expert advice.  This is set by an admin that confirms and approves the account.
 
-        [Required]
+        //[Required]
         public bool IsActive { get; set; }// This indicates if the ExpertConsultant is currently active and will be available for response.  The OrcaUser ExpertConsultant can change this, i.e. setting this to False (inactive) when he/she goes on vacation.
 
         public string TitleDegree { get; set; }

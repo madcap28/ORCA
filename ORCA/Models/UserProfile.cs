@@ -9,7 +9,7 @@ using System.Web;
 namespace ORCA.Models
 {
     public enum ActiveStatus { Yes, No }
-
+    
     [BindableType(IsBindable = true)]
     public class UserProfile
     {

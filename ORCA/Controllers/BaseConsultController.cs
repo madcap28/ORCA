@@ -454,7 +454,7 @@ namespace ORCA.Controllers
 
 
 
-            System.Diagnostics.Debug.WriteLine("AddConsultantToTicket ticketExperts.count = " + ticketExperts.Count);
+            //System.Diagnostics.Debug.WriteLine("AddConsultantToTicket ticketExperts.count = " + ticketExperts.Count);
 
 
 
@@ -471,7 +471,7 @@ namespace ORCA.Controllers
                 db.Entry(expToEdit).State = EntityState.Modified;
                 db.SaveChanges();
 
-                System.Diagnostics.Debug.WriteLine("AddConsultantToTicket UDATED expToEdit.TicketActivityState ");
+                //System.Diagnostics.Debug.WriteLine("AddConsultantToTicket UDATED expToEdit.TicketActivityState ");
 
             }
             else
@@ -484,7 +484,7 @@ namespace ORCA.Controllers
                 db.TicketExperts.Add(ticketExpert);
                 db.SaveChanges();
 
-                System.Diagnostics.Debug.WriteLine("AddConsultantToTicket ADDED ticketExpert");
+                //System.Diagnostics.Debug.WriteLine("AddConsultantToTicket ADDED ticketExpert");
 
             }
 
@@ -494,7 +494,7 @@ namespace ORCA.Controllers
 
         public ActionResult RemoveConsultantFromTicket(int consultantId, int ticketId)
         {
-            //System.Diagnostics.Debug.WriteLine("consultantId = " + consultantId + " | ticketId = " + ticketId);
+            ////System.Diagnostics.Debug.WriteLine("consultantId = " + consultantId + " | ticketId = " + ticketId);
 
             OrcaContext db = new OrcaContext();
             
@@ -544,10 +544,10 @@ namespace ORCA.Controllers
                 ticketEntryToCopyToDb.EntryDTStamp = DateTime.Now;
                 ticketEntryToCopyToDb.EntryText = entryToAddToTicket.NewTicketEntry;
 
-                System.Diagnostics.Debug.WriteLine(ticketEntryToCopyToDb.TicketID);
-                System.Diagnostics.Debug.WriteLine(ticketEntryToCopyToDb.OrcaUserID);
-                System.Diagnostics.Debug.WriteLine(ticketEntryToCopyToDb.EntryDTStamp);
-                System.Diagnostics.Debug.WriteLine(ticketEntryToCopyToDb.EntryText);
+                ////System.Diagnostics.Debug.WriteLine(ticketEntryToCopyToDb.TicketID);
+                ////System.Diagnostics.Debug.WriteLine(ticketEntryToCopyToDb.OrcaUserID);
+                ////System.Diagnostics.Debug.WriteLine(ticketEntryToCopyToDb.EntryDTStamp);
+                ////System.Diagnostics.Debug.WriteLine(ticketEntryToCopyToDb.EntryText);
 
 
                 db.TicketEntries.Add(ticketEntryToCopyToDb);

@@ -51,8 +51,8 @@ namespace ORCA.Models
             if (ticket != null)
             {
 
-                System.Diagnostics.Debug.WriteLine("EditContultationTicket.cs");
-                System.Diagnostics.Debug.WriteLine("ticket is not null");
+                //System.Diagnostics.Debug.WriteLine("EditContultationTicket.cs");
+                //System.Diagnostics.Debug.WriteLine("ticket is not null");
 
                 TicketID = ticketID;
                 OrcaUserName = db.OrcaUsers.Find(ticket.OrcaUserID).OrcaUserName;
@@ -69,7 +69,7 @@ namespace ORCA.Models
                 
                 CurrentTicketExperts = CurrentTicketExperts.RemoveExpertsNotActiveOnTicket(ticketID);
 
-                System.Diagnostics.Debug.WriteLine("After RemoveExpertsNotActiveOnTicket  CurrentTicketExperts.Experts.Count = " + CurrentTicketExperts.Experts.Count);
+                //System.Diagnostics.Debug.WriteLine("After RemoveExpertsNotActiveOnTicket  CurrentTicketExperts.Experts.Count = " + CurrentTicketExperts.Experts.Count);
 
 
                 //ExpertsToAdd = new ActiveExperts();
