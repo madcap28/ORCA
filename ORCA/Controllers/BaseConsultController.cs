@@ -143,6 +143,17 @@ namespace ORCA.Controllers
             return View();
         }
         
+
+
+
+
+
+
+
+
+
+
+
         public ActionResult Consultations(string sortOrder, string selectionFilter)
         {
             /*
@@ -348,24 +359,7 @@ namespace ORCA.Controllers
 
             return View(editConsultationTicket);
         }
-
-
-
-
-
-        //public ActionResult Consults()
-        //{
-
-        //    return View();
-        //}
-
-
-        /*
-         * 
-         * THIS BEGINS THE CRAP THAT NEEDS TO BE REDONE ASAP
-         * 
-         */
-
+        
         public ActionResult AddConsultant(int ticketId, string sortOrder, string searchString)
         {
 
@@ -443,6 +437,14 @@ namespace ORCA.Controllers
         }
 
 
+
+
+
+
+
+
+
+
         public ActionResult AddConsultantToTicket(int consultantId, int ticketId, string sortOrder, string searchString)
         {
             OrcaContext db = new OrcaContext();
@@ -517,13 +519,52 @@ namespace ORCA.Controllers
         }
 
 
+        public ActionResult AddEntryToTicket(int ticketId)
+        {
+            AddEntryToTicket newTicketEntry = new AddEntryToTicket();
+            
+            newTicketEntry.TicketID = ticketId;
+            //newTicketEntry.OrcaUserName = Session["OrcaUserName"].ToString();
+            
+            return View(newTicketEntry);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddEntryToTicket([Bind(/*Exclude = "DescriptionName,OrcaUserName,EntryDTStamp",*/ Include = "TicketID,EntryText")] AddEntryToTicket entryToAddToTicket)
+        {
+            OrcaContext db = new OrcaContext();
+
+            if (ModelState.IsValid)
+            {
+                TicketEntry ticketEntryToCopyToDb = new TicketEntry();
+
+                ticketEntryToCopyToDb.TicketID = entryToAddToTicket.TicketID;
+                ticketEntryToCopyToDb.OrcaUserID = int.Parse(Session["OrcaUserID"].ToString());
+                ticketEntryToCopyToDb.EntryDTStamp = DateTime.Now;
+                ticketEntryToCopyToDb.EntryText = entryToAddToTicket.NewTicketEntry;
+
+                System.Diagnostics.Debug.WriteLine(ticketEntryToCopyToDb.TicketID);
+                System.Diagnostics.Debug.WriteLine(ticketEntryToCopyToDb.OrcaUserID);
+                System.Diagnostics.Debug.WriteLine(ticketEntryToCopyToDb.EntryDTStamp);
+                System.Diagnostics.Debug.WriteLine(ticketEntryToCopyToDb.EntryText);
+
+
+                db.TicketEntries.Add(ticketEntryToCopyToDb);
+                db.SaveChanges();
+
+                RedirectToAction("EditConsultationTicket", new { entryToAddToTicket.TicketID, id = entryToAddToTicket.TicketID });
+            }
+            
+            
+
+            return View(entryToAddToTicket);
+
+        }
 
 
 
 
-
-
-        
 
     }
 }
