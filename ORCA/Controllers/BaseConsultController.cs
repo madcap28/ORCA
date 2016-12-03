@@ -350,6 +350,23 @@ namespace ORCA.Controllers
 
             EditConsultationTicket ticketToEdit = new Models.EditConsultationTicket(ticketId);// this is the ticket we will edit
 
+
+            
+
+
+
+            //ticketToEdit.TicketID = ;
+            //ticketToEdit.OrcaUserName = ;
+            //ticketToEdit.DTStamp = 
+            //ticketToEdit.DescriptionName = ;
+            //ticketToEdit.IsTicketOpen = ;
+            //ticketToEdit.NewTicketEntry = ;
+            //ticketToEdit.CurrentTicketExperts = ;
+            //ticketToEdit.ExpertsToAdd = ;
+            //ticketToEdit.TicketEntries = ;
+
+
+
             return View(ticketToEdit);
         }
         
@@ -365,6 +382,10 @@ namespace ORCA.Controllers
             return View(editConsultationTicket);
         }
         
+
+
+
+
         public ActionResult AddConsultant(int ticketId, string sortOrder, string searchString)
         {
 

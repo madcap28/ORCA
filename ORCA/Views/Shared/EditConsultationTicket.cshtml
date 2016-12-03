@@ -155,7 +155,7 @@
                 @Html.DisplayFor(modelItem => item.LastName)
             </td>
             <td>
-                @Html.ActionLink("Remove Consultant", "RemoveConsultantFromTicket", new { consultantId = item.OrcaUserID, ticketId = Model.TicketID,  })
+                @Html.ActionLink("Remove Consultant", "RemoveConsultantFromTicket", new { consultantId = item.OrcaUserID, ticketId = Model.TicketID  })
             </td>
         </tr>
     }
