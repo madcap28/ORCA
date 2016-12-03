@@ -37,16 +37,17 @@ namespace ORCA.Models
         [Display(Name = "Entries & Replies")]
         public List<ConsultationEntry> TicketEntries { get; set; }
 
-        
 
+        //[Display(Name = "Search")]
+        //public string SearchString { get; set; }
 
 
         public EditConsultationTicket() { }
-        public EditConsultationTicket(int ticketID)
+        public EditConsultationTicket(int ticketId)
         {
             OrcaContext db = new OrcaContext();
 
-            Ticket ticket = db.Tickets.Find(ticketID);
+            Ticket ticket = db.Tickets.Find(ticketId);
 
             if (ticket != null)
             {
@@ -54,11 +55,11 @@ namespace ORCA.Models
                 //System.Diagnostics.Debug.WriteLine("EditContultationTicket.cs");
                 //System.Diagnostics.Debug.WriteLine("ticket is not null");
 
-                TicketID = ticketID;
+                TicketID = ticketId;
                 OrcaUserName = db.OrcaUsers.Find(ticket.OrcaUserID).OrcaUserName;
                 DTStamp = ticket.DTStamp;
                 DescriptionName = ticket.DescriptionName;
-                
+
                 if (ticket.IsTicketOpen) IsTicketOpen = TicketStatus.Open;
                 else IsTicketOpen = TicketStatus.Closed;
 
@@ -66,8 +67,8 @@ namespace ORCA.Models
 
 
                 CurrentTicketExperts = new ActiveExperts();
-                
-                CurrentTicketExperts = CurrentTicketExperts.RemoveExpertsNotActiveOnTicket(ticketID);
+
+                CurrentTicketExperts = CurrentTicketExperts.RemoveExpertsNotActiveOnTicket(ticketId);
 
                 //System.Diagnostics.Debug.WriteLine("After RemoveExpertsNotActiveOnTicket  CurrentTicketExperts.Experts.Count = " + CurrentTicketExperts.Experts.Count);
 
@@ -77,14 +78,63 @@ namespace ORCA.Models
 
                 TicketEntries = new List<ConsultationEntry>();
 
-                foreach(var entry in db.Tickets.Find(ticketID).TicketEntries)
+                foreach (var entry in db.Tickets.Find(ticketId).TicketEntries)
                 {
                     TicketEntries.Add(new ConsultationEntry(entry.TicketEntryID));
                 }
                 TicketEntries.OrderByDescending(x => x.EntryDTStamp);
             }
         }
-        
+
+
+
+
+        //public EditConsultationTicket(int ticketID)
+        //{
+        //    OrcaContext db = new OrcaContext();
+
+        //    Ticket ticket = db.Tickets.Find(ticketID);
+
+        //    if (ticket != null)
+        //    {
+
+        //        this.TicketID = ticketID;
+
+        //        this.OrcaUserName
+        //        ////System.Diagnostics.Debug.WriteLine("EditContultationTicket.cs");
+        //        ////System.Diagnostics.Debug.WriteLine("ticket is not null");
+
+        //        //TicketID = ticketID;
+        //        //OrcaUserName = db.OrcaUsers.Find(ticket.OrcaUserID).OrcaUserName;
+        //        //DTStamp = ticket.DTStamp;
+        //        //DescriptionName = ticket.DescriptionName;
+
+        //        //if (ticket.IsTicketOpen) IsTicketOpen = TicketStatus.Open;
+        //        //else IsTicketOpen = TicketStatus.Closed;
+
+
+
+
+        //        //CurrentTicketExperts = new ActiveExperts();
+
+        //        //CurrentTicketExperts = CurrentTicketExperts.RemoveExpertsNotActiveOnTicket(ticketID);
+
+        //        ////System.Diagnostics.Debug.WriteLine("After RemoveExpertsNotActiveOnTicket  CurrentTicketExperts.Experts.Count = " + CurrentTicketExperts.Experts.Count);
+
+
+        //        ////ExpertsToAdd = new ActiveExperts();
+        //        ////ExpertsToAdd.AddInactiveExpertsThatAreStillActiveOnTicket(ticketID);
+
+        //        //TicketEntries = new List<ConsultationEntry>();
+
+        //        //foreach(var entry in db.Tickets.Find(ticketID).TicketEntries)
+        //        //{
+        //        //    TicketEntries.Add(new ConsultationEntry(entry.TicketEntryID));
+        //        //}
+        //        //TicketEntries.OrderByDescending(x => x.EntryDTStamp);
+        //    }
+        //}
+
 
     }
 }

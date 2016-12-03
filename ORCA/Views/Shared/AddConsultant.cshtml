@@ -6,21 +6,6 @@
     ViewBag.Title = "Home";
 }
 
-@*
-    ViewBag.FieldSortParam
-    ViewBag.TitleSortParam
-    ViewBag.FirstNameSortParam
-    ViewBag.LastNameSortParam
-*@
-
-@*
-    <h6>@Session["OrcaUserID"]</h6>
-    <h6>@Session["OrcaUserName"]</h6>
-    <h6>@Session["FirstName"]</h6>
-    <h6>@Session["LastName"]</h6>
-    <h6>@Session["UserType"]</h6>
-*@
-
 <h1>Marshall Online Reporting & Consulting Application</h1>
 <h4>@ViewBag.Message</h4>
 <h3>Welcome @Session["OrcaUserName"]</h3>
@@ -31,8 +16,19 @@
 }
 
 @*<input type="button" value="New Reply" class="btn btn-default" onclick="location.href='@Url.Action("Consultations", new { sortOrder = ViewBag.SortOrder, selectionFilter = ConsultationTicketSelection.NewReply.ToString() })'" />
-    <input type="submit" value="Search" onsubmit=@{TempData["SearchString"] = ViewBag.SearchString;} />
-*@
+    <input type="submit" value="Search" onsubmit=@{TempData["SearchString"] = ViewBag.SearchString;} />*@
+
+
+@*@using (Html.BeginForm())
+
+
+{
+    <p>
+        Search Expert Consultants:  @Html.TextBox("searchString")
+        <input type="submit" value="Search" onclick=@{ TempData["SearchString"] = null; } />
+    </p>
+    }*@
+
 
 @using (Html.BeginForm())
 
@@ -44,14 +40,6 @@
     </p>
     }
 
-
-
-@{
-    //System.Diagnostics.Debug.WriteLine("&&&&& PROBLEM SOMEWHERE &&&&&&");
-    //System.Diagnostics.Debug.WriteLine("In AddConsultant.cshtml");
-    //System.Diagnostics.Debug.WriteLine("Model.Experts.Count = " + Model.Experts.Count);
-
-}
 
 
 
@@ -102,16 +90,19 @@
                 @Html.ActionLink("Add", "AddConsultantToTicket", new { consultantId = item.OrcaUserID, ticketId = ViewBag.TicketID, sortOrder = ViewBag.LastNameSortParam, searchString = ViewBag.SearchString })
             </td>
 
-           
-            
         </tr>
     }
 
-  
-
-
-
 </table>
+
+
+
+
+
+
+
+
+
 
 <div>
     @Html.ActionLink("Home", "Index")

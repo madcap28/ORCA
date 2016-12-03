@@ -9,6 +9,7 @@ namespace ORCA.Models
 {
     public class ActiveExpert
     {
+        [Key]
         public int OrcaUserID { get; set; }
 
         [Display(Name = "Expert/Consultant")]

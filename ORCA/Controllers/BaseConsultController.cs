@@ -338,7 +338,7 @@ namespace ORCA.Controllers
         }
         
         [HttpGet]
-        public ActionResult EditConsultationTicket(int ticketId)
+        public ActionResult EditConsultationTicket(int ticketId, string searchString)
         {
             // convnention for making it easier to pass messages between controllers
             if (TempData["Message"] != null)
@@ -349,18 +349,17 @@ namespace ORCA.Controllers
             OrcaContext db = new OrcaContext();
 
             EditConsultationTicket ticketToEdit = new Models.EditConsultationTicket(ticketId);// this is the ticket we will edit
-
-
             
+            
+            //Ticket tick = db.Tickets.Find(ticketId);
 
+            //ticketToEdit.TicketID = ticketId;
 
-
-            //ticketToEdit.TicketID = ;
-            //ticketToEdit.OrcaUserName = ;
-            //ticketToEdit.DTStamp = 
-            //ticketToEdit.DescriptionName = ;
-            //ticketToEdit.IsTicketOpen = ;
-            //ticketToEdit.NewTicketEntry = ;
+            //ticketToEdit.OrcaUserName = Session["OrcaUserName"].ToString();
+            //ticketToEdit.DTStamp = tick.DTStamp;
+            //ticketToEdit.DescriptionName = tick.DescriptionName;
+            //ticketToEdit.IsTicketOpen = tick.IsTicketOpen ? TicketStatus.Open : TicketStatus.Closed;
+            //ticketToEdit.NewTicketEntry = "";
             //ticketToEdit.CurrentTicketExperts = ;
             //ticketToEdit.ExpertsToAdd = ;
             //ticketToEdit.TicketEntries = ;
@@ -384,9 +383,9 @@ namespace ORCA.Controllers
         
 
 
+        
 
-
-        public ActionResult AddConsultant(int ticketId, string sortOrder, string searchString)
+        public ActionResult AddConsultant(int ticketID, string sortOrder, string searchString)//, string searchString)
         {
 
             // convnention for making it easier to pass messages between controllers
@@ -401,7 +400,9 @@ namespace ORCA.Controllers
             if (String.IsNullOrEmpty(searchString))
                 if (TempData["SearchString"] != null)
                     searchString = TempData["SearchString"].ToString();
-            
+
+
+
             if (String.IsNullOrEmpty(sortOrder)) sortOrder = SortBy.FieldOfExpertise.ToString();
 
             ViewBag.FieldOfExpertiseSortParam = sortOrder == SortBy.FieldOfExpertise.ToString() ? "FieldOfExpertise_desc" : SortBy.FieldOfExpertise.ToString();
@@ -416,7 +417,7 @@ namespace ORCA.Controllers
             if (String.IsNullOrWhiteSpace(searchString)) activeExperts.PopulateList();
             
             //activeExperts.AddInactiveExpertsThatAreStillActiveOnTicket(ticketId);
-            activeExperts = activeExperts.RemoveExpertsNotActiveOnTicket(ticketId);
+            //activeExperts = activeExperts.RemoveExpertsNotActiveOnTicket(ticketId);
 
             // IS THIS THE CULPRIT???????
             //if (String.IsNullOrWhiteSpace(searchString)) activeExperts.PopulateList();
@@ -455,12 +456,110 @@ namespace ORCA.Controllers
                     break;
             }
 
+
+
+
+
+            //activeExperts = activeExperts.RemoveExpertsNotActiveOnTicket(ticketId);
+
+
+
+
+
             ViewBag.SortOrder = sortOrder;
             //ViewBag.SearchString = searchString;
-            ViewBag.TicketID = ticketId;
+            ViewBag.TicketID = ticketID;
             
             return View(activeExperts);
         }
+
+
+
+        //public ActionResult AddConsultant(int ticketId, string sortOrder, string searchString)
+        //{
+
+        //    // convnention for making it easier to pass messages between controllers
+        //    if (TempData["Message"] != null)
+        //    {
+        //        ViewBag.Message += (" " + TempData["Message"].ToString());
+        //    }
+
+        //    if (String.IsNullOrEmpty(sortOrder))
+        //        if (TempData["SortOrder"] != null)
+        //            sortOrder = TempData["SortOrder"].ToString();
+        //    if (String.IsNullOrEmpty(searchString))
+        //        if (TempData["SearchString"] != null)
+        //            searchString = TempData["SearchString"].ToString();
+
+        //    if (String.IsNullOrEmpty(sortOrder)) sortOrder = SortBy.FieldOfExpertise.ToString();
+
+        //    ViewBag.FieldOfExpertiseSortParam = sortOrder == SortBy.FieldOfExpertise.ToString() ? "FieldOfExpertise_desc" : SortBy.FieldOfExpertise.ToString();
+        //    ViewBag.TitleDegreeSortParam = sortOrder == SortBy.TitleDegree.ToString() ? "TitleDegree_desc" : SortBy.TitleDegree.ToString();
+        //    ViewBag.OrcaUserNameSortParam = sortOrder == SortBy.OrcaUserName.ToString() ? "OrcaUserName_desc" : SortBy.OrcaUserName.ToString();
+        //    ViewBag.FirstNameSortParam = sortOrder == SortBy.FirstName.ToString() ? "FirstName_desc" : SortBy.FirstName.ToString();
+        //    ViewBag.LastNameSortParam = sortOrder == SortBy.LastName.ToString() ? "LastName_desc" : SortBy.LastName.ToString();
+
+        //    ActiveExperts activeExperts = new ActiveExperts();
+
+
+        //    if (String.IsNullOrWhiteSpace(searchString)) activeExperts.PopulateList();
+
+        //    //activeExperts.AddInactiveExpertsThatAreStillActiveOnTicket(ticketId);
+        //    //activeExperts = activeExperts.RemoveExpertsNotActiveOnTicket(ticketId);
+
+        //    // IS THIS THE CULPRIT???????
+        //    //if (String.IsNullOrWhiteSpace(searchString)) activeExperts.PopulateList();
+
+        //    switch (sortOrder)
+        //    {
+        //        case "OrcaUserName":
+        //            activeExperts.FilterList(searchString).SortListBy(SortBy.OrcaUserName, SortMethod.Ascending);
+        //            break;
+        //        case "TitleDegree":
+        //            activeExperts.FilterList(searchString).SortListBy(SortBy.TitleDegree, SortMethod.Ascending);
+        //            break;
+        //        case "FirstName":
+        //            activeExperts.FilterList(searchString).SortListBy(SortBy.FirstName, SortMethod.Ascending);
+        //            break;
+        //        case "LastName":
+        //            activeExperts.FilterList(searchString).SortListBy(SortBy.LastName, SortMethod.Ascending);
+        //            break;
+        //        case "FieldOfExpertise_desc":
+        //            activeExperts.FilterList(searchString).SortListBy(SortBy.FieldOfExpertise, SortMethod.Descending);
+        //            break;
+        //        case "OrcaUserName_desc":
+        //            activeExperts.FilterList(searchString).SortListBy(SortBy.OrcaUserName, SortMethod.Descending);
+        //            break;
+        //        case "TitleDegree_desc":
+        //            activeExperts.FilterList(searchString).SortListBy(SortBy.TitleDegree, SortMethod.Descending);
+        //            break;
+        //        case "FirstName_desc":
+        //            activeExperts.FilterList(searchString).SortListBy(SortBy.FirstName, SortMethod.Descending);
+        //            break;
+        //        case "LastName_desc":
+        //            activeExperts.FilterList(searchString).SortListBy(SortBy.LastName, SortMethod.Descending);
+        //            break;
+        //        default: // case "FieldOfExpertise":
+        //            activeExperts.FilterList(searchString).SortListBy(SortBy.FieldOfExpertise, SortMethod.Ascending);
+        //            break;
+        //    }
+
+
+
+
+
+        //    //activeExperts = activeExperts.RemoveExpertsNotActiveOnTicket(ticketId);
+
+
+
+
+
+        //    ViewBag.SortOrder = sortOrder;
+        //    //ViewBag.SearchString = searchString;
+        //    ViewBag.TicketID = ticketId;
+
+        //    return View(activeExperts);
+        //}
 
 
 

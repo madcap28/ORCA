@@ -498,6 +498,11 @@ namespace ORCA.Models
 
         public ActiveExperts AddInactiveExpertsThatAreStillActiveOnTicket(int ticketID)
         {
+
+
+
+
+
             //OrcaContext db = new OrcaContext();
 
             //PopulateList();
@@ -523,31 +528,23 @@ namespace ORCA.Models
 
             return this;
         }
-
+        
         public ActiveExperts RemoveExpertsNotActiveOnTicket(int ticketID)
         {
             OrcaContext db = new OrcaContext();
-            
-             //List<TicketExpert> ticketExperts = db.TicketExperts.Where(x => x.TicketID == ticketID && x.TicketActivityState == ActivityState.Active).ToList();
-
-            List<TicketExpert> ticketExperts = (from ticEx in db.TicketExperts
-                                                where ticEx.TicketID == ticketID && ticEx.TicketActivityState == ActivityState.Active
-                                                select ticEx).ToList();
-
             List<ActiveExpert> newExperts = new List<ActiveExpert>();
 
-            // HACK & SLASH TIME
             foreach (ActiveExpert actExp in Experts)
             {
-                foreach(TicketExpert ticExp in ticketExperts)
-                {
-                    if (actExp.OrcaUserID == ticExp.ExpertForThisTicket)
-                    {
-                        newExperts.Add(actExp);
-                        break;
-                    }
-                }
+                //var ticketExperts = from ticEx in db.TicketExperts
+                //                    where ticEx.ExpertForThisTicket == actExp.OrcaUserID
+                //                    select ticEx;
+                List<TicketExpert>ticketExperts = db.TicketExperts.Where(x => x.ExpertForThisTicket == actExp.OrcaUserID && x.TicketActivityState == ActivityState.Active && x.TicketID == ticketID).ToList();
+                
+                if (ticketExperts.Count > 0) newExperts.Add(actExp);
+                
             }
+            
             Experts = newExperts;
             return this;
         }
