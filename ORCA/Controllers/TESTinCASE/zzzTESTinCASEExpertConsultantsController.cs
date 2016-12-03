@@ -9,20 +9,20 @@ using System.Web.Mvc;
 using ORCA.DAL;
 using ORCA.Models.OrcaDB;
 
-namespace ORCA.Controllers
+namespace ORCA.Controllers.TESTinCASE
 {
-    public class xxxxExpertConsultantsController : Controller
+    public class zzzTESTinCASEExpertConsultantsController : Controller
     {
         private OrcaContext db = new OrcaContext();
 
-        // GET: xxxxExpertConsultants
+        // GET: zzzTESTinCASEExpertConsultants
         public ActionResult Index()
         {
             var expertConsultants = db.ExpertConsultants.Include(e => e.OrcaUser);
             return View(expertConsultants.ToList());
         }
 
-        // GET: xxxxExpertConsultants/Details/5
+        // GET: zzzTESTinCASEExpertConsultants/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -37,14 +37,14 @@ namespace ORCA.Controllers
             return View(expertConsultant);
         }
 
-        // GET: xxxxExpertConsultants/Create
+        // GET: zzzTESTinCASEExpertConsultants/Create
         public ActionResult Create()
         {
             ViewBag.OrcaUserID = new SelectList(db.OrcaUsers, "OrcaUserID", "OrcaUserName");
             return View();
         }
 
-        // POST: xxxxExpertConsultants/Create
+        // POST: zzzTESTinCASEExpertConsultants/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -62,7 +62,7 @@ namespace ORCA.Controllers
             return View(expertConsultant);
         }
 
-        // GET: xxxxExpertConsultants/Edit/5
+        // GET: zzzTESTinCASEExpertConsultants/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -78,7 +78,7 @@ namespace ORCA.Controllers
             return View(expertConsultant);
         }
 
-        // POST: xxxxExpertConsultants/Edit/5
+        // POST: zzzTESTinCASEExpertConsultants/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -95,7 +95,7 @@ namespace ORCA.Controllers
             return View(expertConsultant);
         }
 
-        // GET: xxxxExpertConsultants/Delete/5
+        // GET: zzzTESTinCASEExpertConsultants/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -110,7 +110,7 @@ namespace ORCA.Controllers
             return View(expertConsultant);
         }
 
-        // POST: xxxxExpertConsultants/Delete/5
+        // POST: zzzTESTinCASEExpertConsultants/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

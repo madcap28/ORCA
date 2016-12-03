@@ -134,6 +134,8 @@
     <Compile Include="Controllers\ConsulteeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OrcaUsersController.cs" />
+    <Compile Include="Controllers\TESTinCASE\zzzTESTinCASEExpertConsultantsController.cs" />
+    <Compile Include="Controllers\TESTinCASE\zzzTESTinCASEOrcaUsersController.cs" />
     <Compile Include="DAL\OrcaContext.cs" />
     <Compile Include="DAL\OrcaInitializer.cs" />
     <Compile Include="Global.asax.cs">
@@ -240,11 +242,16 @@
     <Content Include="Views\ConsultantAdmin\ChangeExpert.cshtml" />
     <None Include="Views\Shared\AddConsultant.cshtml" />
     <Content Include="Views\Shared\AddEntryToTicket.cshtml" />
-    <Content Include="Views\xxxxExpertConsultants\Create.cshtml" />
-    <Content Include="Views\xxxxExpertConsultants\Delete.cshtml" />
-    <Content Include="Views\xxxxExpertConsultants\Details.cshtml" />
-    <Content Include="Views\xxxxExpertConsultants\Edit.cshtml" />
-    <Content Include="Views\xxxxExpertConsultants\Index.cshtml" />
+    <Content Include="Views\zzzTESTinCASEExpertConsultants\Create.cshtml" />
+    <Content Include="Views\zzzTESTinCASEExpertConsultants\Delete.cshtml" />
+    <Content Include="Views\zzzTESTinCASEExpertConsultants\Details.cshtml" />
+    <Content Include="Views\zzzTESTinCASEExpertConsultants\Edit.cshtml" />
+    <Content Include="Views\zzzTESTinCASEExpertConsultants\Index.cshtml" />
+    <Content Include="Views\zzzTESTinCASEOrcaUsers\Create.cshtml" />
+    <Content Include="Views\zzzTESTinCASEOrcaUsers\Delete.cshtml" />
+    <Content Include="Views\zzzTESTinCASEOrcaUsers\Details.cshtml" />
+    <Content Include="Views\zzzTESTinCASEOrcaUsers\Edit.cshtml" />
+    <Content Include="Views\zzzTESTinCASEOrcaUsers\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
