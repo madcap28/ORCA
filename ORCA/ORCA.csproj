@@ -142,6 +142,7 @@
     <Compile Include="Models\ActiveExpert.cs" />
     <Compile Include="Models\ActiveExperts.cs" />
     <Compile Include="Models\AddEntryToTicket.cs" />
+    <Compile Include="Models\Admin\PendingExpertRequest.cs" />
     <Compile Include="Models\ConsultationEntry.cs" />
     <Compile Include="Models\Consultation\Consultation.cs" />
     <Compile Include="Models\Consultation\ConsultsTicketForTicketList.cs" />

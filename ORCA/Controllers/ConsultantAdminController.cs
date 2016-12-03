@@ -11,7 +11,11 @@ namespace ORCA.Controllers
 {
     public class ConsultantAdminController : ConsultantController
     {
+        public ActionResult PendingExpertRequests()
+        {
 
+            return View();
+        }
         
     }
 }
