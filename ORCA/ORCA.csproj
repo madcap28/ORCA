@@ -144,6 +144,9 @@
     <Compile Include="Models\AddEntryToTicket.cs" />
     <Compile Include="Models\ConsultationEntry.cs" />
     <Compile Include="Models\Consultation\Consultation.cs" />
+    <Compile Include="Models\Consultation\ConsultsTicketForTicketList.cs" />
+    <Compile Include="Models\Consultation\ReplyToConsultationTicket.cs" />
+    <Compile Include="Models\Consultation\ConsultTicketEntryForTicketEntryList.cs" />
     <Compile Include="Models\CreateConsultationTicket.cs" />
     <Compile Include="Models\EditConsultationTicket.cs" />
     <Compile Include="Models\OrcaDB\ConsultantStatusRequest.cs" />
@@ -226,10 +229,9 @@
     <Content Include="Views\Shared\CreateConsultationTicket.cshtml" />
     <Content Include="Views\Shared\EditConsultationTicket.cshtml" />
     <Content Include="Views\EditConsultationTicket.cshtml" />
-    <Content Include="Views\Consultant\Consults.cshtml" />
-    <Content Include="Views\Consultant\_Consults_Consultation_TicketList.cshtml" />
-    <Content Include="Views\Consultant\View.cshtml" />
-    <Content Include="Views\Shared\OrcaConsults.cshtml" />
+    <Content Include="Views\Shared\Consults.cshtml" />
+    <Content Include="Views\Shared\ConsultsTicketEntryList.cshtml" />
+    <Content Include="Views\Shared\Reply.cshtml" />
     <None Include="Views\Shared\AddConsultant.cshtml" />
     <Content Include="Views\Shared\AddEntryToTicket.cshtml" />
   </ItemGroup>

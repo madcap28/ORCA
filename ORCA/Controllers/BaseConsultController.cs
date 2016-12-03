@@ -1,5 +1,6 @@
 ﻿using ORCA.DAL;
 using ORCA.Models;
+using ORCA.Models.Consultation;
 using ORCA.Models.OrcaDB;
 using System;
 using System.Collections.Generic;
@@ -445,6 +446,48 @@ namespace ORCA.Controllers
 
 
 
+        public ActionResult Reply(int ticketId)
+        {
+            ReplyToConsultationTicket ticketReply = new ReplyToConsultationTicket();
+            ticketReply.TicketID = ticketId;
+
+            return View(ticketReply);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Reply([Bind(Include = "TicketID,ReplyText")] ReplyToConsultationTicket reply)
+        {
+            OrcaContext db = new OrcaContext();
+
+            if (ModelState.IsValid)
+            {
+                TicketEntry newTicketEntry = new TicketEntry();
+
+                int oid = int.Parse(Session["OrcaUserID"].ToString());
+                DateTime dt = DateTime.Now;
+
+                newTicketEntry.TicketID = reply.TicketID;
+                newTicketEntry.OrcaUserID = oid;
+                newTicketEntry.EntryDTStamp = dt;
+                newTicketEntry.EntryText = reply.ReplyText;
+
+                db.TicketEntries.Add(newTicketEntry);
+                db.SaveChanges();
+
+
+
+                return RedirectToAction("Index");
+            }
+            return View(reply);
+        }
+
+
+
+
+
+
+
         public ActionResult AddConsultantToTicket(int consultantId, int ticketId, string sortOrder, string searchString)
         {
             OrcaContext db = new OrcaContext();
@@ -521,13 +564,18 @@ namespace ORCA.Controllers
 
         public ActionResult AddEntryToTicket(int ticketId)
         {
-            AddEntryToTicket newTicketEntry = new AddEntryToTicket();
-            
-            newTicketEntry.TicketID = ticketId;
-            //newTicketEntry.OrcaUserName = Session["OrcaUserName"].ToString();
-            
-            return View(newTicketEntry);
+            return RedirectToAction("Reply", new { ticketId = ticketId });
         }
+
+        //public ActionResult AddEntryToTicket(int ticketId)
+        //{
+        //    AddEntryToTicket newTicketEntry = new AddEntryToTicket();
+            
+        //    newTicketEntry.TicketID = ticketId;
+        //    //newTicketEntry.OrcaUserName = Session["OrcaUserName"].ToString();
+            
+        //    return View(newTicketEntry);
+        //}
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -537,11 +585,13 @@ namespace ORCA.Controllers
             // the shit gives probs
             if (ModelState.IsValid)
             {
+                DateTime dt = DateTime.Now;
+
                 TicketEntry ticketEntryToCopyToDb = new TicketEntry();
 
                 ticketEntryToCopyToDb.TicketID = entryToAddToTicket.TicketID;
                 ticketEntryToCopyToDb.OrcaUserID = int.Parse(Session["OrcaUserID"].ToString());
-                ticketEntryToCopyToDb.EntryDTStamp = DateTime.Now;
+                ticketEntryToCopyToDb.EntryDTStamp = dt;
                 ticketEntryToCopyToDb.EntryText = entryToAddToTicket.NewTicketEntry;
 
                 ////System.Diagnostics.Debug.WriteLine(ticketEntryToCopyToDb.TicketID);

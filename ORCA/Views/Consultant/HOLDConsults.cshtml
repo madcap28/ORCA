@@ -1,0 +1,51 @@
+﻿@model IEnumerable<ORCA.Models.Consultation.ConsultsTicketForTicketList>
+
+@{
+    ViewBag.Title = "Consults";
+}
+
+<h2>Consults</h2>
+
+<p>
+    @Html.ActionLink("Home", "Index")
+</p>
+
+<h3>Tickets where you provide consultation</h3>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.TicketID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OrcaUserName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateCreated)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.TicketID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OrcaUserName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateCreated)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.ActionLink("Reply", "Reply", new { id=item.TicketID })
+        </td>
+    </tr>
+}
+
+</table>

@@ -68,7 +68,7 @@ namespace ORCA.Controllers
 
             return View(profileInfo);
         }
-        
+
         public ActionResult DeleteExpertise(int id)
         {
             OrcaContext db = new OrcaContext();
@@ -86,51 +86,167 @@ namespace ORCA.Controllers
 
 
 
+        
+        // alternatively, should have called this ConsultsTicketsList
 
-
-        public ActionResult OrcaConsults() { return View(); } // used for testing and in future maybe redirect, or remove it
-
-        [HttpGet]
         public ActionResult Consults()
         {
-            Consultation consultsModel=null;
+            // I now realize how it works and how it should be done, but a little late
+            // al
 
-            if (TempData["ConsultationModel"] != null)
+
+            // this will list the consultation tickets where the user is consulting
+            // and if you click reply you can reply to ticket
+
+
+
+            OrcaContext db = new OrcaContext();
+
+            // get user id of consultant to search for tickets where he is actively consulting
+            int idOfConsultant = int.Parse(Session["OrcaUserID"].ToString());
+
+            // get all TicketExpert to find all tickets that are actively consulting
+            List<TicketExpert> ticketExperts = (from ticEx in db.TicketExperts
+                                                where ticEx.ExpertForThisTicket == idOfConsultant && ticEx.TicketActivityState == ActivityState.Active
+                                                select ticEx).ToList();
+
+
+            // will put info in this list for view
+            List<ConsultsTicketForTicketList> consultReply = new List<ConsultsTicketForTicketList>();
+
+            foreach (TicketExpert tex in ticketExperts)
             {
-                //System.Diagnostics.Debug.WriteLine("************#######************");
-                consultsModel = TempData["ConsultationModel"] as Consultation;
+                ConsultsTicketForTicketList conRep = new ConsultsTicketForTicketList();// create element to put in list
+
+                // populate element
+
+
+                int tid = tex.TicketID;// find the ticket that the expert is on
+                int OrcaIdOfCreator = db.Tickets.Find(tid).OrcaUserID;// needed for user name of created by
+
+
+                conRep.TicketID = tid;
+                conRep.OrcaUserName = db.OrcaUsers.Find(OrcaIdOfCreator).OrcaUserName;
+                conRep.DateCreated = db.Tickets.Find(tid).DTStamp;
+                conRep.Description = db.Tickets.Find(tid).DescriptionName;
+
+                consultReply.Add(conRep);
+
             }
-            else
+            consultReply = consultReply.OrderByDescending(x => x.DateCreated).ToList();
+
+
+            return View(consultReply);
+        }
+
+        [HttpGet]
+        public ActionResult ConsultsTicketEntryList(int? ticketId)
+        {
+            OrcaContext db = new OrcaContext();
+
+            // get the ticket that has the information and entries
+            Ticket ticketWithEntries = db.Tickets.Find(ticketId);
+
+            List<TicketEntry> ticketEntriesForThisTicket = (from ticEnt in db.TicketEntries
+                                                            where ticEnt.TicketID == ticketId
+                                                            select ticEnt).ToList();
+
+
+
+
+            List<ConsultTicketEntryForTicketEntryList> listOfentriesToView = new List<ConsultTicketEntryForTicketEntryList>();
+
+            foreach (TicketEntry ticEnt in ticketEntriesForThisTicket)
             {
-                int userId = int.Parse(Session["OrcaUserID"].ToString());
+                // this needs populated so we can add it to the list which will be passed in return statement
+                ConsultTicketEntryForTicketEntryList entryToAddToTicketEntryList = new ConsultTicketEntryForTicketEntryList();
+                
 
-                consultsModel = new Consultation(userId, Consultation.UserAccessType.Consultant);
+                entryToAddToTicketEntryList.TicketEntryID = ticEnt.TicketEntryID;
+                entryToAddToTicketEntryList.TicketID = ticEnt.TicketID;
+                entryToAddToTicketEntryList.EntryDTStamp = ticEnt.EntryDTStamp;
+                entryToAddToTicketEntryList.EntryText = ticEnt.EntryText;
+                entryToAddToTicketEntryList.OrcaUserID = ticEnt.OrcaUserID;
+
+                int oid = entryToAddToTicketEntryList.OrcaUserID;
+                string name = db.OrcaUsers.Find(oid).OrcaUserName;
+
+                entryToAddToTicketEntryList.OrcaUserNameCreator = name;
+
+                listOfentriesToView.Add(entryToAddToTicketEntryList);
             }
-            
-            return View(consultsModel);
+            listOfentriesToView = listOfentriesToView.OrderByDescending(x => x.EntryDTStamp).ToList();
+
+
+            return View(listOfentriesToView);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Consults([Bind(Include = "OrcaUserID_or_TicketExpertID,UserViewAccess,FilterTicketsOption,SortTicketsOption,TicketSearchString,ConsultationTickets")]Consultation viewModel)
-        {
 
-            return View(viewModel);
-        }
 
-        public ActionResult ConsultsUpdate(int OrcaUserID_or_TicketExpertID, UserAccessType UserViewAccess, TicketFilterOption FilterTicketsOption, TicketSortOption SortTicketsOption, string TicketSearchString)
-        {
-            Consultation consultationModel = new Consultation();
-            
-            consultationModel.OrcaUserID_or_TicketExpertID = OrcaUserID_or_TicketExpertID;
-            consultationModel.FilterTicketsOption = FilterTicketsOption;
-            consultationModel.SortTicketsOption = SortTicketsOption;
-            consultationModel.TicketSearchString = TicketSearchString;
 
-            return RedirectToAction("Consults", new { viewModel = consultationModel });
 
-            //return View();
-        }
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //[HttpGet]
+        //public ActionResult Consults()
+        //{
+        //    Consultation consultsModel=null;
+
+        //    if (TempData["ConsultationModel"] != null)
+        //    {
+        //        //System.Diagnostics.Debug.WriteLine("************#######************");
+        //        consultsModel = TempData["ConsultationModel"] as Consultation;
+        //    }
+        //    else
+        //    {
+        //        int userId = int.Parse(Session["OrcaUserID"].ToString());
+
+        //        consultsModel = new Consultation(userId, Consultation.UserAccessType.Consultant);
+        //    }
+
+        //    return View(consultsModel);
+        //}
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Consults([Bind(Include = "OrcaUserID_or_TicketExpertID,UserViewAccess,FilterTicketsOption,SortTicketsOption,TicketSearchString,ConsultationTickets")]Consultation viewModel)
+        //{
+
+        //    return View(viewModel);
+        //}
+
+        //public ActionResult ConsultsUpdate(int OrcaUserID_or_TicketExpertID, UserAccessType UserViewAccess, TicketFilterOption FilterTicketsOption, TicketSortOption SortTicketsOption, string TicketSearchString)
+        //{
+        //    Consultation consultationModel = new Consultation();
+
+        //    consultationModel.OrcaUserID_or_TicketExpertID = OrcaUserID_or_TicketExpertID;
+        //    consultationModel.FilterTicketsOption = FilterTicketsOption;
+        //    consultationModel.SortTicketsOption = SortTicketsOption;
+        //    consultationModel.TicketSearchString = TicketSearchString;
+
+        //    return RedirectToAction("Consults", new { viewModel = consultationModel });
+
+        //    //return View();
+        //}
 
 
 
