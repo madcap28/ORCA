@@ -125,5 +125,23 @@ namespace ORCA
 
             return PasswordChangeStatus.INVALID_PASSWORD;
         }
+
+
+
+        public static bool ChangeStringToBoolean(String value)
+        {
+            value = value.ToLower().Trim();
+            if (value == "true") return true;
+            else return false;
+        }
     }
 }
+
+
+
+
+
+
+
+
+

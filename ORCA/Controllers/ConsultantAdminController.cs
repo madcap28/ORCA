@@ -113,5 +113,121 @@ namespace ORCA.Controllers
 
             return View(pendingExpertRequest);
         }
+
+
+
+        
+        public ActionResult CurrentExperts()
+        {
+            OrcaContext db = new OrcaContext();
+
+            List<ChangeExpert> experts = new List<ChangeExpert>();
+
+            
+            List<OrcaUser> expertUsers = db.OrcaUsers.Where(x => x.UserType == OrcaUserType.Consultant).ToList();
+
+            foreach (OrcaUser exp in expertUsers)
+            {
+                int oid = exp.OrcaUserID;
+                ExpertConsultant expCon = db.ExpertConsultants.Find(oid);
+                
+                ChangeExpert expToChange = new ChangeExpert();
+                
+                expToChange.OrcaUserID = oid;
+                expToChange.OrcaUserName = exp.OrcaUserName;
+                
+
+                expToChange.IsActive = expCon.IsActive;
+
+                expToChange.IsAccountDeactivated = exp.IsAccountDeactivated;
+
+
+                expToChange.FirstName = exp.FirstName;
+                expToChange.LastName = exp.LastName;
+                expToChange.Email = exp.Email;
+                expToChange.PhoneNumber = exp.PhoneNumber;
+
+                experts.Add(expToChange);
+            }
+            
+            return View(experts);
+        }
+
+        
+        public ActionResult ChangeExpert(int OrcaUserID)
+        {
+            OrcaContext db = new OrcaContext();
+
+            OrcaUser exp = db.OrcaUsers.Find(OrcaUserID);
+
+            ChangeExpert expToChange = new ChangeExpert();
+            int oid = (int)OrcaUserID;
+
+            expToChange.OrcaUserID = oid;
+            expToChange.OrcaUserName = exp.OrcaUserName;
+
+            expToChange.UserType = exp.UserType;
+
+            string boolStrng = db.ExpertConsultants.Find(oid).IsActive.ToString().ToLower().Trim();
+
+
+
+            if (boolStrng == "true")
+                expToChange.IsActive = true;
+            else expToChange.IsActive = false;
+
+            boolStrng = exp.IsAccountDeactivated.ToString().ToLower().Trim();
+
+
+
+            if (boolStrng == "true")
+                expToChange.IsAccountDeactivated = true;
+            else expToChange.IsAccountDeactivated = false;
+
+
+
+            expToChange.FirstName = exp.FirstName;
+            expToChange.LastName = exp.LastName;
+            expToChange.Email = exp.Email;
+            expToChange.PhoneNumber = exp.PhoneNumber;
+
+
+            return View(expToChange);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ChangeExpert([Bind(Exclude = "OrcaUserName,FirstName,LastName,Email,PhoneNumber", Include = "OrcaUserID,UserType,IsActive,IsAccountDeactivated")] ChangeExpert expToChange)
+        {
+            if (ModelState.IsValid)
+            {
+                OrcaContext db = new OrcaContext();
+                int oid = expToChange.OrcaUserID;
+
+                OrcaUser changeUser = db.OrcaUsers.Find(oid);
+
+                changeUser.UserType = expToChange.UserType;
+                changeUser.IsAccountDeactivated = expToChange.IsAccountDeactivated;
+
+                db.Entry(changeUser).State = EntityState.Modified;
+                db.SaveChanges();
+
+                ExpertConsultant expCon = db.ExpertConsultants.Find(oid);
+
+                expCon.IsActive = expToChange.IsActive;
+
+                db.Entry(expCon).State = EntityState.Modified;
+                db.SaveChanges();
+
+                return RedirectToAction("CurrentExperts");
+
+            }
+
+            return View();
+        }
+
+
+            
+
     }
 }
