@@ -12,7 +12,7 @@ namespace ORCA.Models.OrcaDB
 
     public class ExpertConsultant
     {
-        [Key, ForeignKey("OrcaUser"), Required]
+        [Key, ForeignKey("OrcaUser")/*, Required*/]
         public int OrcaUserID { get; set; }// This is the ExpertConsultantID of the OrcaUser that is an ExpertConsultant.   ExpertConsultantID = OrcaUser.OrcaUserID
         
         //[Required]

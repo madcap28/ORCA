@@ -14,7 +14,7 @@ namespace ORCA.Models.OrcaDB
         [Key, ForeignKey("OrcaPassword")]
         public int OrcaUserID { get; set; }
         
-        [Required]
+        //[Required]
         public string OrcaUserName { get; set; }// This is the OrcaUserName that the account creator chooses.  This must be unique but we are not using it as the OrcaUserID in order to avoid problems with special characters.
         
         public string FirstName { get; set; }// Optional field but will be required for OrcaUser ExpertConsultant in order to get approved as an ExpertConsultant.

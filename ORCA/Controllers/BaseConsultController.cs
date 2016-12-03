@@ -88,37 +88,41 @@ namespace ORCA.Controllers
 
             int userId = (int)Convert.ToInt32(Session["OrcaUserID"].ToString());
 
-            ExpertConsultant requestingUser = db.ExpertConsultants.Find(userId);
+            //  BOOKMARK
+            ExpertConsultant requestingUser = null;// db.ExpertConsultants.Find(userId);
 
             if (requestingUser == null)
             {
                 requestingUser = new ExpertConsultant();
-                requestingUser.OrcaUserID = userId;
+                int oid = Convert.ToInt32(Session["OrcaUserID"].ToString());
+
+                requestingUser.OrcaUserID = db.OrcaUsers.Find(oid).OrcaUserID;
+                
                 requestingUser.IsActive = true;
                 requestingUser.ExpertStatus = ExpertStatus.Requested;
-
+                
                 db.ExpertConsultants.Add(requestingUser);
                 db.SaveChanges();
 
-                ConsultantStatusRequest request = db.ConsultantStatusRequests.Find(userId);
+                //ConsultantStatusRequest request = db.ConsultantStatusRequests.Find(userId);
 
-                if (request == null)
-                {
-                    request = new ConsultantStatusRequest();
-                    request.OrcaUserID = userId;
-                    request.RequestingStatus = true;
+                //if (request == null)
+                //{
+                //    request = new ConsultantStatusRequest();
+                //    request.OrcaUserID = userId;
+                //    request.RequestingStatus = true;
 
-                    db.ConsultantStatusRequests.Add(request);
-                    db.SaveChanges();
-                }
-                else
-                {
-                    request.OrcaUserID = userId;
-                    request.RequestingStatus = true;
+                //    db.ConsultantStatusRequests.Add(request);
+                //    db.SaveChanges();
+                //}
+                //else
+                //{
+                //    request.OrcaUserID = userId;
+                //    request.RequestingStatus = true;
 
-                    db.Entry(request).State = EntityState.Modified;
-                    db.SaveChanges();
-                }
+                //    db.Entry(request).State = EntityState.Modified;
+                //    db.SaveChanges();
+                //}
 
                 ViewBag.Message = "A request to become a Marshall Expert Consultant has been submitted.  Please make sure that your name and contact information under Profile is accurate. Your request will be reviewed, and an administrator may contact you for further information.  If your request is approved then your account will be promoted.";
             }
@@ -464,7 +468,8 @@ namespace ORCA.Controllers
             {
                 TicketEntry newTicketEntry = new TicketEntry();
 
-                int oid = int.Parse(Session["OrcaUserID"].ToString());
+                //int oid = int.Parse(Session["OrcaUserID"].ToString());
+                int oid = Convert.ToInt32(Session["OrcaUserID"].ToString());
                 DateTime dt = DateTime.Now;
 
                 newTicketEntry.TicketID = reply.TicketID;
@@ -590,7 +595,8 @@ namespace ORCA.Controllers
                 TicketEntry ticketEntryToCopyToDb = new TicketEntry();
 
                 ticketEntryToCopyToDb.TicketID = entryToAddToTicket.TicketID;
-                ticketEntryToCopyToDb.OrcaUserID = int.Parse(Session["OrcaUserID"].ToString());
+                //ticketEntryToCopyToDb.OrcaUserID = int.Parse(Session["OrcaUserID"].ToString()); 
+                ticketEntryToCopyToDb.OrcaUserID = Convert.ToInt32(Session["OrcaUserID"].ToString());
                 ticketEntryToCopyToDb.EntryDTStamp = dt;
                 ticketEntryToCopyToDb.EntryText = entryToAddToTicket.NewTicketEntry;
 

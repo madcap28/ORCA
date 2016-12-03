@@ -24,7 +24,7 @@ namespace ORCA.DAL
         public DbSet<Ticket> Tickets { get; set; }
         public DbSet<TicketEntry> TicketEntries { get; set; }
         public DbSet<TicketExpert> TicketExperts { get; set; }
-        public DbSet<ConsultantStatusRequest> ConsultantStatusRequests { get; set; }
+        //public DbSet<ConsultantStatusRequest> ConsultantStatusRequests { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

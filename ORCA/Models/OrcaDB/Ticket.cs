@@ -12,7 +12,7 @@ namespace ORCA.Models.OrcaDB
         [Key, Display(Name = "Ticket Number")]
         public int TicketID { get; set; }
 
-        [ForeignKey("OrcaUserCreator"), Required]
+        [ForeignKey("OrcaUserCreator")]
         public int OrcaUserID { get; set; }// This is the OrcaUserID of the creator of this Ticket. OrcaUserID = OrcaUser.OrcaUserID
 
         //[ForeignKey("OrcaUserLastReplied")]

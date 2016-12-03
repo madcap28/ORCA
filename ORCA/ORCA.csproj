@@ -150,7 +150,6 @@
     <Compile Include="Models\Consultation\ConsultTicketEntryForTicketEntryList.cs" />
     <Compile Include="Models\CreateConsultationTicket.cs" />
     <Compile Include="Models\EditConsultationTicket.cs" />
-    <Compile Include="Models\OrcaDB\ConsultantStatusRequest.cs" />
     <Compile Include="Models\Consultation\ConsultationTicket.cs" />
     <Compile Include="Models\UserConsultation.cs" />
     <Compile Include="Models\UserConsultations.cs" />
@@ -233,8 +232,16 @@
     <Content Include="Views\Shared\Consults.cshtml" />
     <Content Include="Views\Shared\ConsultsTicketEntryList.cshtml" />
     <Content Include="Views\Shared\Reply.cshtml" />
+    <Content Include="Views\ConsultantAdmin\PendingExpertRequests.cshtml" />
+    <Content Include="Views\ConsultantAdmin\PendingExpertRequestDetails.cshtml" />
+    <Content Include="Views\ConsultantAdmin\Admin.cshtml" />
     <None Include="Views\Shared\AddConsultant.cshtml" />
     <Content Include="Views\Shared\AddEntryToTicket.cshtml" />
+    <Content Include="Views\xxxxExpertConsultants\Create.cshtml" />
+    <Content Include="Views\xxxxExpertConsultants\Delete.cshtml" />
+    <Content Include="Views\xxxxExpertConsultants\Details.cshtml" />
+    <Content Include="Views\xxxxExpertConsultants\Edit.cshtml" />
+    <Content Include="Views\xxxxExpertConsultants\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

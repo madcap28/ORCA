@@ -9,7 +9,7 @@ namespace ORCA.Models.OrcaDB
 {
     public class OrcaPassword
     {
-        [Key, ForeignKey("OrcaUser"), Required]
+        [Key, ForeignKey("OrcaUser")]
         public int OrcaUserID { get; set; }
         
         [Required,

@@ -103,7 +103,8 @@ namespace ORCA.Controllers
             OrcaContext db = new OrcaContext();
 
             // get user id of consultant to search for tickets where he is actively consulting
-            int idOfConsultant = int.Parse(Session["OrcaUserID"].ToString());
+            //int idOfConsultant = int.Parse(Session["OrcaUserID"].ToString());
+            int idOfConsultant = Convert.ToInt32(Session["OrcaUserID"].ToString());
 
             // get all TicketExpert to find all tickets that are actively consulting
             List<TicketExpert> ticketExperts = (from ticEx in db.TicketExperts
