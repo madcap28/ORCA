@@ -15,7 +15,7 @@ namespace ORCA.Models.OrcaDB
         [Required,
             Display(Name = "Password"),
             DataType(DataType.Password),
-            MinLength(8, ErrorMessage = "Please ensure that your password is at least 8 characters.")]
+            MinLength(0, ErrorMessage = "Please ensure that your password is at least 8 characters.")]
         public string Password { get; set; }// NEED TO HASH AND SECURE THIS
 
 
