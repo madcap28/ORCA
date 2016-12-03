@@ -133,9 +133,13 @@
     <Compile Include="Controllers\ConsultantController.cs" />
     <Compile Include="Controllers\ConsulteeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\OrcaUsersController.cs" />
+    <Compile Include="Controllers\TESTinCASE\zzzTESTinCASEConsultantExpertisesController.cs" />
     <Compile Include="Controllers\TESTinCASE\zzzTESTinCASEExpertConsultantsController.cs" />
+    <Compile Include="Controllers\TESTinCASE\zzzTESTinCASEOrcaPasswordsController.cs" />
     <Compile Include="Controllers\TESTinCASE\zzzTESTinCASEOrcaUsersController.cs" />
+    <Compile Include="Controllers\TESTinCASE\zzzTESTinCASETicketEntriesController.cs" />
+    <Compile Include="Controllers\TESTinCASE\zzzTESTinCASETicketExpertsController.cs" />
+    <Compile Include="Controllers\TESTinCASE\zzzTESTinCASETicketsController.cs" />
     <Compile Include="DAL\OrcaContext.cs" />
     <Compile Include="DAL\OrcaInitializer.cs" />
     <Compile Include="Global.asax.cs">
@@ -252,6 +256,31 @@
     <Content Include="Views\zzzTESTinCASEOrcaUsers\Details.cshtml" />
     <Content Include="Views\zzzTESTinCASEOrcaUsers\Edit.cshtml" />
     <Content Include="Views\zzzTESTinCASEOrcaUsers\Index.cshtml" />
+    <Content Include="Views\zzzTESTinCASETickets\Create.cshtml" />
+    <Content Include="Views\zzzTESTinCASETickets\Delete.cshtml" />
+    <Content Include="Views\zzzTESTinCASETickets\Details.cshtml" />
+    <Content Include="Views\zzzTESTinCASETickets\Edit.cshtml" />
+    <Content Include="Views\zzzTESTinCASETickets\Index.cshtml" />
+    <Content Include="Views\zzzTESTinCASETicketEntries\Create.cshtml" />
+    <Content Include="Views\zzzTESTinCASETicketEntries\Delete.cshtml" />
+    <Content Include="Views\zzzTESTinCASETicketEntries\Details.cshtml" />
+    <Content Include="Views\zzzTESTinCASETicketEntries\Edit.cshtml" />
+    <Content Include="Views\zzzTESTinCASETicketEntries\Index.cshtml" />
+    <Content Include="Views\zzzTESTinCASEConsultantExpertises\Create.cshtml" />
+    <Content Include="Views\zzzTESTinCASEConsultantExpertises\Delete.cshtml" />
+    <Content Include="Views\zzzTESTinCASEConsultantExpertises\Details.cshtml" />
+    <Content Include="Views\zzzTESTinCASEConsultantExpertises\Edit.cshtml" />
+    <Content Include="Views\zzzTESTinCASEConsultantExpertises\Index.cshtml" />
+    <Content Include="Views\zzzTESTinCASEOrcaPasswords\Create.cshtml" />
+    <Content Include="Views\zzzTESTinCASEOrcaPasswords\Delete.cshtml" />
+    <Content Include="Views\zzzTESTinCASEOrcaPasswords\Details.cshtml" />
+    <Content Include="Views\zzzTESTinCASEOrcaPasswords\Edit.cshtml" />
+    <Content Include="Views\zzzTESTinCASEOrcaPasswords\Index.cshtml" />
+    <Content Include="Views\zzzTESTinCASETicketExperts\Create.cshtml" />
+    <Content Include="Views\zzzTESTinCASETicketExperts\Delete.cshtml" />
+    <Content Include="Views\zzzTESTinCASETicketExperts\Details.cshtml" />
+    <Content Include="Views\zzzTESTinCASETicketExperts\Edit.cshtml" />
+    <Content Include="Views\zzzTESTinCASETicketExperts\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

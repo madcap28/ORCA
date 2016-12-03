@@ -1,0 +1,34 @@
+﻿@model ORCA.Models.OrcaDB.OrcaPassword
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>OrcaPassword</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.OrcaUser.OrcaUserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OrcaUser.OrcaUserName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Password)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Password)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.OrcaUserID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

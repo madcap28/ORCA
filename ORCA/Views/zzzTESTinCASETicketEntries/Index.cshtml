@@ -1,0 +1,51 @@
+﻿@model IEnumerable<ORCA.Models.OrcaDB.TicketEntry>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.OrcaUser.OrcaUserName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Ticket.DescriptionName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EntryDTStamp)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EntryText)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.OrcaUser.OrcaUserName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Ticket.DescriptionName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EntryDTStamp)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EntryText)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.TicketEntryID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.TicketEntryID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.TicketEntryID })
+        </td>
+    </tr>
+}
+
+</table>

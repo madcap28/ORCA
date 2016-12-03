@@ -1,0 +1,57 @@
+﻿@model IEnumerable<ORCA.Models.OrcaDB.Ticket>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.OrcaUserCreator.OrcaUserName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OrcaUserLastReplied.OrcaUserName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DTStamp)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DescriptionName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsTicketOpen)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.OrcaUserCreator.OrcaUserName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OrcaUserLastReplied.OrcaUserName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DTStamp)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DescriptionName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsTicketOpen)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.TicketID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.TicketID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.TicketID })
+        </td>
+    </tr>
+}
+
+</table>

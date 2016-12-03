@@ -9,109 +9,118 @@ using System.Web.Mvc;
 using ORCA.DAL;
 using ORCA.Models.OrcaDB;
 
-namespace ORCA.Controllers
+namespace ORCA.Controllers.TESTinCASE
 {
-    public class OrcaUsersController : Controller
+    public class zzzTESTinCASETicketsController : Controller
     {
         private OrcaContext db = new OrcaContext();
 
-        // GET: OrcaUsers
+        // GET: zzzTESTinCASETickets
         public ActionResult Index()
         {
-            return View(db.OrcaUsers.ToList());
+            var tickets = db.Tickets.Include(t => t.OrcaUserCreator).Include(t => t.OrcaUserLastReplied);
+            return View(tickets.ToList());
         }
 
-        // GET: OrcaUsers/Details/5
+        // GET: zzzTESTinCASETickets/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            OrcaUser orcaUser = db.OrcaUsers.Find(id);
-            if (orcaUser == null)
+            Ticket ticket = db.Tickets.Find(id);
+            if (ticket == null)
             {
                 return HttpNotFound();
             }
-            return View(orcaUser);
+            return View(ticket);
         }
 
-        // GET: OrcaUsers/Create
+        // GET: zzzTESTinCASETickets/Create
         public ActionResult Create()
         {
+            ViewBag.OrcaUserID = new SelectList(db.OrcaUsers, "OrcaUserID", "OrcaUserName");
+            ViewBag.OrcaUserIDLastReplied = new SelectList(db.OrcaUsers, "OrcaUserID", "OrcaUserName");
             return View();
         }
 
-        // POST: OrcaUsers/Create
+        // POST: zzzTESTinCASETickets/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "OrcaUserID,OrcaUserName,FirstName,LastName,Email,PhoneNumber,IsAccountDeactivated,UserType")] OrcaUser orcaUser)
+        public ActionResult Create([Bind(Include = "TicketID,OrcaUserID,OrcaUserIDLastReplied,DTStamp,DescriptionName,IsTicketOpen")] Ticket ticket)
         {
             if (ModelState.IsValid)
             {
-                db.OrcaUsers.Add(orcaUser);
+                db.Tickets.Add(ticket);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(orcaUser);
+            ViewBag.OrcaUserID = new SelectList(db.OrcaUsers, "OrcaUserID", "OrcaUserName", ticket.OrcaUserID);
+            ViewBag.OrcaUserIDLastReplied = new SelectList(db.OrcaUsers, "OrcaUserID", "OrcaUserName", ticket.OrcaUserIDLastReplied);
+            return View(ticket);
         }
 
-        // GET: OrcaUsers/Edit/5
+        // GET: zzzTESTinCASETickets/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            OrcaUser orcaUser = db.OrcaUsers.Find(id);
-            if (orcaUser == null)
+            Ticket ticket = db.Tickets.Find(id);
+            if (ticket == null)
             {
                 return HttpNotFound();
             }
-            return View(orcaUser);
+            ViewBag.OrcaUserID = new SelectList(db.OrcaUsers, "OrcaUserID", "OrcaUserName", ticket.OrcaUserID);
+            ViewBag.OrcaUserIDLastReplied = new SelectList(db.OrcaUsers, "OrcaUserID", "OrcaUserName", ticket.OrcaUserIDLastReplied);
+            return View(ticket);
         }
 
-        // POST: OrcaUsers/Edit/5
+        // POST: zzzTESTinCASETickets/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "OrcaUserID,OrcaUserName,FirstName,LastName,Email,PhoneNumber,IsAccountDeactivated,UserType")] OrcaUser orcaUser)
+        public ActionResult Edit([Bind(Include = "TicketID,OrcaUserID,OrcaUserIDLastReplied,DTStamp,DescriptionName,IsTicketOpen")] Ticket ticket)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(orcaUser).State = EntityState.Modified;
+                db.Entry(ticket).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(orcaUser);
+            ViewBag.OrcaUserID = new SelectList(db.OrcaUsers, "OrcaUserID", "OrcaUserName", ticket.OrcaUserID);
+            ViewBag.OrcaUserIDLastReplied = new SelectList(db.OrcaUsers, "OrcaUserID", "OrcaUserName", ticket.OrcaUserIDLastReplied);
+            return View(ticket);
         }
 
-        // GET: OrcaUsers/Delete/5
+        // GET: zzzTESTinCASETickets/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            OrcaUser orcaUser = db.OrcaUsers.Find(id);
-            if (orcaUser == null)
+            Ticket ticket = db.Tickets.Find(id);
+            if (ticket == null)
             {
                 return HttpNotFound();
             }
-            return View(orcaUser);
+            return View(ticket);
         }
 
-        // POST: OrcaUsers/Delete/5
+        // POST: zzzTESTinCASETickets/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            OrcaUser orcaUser = db.OrcaUsers.Find(id);
-            db.OrcaUsers.Remove(orcaUser);
+            Ticket ticket = db.Tickets.Find(id);
+            db.Tickets.Remove(ticket);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
