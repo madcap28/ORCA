@@ -147,6 +147,7 @@
     </Compile>
     <Compile Include="Models\ActiveExpert.cs" />
     <Compile Include="Models\ActiveExperts.cs" />
+    <Compile Include="Models\AddCon.cs" />
     <Compile Include="Models\AddEntryToTicket.cs" />
     <Compile Include="Models\Admin\ChangeExperts.cs" />
     <Compile Include="Models\Admin\PendingExpertRequest.cs" />
@@ -244,6 +245,11 @@
     <Content Include="Views\ConsultantAdmin\Admin.cshtml" />
     <Content Include="Views\ConsultantAdmin\CurrentExperts.cshtml" />
     <Content Include="Views\ConsultantAdmin\ChangeExpert.cshtml" />
+    <Content Include="Views\Consultant\zzzzAddConEDIT.cshtml" />
+    <Content Include="Views\Consultant\zzzListActExp.cshtml" />
+    <Content Include="Views\Consultant\zzzdeta.cshtml" />
+    <Content Include="Views\Shared\AddConList.cshtml" />
+    <Content Include="Views\Shared\AddCon.cshtml" />
     <None Include="Views\Shared\AddConsultant.cshtml" />
     <Content Include="Views\Shared\AddEntryToTicket.cshtml" />
     <Content Include="Views\zzzTESTinCASEExpertConsultants\Create.cshtml" />

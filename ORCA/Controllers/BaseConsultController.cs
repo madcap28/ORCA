@@ -380,98 +380,153 @@ namespace ORCA.Controllers
 
             return View(editConsultationTicket);
         }
-        
 
 
-        
 
-        public ActionResult AddConsultant(int ticketID, string sortOrder, string searchString)//, string searchString)
+
+
+        public ActionResult AddCon(int ticketId, SortBy sortOrder, string searchString)
         {
+            AddCon addCon = new AddCon();
+            addCon.TicketID = ticketId;
+            addCon.SortOrder = sortOrder;
+            addCon.SearchString = searchString;
 
-            // convnention for making it easier to pass messages between controllers
-            if (TempData["Message"] != null)
-            {
-                ViewBag.Message += (" " + TempData["Message"].ToString());
-            }
-
-            if (String.IsNullOrEmpty(sortOrder))
-                if (TempData["SortOrder"] != null)
-                    sortOrder = TempData["SortOrder"].ToString();
-            if (String.IsNullOrEmpty(searchString))
-                if (TempData["SearchString"] != null)
-                    searchString = TempData["SearchString"].ToString();
-
-
-
-            if (String.IsNullOrEmpty(sortOrder)) sortOrder = SortBy.FieldOfExpertise.ToString();
-
-            ViewBag.FieldOfExpertiseSortParam = sortOrder == SortBy.FieldOfExpertise.ToString() ? "FieldOfExpertise_desc" : SortBy.FieldOfExpertise.ToString();
-            ViewBag.TitleDegreeSortParam = sortOrder == SortBy.TitleDegree.ToString() ? "TitleDegree_desc" : SortBy.TitleDegree.ToString();
-            ViewBag.OrcaUserNameSortParam = sortOrder == SortBy.OrcaUserName.ToString() ? "OrcaUserName_desc" : SortBy.OrcaUserName.ToString();
-            ViewBag.FirstNameSortParam = sortOrder == SortBy.FirstName.ToString() ? "FirstName_desc" : SortBy.FirstName.ToString();
-            ViewBag.LastNameSortParam = sortOrder == SortBy.LastName.ToString() ? "LastName_desc" : SortBy.LastName.ToString();
-
-            ActiveExperts activeExperts = new ActiveExperts();
-
-            
-            if (String.IsNullOrWhiteSpace(searchString)) activeExperts.PopulateList();
-            
-            //activeExperts.AddInactiveExpertsThatAreStillActiveOnTicket(ticketId);
-            //activeExperts = activeExperts.RemoveExpertsNotActiveOnTicket(ticketId);
-
-            // IS THIS THE CULPRIT???????
-            //if (String.IsNullOrWhiteSpace(searchString)) activeExperts.PopulateList();
-            
-            switch (sortOrder)
-            {
-                case "OrcaUserName":
-                    activeExperts.FilterList(searchString).SortListBy(SortBy.OrcaUserName, SortMethod.Ascending);
-                    break;
-                case "TitleDegree":
-                    activeExperts.FilterList(searchString).SortListBy(SortBy.TitleDegree, SortMethod.Ascending);
-                    break;
-                case "FirstName":
-                    activeExperts.FilterList(searchString).SortListBy(SortBy.FirstName, SortMethod.Ascending);
-                    break;
-                case "LastName":
-                    activeExperts.FilterList(searchString).SortListBy(SortBy.LastName, SortMethod.Ascending);
-                    break;
-                case "FieldOfExpertise_desc":
-                    activeExperts.FilterList(searchString).SortListBy(SortBy.FieldOfExpertise, SortMethod.Descending);
-                    break;
-                case "OrcaUserName_desc":
-                    activeExperts.FilterList(searchString).SortListBy(SortBy.OrcaUserName, SortMethod.Descending);
-                    break;
-                case "TitleDegree_desc":
-                    activeExperts.FilterList(searchString).SortListBy(SortBy.TitleDegree, SortMethod.Descending);
-                    break;
-                case "FirstName_desc":
-                    activeExperts.FilterList(searchString).SortListBy(SortBy.FirstName, SortMethod.Descending);
-                    break;
-                case "LastName_desc":
-                    activeExperts.FilterList(searchString).SortListBy(SortBy.LastName, SortMethod.Descending);
-                    break;
-                default: // case "FieldOfExpertise":
-                    activeExperts.FilterList(searchString).SortListBy(SortBy.FieldOfExpertise, SortMethod.Ascending);
-                    break;
-            }
-
-
-
-
-
-            //activeExperts = activeExperts.RemoveExpertsNotActiveOnTicket(ticketId);
-
-
-
-
-
-            ViewBag.SortOrder = sortOrder;
-            //ViewBag.SearchString = searchString;
-            ViewBag.TicketID = ticketID;
-            
-            return View(activeExperts);
+            return View(addCon);
         }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddCon([Bind(Include = "TicketID,SortOrder,SearchString")] AddCon addCon)
+        {
+            
+            int ticketId = addCon.TicketID;
+            SortBy sortOrder = addCon.SortOrder;
+            string searchString = addCon.SearchString;
+
+            return RedirectToAction("AddCon",new { ticketId = ticketId, sortOrder = sortOrder, searchString = searchString });
+        }
+
+
+
+        public ActionResult AddConList(int ticketId, SortBy sortOrder, string searchString)
+        {
+            OrcaContext db = new OrcaContext();
+
+            ActiveExperts hackExperts = new ActiveExperts();
+
+            hackExperts.SortListBy(SortBy.FieldOfExpertise, SortMethod.Ascending);
+
+            List<ActiveExpert> listForOurModel = hackExperts.Experts;
+
+            // now just get rid of any that are already on the ticket
+
+            List<TicketExpert> ticketExperts = (from ticEx in db.TicketExperts
+                                                where ticEx.TicketID != ticketId || (ticEx.TicketActivityState != ActivityState.Active)
+                                                select ticEx).ToList();
+
+
+            List<ActiveExpert> finalList = new List<ActiveExpert>();
+
+            foreach (ActiveExpert ae in listForOurModel)
+            {
+                List<TicketExpert> tics = ticketExperts.Where(x => x.ExpertForThisTicket == ae.OrcaUserID).ToList();
+                if (tics.Count > 0) finalList.Add(ae);
+
+            }
+            
+            
+            return View(finalList);
+        }
+
+        //public ActionResult AddConsultant(int ticketID, string sortOrder, string searchString)//, string searchString)
+        //{
+
+        //    // convnention for making it easier to pass messages between controllers
+        //    if (TempData["Message"] != null)
+        //    {
+        //        ViewBag.Message += (" " + TempData["Message"].ToString());
+        //    }
+
+        //    if (String.IsNullOrEmpty(sortOrder))
+        //        if (TempData["SortOrder"] != null)
+        //            sortOrder = TempData["SortOrder"].ToString();
+        //    if (String.IsNullOrEmpty(searchString))
+        //        if (TempData["SearchString"] != null)
+        //            searchString = TempData["SearchString"].ToString();
+
+
+
+        //    if (String.IsNullOrEmpty(sortOrder)) sortOrder = SortBy.FieldOfExpertise.ToString();
+
+        //    ViewBag.FieldOfExpertiseSortParam = sortOrder == SortBy.FieldOfExpertise.ToString() ? "FieldOfExpertise_desc" : SortBy.FieldOfExpertise.ToString();
+        //    ViewBag.TitleDegreeSortParam = sortOrder == SortBy.TitleDegree.ToString() ? "TitleDegree_desc" : SortBy.TitleDegree.ToString();
+        //    ViewBag.OrcaUserNameSortParam = sortOrder == SortBy.OrcaUserName.ToString() ? "OrcaUserName_desc" : SortBy.OrcaUserName.ToString();
+        //    ViewBag.FirstNameSortParam = sortOrder == SortBy.FirstName.ToString() ? "FirstName_desc" : SortBy.FirstName.ToString();
+        //    ViewBag.LastNameSortParam = sortOrder == SortBy.LastName.ToString() ? "LastName_desc" : SortBy.LastName.ToString();
+
+        //    ActiveExperts activeExperts = new ActiveExperts();
+
+            
+        //    if (String.IsNullOrWhiteSpace(searchString)) activeExperts.PopulateList();
+            
+        //    //activeExperts.AddInactiveExpertsThatAreStillActiveOnTicket(ticketId);
+        //    //activeExperts = activeExperts.RemoveExpertsNotActiveOnTicket(ticketId);
+
+        //    // IS THIS THE CULPRIT???????
+        //    //if (String.IsNullOrWhiteSpace(searchString)) activeExperts.PopulateList();
+            
+        //    switch (sortOrder)
+        //    {
+        //        case "OrcaUserName":
+        //            activeExperts.FilterList(searchString).SortListBy(SortBy.OrcaUserName, SortMethod.Ascending);
+        //            break;
+        //        case "TitleDegree":
+        //            activeExperts.FilterList(searchString).SortListBy(SortBy.TitleDegree, SortMethod.Ascending);
+        //            break;
+        //        case "FirstName":
+        //            activeExperts.FilterList(searchString).SortListBy(SortBy.FirstName, SortMethod.Ascending);
+        //            break;
+        //        case "LastName":
+        //            activeExperts.FilterList(searchString).SortListBy(SortBy.LastName, SortMethod.Ascending);
+        //            break;
+        //        case "FieldOfExpertise_desc":
+        //            activeExperts.FilterList(searchString).SortListBy(SortBy.FieldOfExpertise, SortMethod.Descending);
+        //            break;
+        //        case "OrcaUserName_desc":
+        //            activeExperts.FilterList(searchString).SortListBy(SortBy.OrcaUserName, SortMethod.Descending);
+        //            break;
+        //        case "TitleDegree_desc":
+        //            activeExperts.FilterList(searchString).SortListBy(SortBy.TitleDegree, SortMethod.Descending);
+        //            break;
+        //        case "FirstName_desc":
+        //            activeExperts.FilterList(searchString).SortListBy(SortBy.FirstName, SortMethod.Descending);
+        //            break;
+        //        case "LastName_desc":
+        //            activeExperts.FilterList(searchString).SortListBy(SortBy.LastName, SortMethod.Descending);
+        //            break;
+        //        default: // case "FieldOfExpertise":
+        //            activeExperts.FilterList(searchString).SortListBy(SortBy.FieldOfExpertise, SortMethod.Ascending);
+        //            break;
+        //    }
+
+
+
+
+
+        //    //activeExperts = activeExperts.RemoveExpertsNotActiveOnTicket(ticketId);
+
+
+
+
+
+        //    ViewBag.SortOrder = sortOrder;
+        //    //ViewBag.SearchString = searchString;
+        //    ViewBag.TicketID = ticketID;
+            
+        //    return View(activeExperts);
+        //}
 
 
 
@@ -610,9 +665,7 @@ namespace ORCA.Controllers
 
 
 
-
-
-
+        [HttpGet]
         public ActionResult AddConsultantToTicket(int consultantId, int ticketId, string sortOrder, string searchString)
         {
             OrcaContext db = new OrcaContext();
@@ -660,6 +713,7 @@ namespace ORCA.Controllers
         }
 
 
+
         public ActionResult RemoveConsultantFromTicket(int consultantId, int ticketId)
         {
             ////System.Diagnostics.Debug.WriteLine("consultantId = " + consultantId + " | ticketId = " + ticketId);
@@ -687,6 +741,20 @@ namespace ORCA.Controllers
         }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         public ActionResult AddEntryToTicket(int ticketId)
         {
             return RedirectToAction("Reply", new { ticketId = ticketId });
@@ -701,6 +769,12 @@ namespace ORCA.Controllers
             
         //    return View(newTicketEntry);
         //}
+
+
+
+
+
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
