@@ -8,6 +8,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using static ORCA.OrcaHelper;
 
 
 /* 
@@ -385,33 +386,59 @@ namespace ORCA.Controllers
 
 
 
-        public ActionResult AddCon(int ticketId, SortBy sortOrder, string searchString)
-        {
-            AddCon addCon = new AddCon();
-            addCon.TicketID = ticketId;
-            addCon.SortOrder = sortOrder;
-            addCon.SearchString = searchString;
 
-            return View(addCon);
-        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //public ActionResult AddCon(int ticketId, string sortOrder, string searchString)
+        //{
+
+        //    AddCon addCon = new AddCon();
+
+        //    if (TempData["AddCon"] != null) addCon = TempData["AddCon"] as AddCon;
+
+        //    return View(addCon);
+        //}
 
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult AddCon([Bind(Include = "TicketID,SortOrder,SearchString")] AddCon addCon)
         {
-            
-            int ticketId = addCon.TicketID;
-            SortBy sortOrder = addCon.SortOrder;
-            string searchString = addCon.SearchString;
+            if (ModelState.IsValid)
+            {
 
-            return RedirectToAction("AddCon",new { ticketId = ticketId, sortOrder = sortOrder, searchString = searchString });
+                return RedirectToAction("Index");
+            }
+
+            //return RedirectToAction("AddCon",new { ticketId = ticketId, sortOrder = sortOrder, searchString = searchString });
+            return View(addCon);
         }
 
 
 
-        public ActionResult AddConList(int ticketId, SortBy sortOrder, string searchString)
+        //public ActionResult AddConList(int ticketId, string sortOrder, string searchString)
+        public ActionResult AddCon(int ticketId, string sortOrder, string searchString)
         {
+            ViewBag.TicketID = ticketId;
+            ViewBag.SortOrder = sortOrder;
+            ViewBag.SearchString = searchString;
+
+
             OrcaContext db = new OrcaContext();
 
             ActiveExperts hackExperts = new ActiveExperts();
@@ -439,6 +466,17 @@ namespace ORCA.Controllers
             
             return View(finalList);
         }
+
+
+
+
+
+        public ActionResult AddConToTic(int id, int ticketId)
+        {
+
+            return RedirectToAction("About");
+        }
+
 
         //public ActionResult AddConsultant(int ticketID, string sortOrder, string searchString)//, string searchString)
         //{

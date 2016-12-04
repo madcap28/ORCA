@@ -4,31 +4,45 @@
     ViewBag.Title = "AddConList";
 }
 
-<h2>AddConList</h2>
+@*@using ORCA.Models
+@{ 
+    AddCon addCon = new AddCon();
+    
+    addCon.TicketID = Convert.ToInt32(ViewBag.TicketID);
+    addCon.SortOrder = ViewBag.SortOrder;
+    addCon.SearchString = ViewBag.SearchString;
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+    TempData["AddCon"] = addCon;
+}*@
+
+
+<hr />
+<h3>Marshall Expert Consultants</h3>
 <table class="table">
     <tr>
         <th>
+            @*@Html.ActionLink("User Name", "AddCon", new { ticketId = ViewBag.TicketID, sortOrder = ViewBag.SortOrder, searchString = ViewBag.SearchString })*@
             @Html.DisplayNameFor(model => model.OrcaUserName)
         </th>
         <th>
+            @*@Html.ActionLink("Title/Degree", "AddCon", new { ticketId = ViewBag.TicketID, sortOrder = ViewBag.SortOrder, searchString = ViewBag.SearchString })*@
             @Html.DisplayNameFor(model => model.TitleDegree)
         </th>
         <th>
+            @*@Html.ActionLink("First Name", "AddCon", new { ticketId = ViewBag.TicketID, sortOrder = ViewBag.SortOrder, searchString = ViewBag.SearchString })*@
             @Html.DisplayNameFor(model => model.FirstName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.LastName)
+            @Html.ActionLink("Last Name", "AddCon", new { ticketId = ViewBag.TicketID, sortOrder = ViewBag.SortOrder, searchString = ViewBag.SearchString })
+            @*@Html.DisplayNameFor(model => model.LastName)*@
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.FieldOfExpertise)
+            @Html.ActionLink("Expertise", "AddCon", new { ticketId = ViewBag.TicketID, sortOrder = ViewBag.SortOrder, searchString = ViewBag.SearchString })
+            @*@Html.DisplayNameFor(model => model.FieldOfExpertise)*@
         </th>
         <th></th>
     </tr>
-
+    
 @foreach (var item in Model) {
     <tr>
         <td>
@@ -47,11 +61,82 @@
             @Html.DisplayFor(modelItem => item.FieldOfExpertise)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.OrcaUserID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.OrcaUserID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.OrcaUserID })
+            @Html.ActionLink("Add Expert", "AddConToTic", new { id=item.OrcaUserID, ticketId=Model.TicketID }) 
         </td>
     </tr>
 }
 
 </table>
+<hr />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@model ORCA.Models.AddCon
+
+@{
+    ViewBag.Title = "AddCon";
+}
+
+<h2>AddCon</h2>
+
+
+
+@using ORCA.Models
+@{
+    AddCon addCon = new AddCon();
+
+    addCon.TicketID = Convert.ToInt32(ViewBag.TicketID);
+    addCon.SortOrder = ViewBag.SortOrder;
+    addCon.SearchString = ViewBag.SearchString;
+
+    TempData["AddCon"] = addCon;
+}
+
+
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div>
+        <h4>AddCon</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.TicketID)
+        @Html.HiddenFor(model => model.SortOrder)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SearchString, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.SearchString, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.SearchString, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Search" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@Html.Action("AddConList", new { ticketId = Model.TicketID, sortOrder = Model.SortOrder, searchString = Model.SearchString })
