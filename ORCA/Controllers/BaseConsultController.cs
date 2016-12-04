@@ -449,22 +449,37 @@ namespace ORCA.Controllers
 
             // now just get rid of any that are already on the ticket
 
-            List<TicketExpert> ticketExperts = (from ticEx in db.TicketExperts
-                                                where ticEx.TicketID != ticketId || (ticEx.TicketActivityState != ActivityState.Active)
-                                                select ticEx).ToList();
+            //List<TicketExpert> ticketExperts = (from ticEx in db.TicketExperts
+            //                                    where ticEx.TicketID != ticketId || (ticEx.TicketActivityState != ActivityState.Active)
+            //                                    select ticEx).ToList();
+
+            
 
 
-            List<ActiveExpert> finalList = new List<ActiveExpert>();
 
-            foreach (ActiveExpert ae in listForOurModel)
-            {
-                List<TicketExpert> tics = ticketExperts.Where(x => x.ExpertForThisTicket == ae.OrcaUserID).ToList();
-                if (tics.Count > 0) finalList.Add(ae);
+            //List<ActiveExpert> finalList = new List<ActiveExpert>();
 
-            }
+            //foreach (ActiveExpert ae in listForOurModel)
+            //{
+            //    var ticketExperts = from ticEx in db.TicketExperts
+            //                        where ticEx.ExpertForThisTicket == ae.OrcaUserID && ticEx.TicketActivityState == ActivityState.Active
+            //                        select ticEx;
+            //    bool keep = true;
+
+            //    foreach (var te in ticketExperts)
+            //    {
+            //        if (ae.OrcaUserID == te.ExpertForThisTicket)
+            //        {
+            //            keep = false;
+            //            break;
+            //        }
+            //    }
+
+            //    if (keep) finalList.Add(ae);
+            //}
             
             
-            return View(finalList);
+            return View(listForOurModel);
         }
 
 
@@ -473,8 +488,36 @@ namespace ORCA.Controllers
 
         public ActionResult AddConToTic(int id, int ticketId)
         {
+            OrcaContext db = new OrcaContext();
 
-            return RedirectToAction("About");
+            List<TicketExpert> ticketExperts = db.TicketExperts.Where(ticEx => ticEx.TicketID == ticketId).ToList();
+            
+            if (ticketExperts.Any(tic => tic.ExpertForThisTicket == id))
+            {
+                TicketExpert expToEdit = new TicketExpert();
+                int ticExpId = ticketExperts.First(ticExp => ticExp.ExpertForThisTicket == id).TicketExpertID;
+
+                expToEdit = db.TicketExperts.Find(ticExpId);
+
+                expToEdit.TicketActivityState = ActivityState.Active;
+
+                db.Entry(expToEdit).State = EntityState.Modified;
+                db.SaveChanges();
+                
+            }
+            else
+            {
+                TicketExpert ticketExpert = new TicketExpert();
+                ticketExpert.TicketID = ticketId;
+                ticketExpert.ExpertForThisTicket = id;
+                ticketExpert.TicketActivityState = ActivityState.Active;// need to change
+
+                db.TicketExperts.Add(ticketExpert);
+                db.SaveChanges();
+                
+            }
+
+            return RedirectToAction("EditConsulTationTicket", new { ticketId = ticketId });
         }
 
 
